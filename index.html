@@ -622,19 +622,32 @@ function saveLog(){ try{ localStorage.setItem('pma_log_v2', JSON.stringify(log))
 function parseCSV(text) {
   const lines = text.trim().split('\n');
   if (lines.length < 2) return [];
-  const headers = parseCSVLine(lines[0]).map(h => h.trim().toUpperCase());
+  // Normalize headers: uppercase, remove accents, trim
+  function normalizeHeader(h) {
+    return h.trim()
+      .toUpperCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')  // remove accents
+      .replace(/[''`]/g, '')
+      .trim();
+  }
+  const rawHeaders = parseCSVLine(lines[0]);
+  const headers = rawHeaders.map(normalizeHeader);
   const items = [];
+  // Helper: find value by normalized key prefix
+  function get(obj, prefix) {
+    const key = Object.keys(obj).find(k => k.startsWith(prefix));
+    return key ? obj[key] : '';
+  }
   for (let i = 1; i < lines.length; i++) {
     const vals = parseCSVLine(lines[i]);
     const obj = {};
     headers.forEach((h, idx) => { obj[h] = (vals[idx] || '').trim(); });
     // Map to standard fields
-    const articolo = obj['ARTICOLO'] || '';
+    const articolo = get(obj, 'ARTICOLO');
     if (!articolo || articolo.length < 2) continue;
-    const scadStr = obj['SCADENZA'] || '';
+    const scadStr = get(obj, 'SCADENZA');
     let scadenza = null;
     if (scadStr) {
-      // Try DD/MM/YYYY
       const parts = scadStr.split('/');
       if (parts.length === 3) {
         scadenza = new Date(`${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`);
@@ -644,7 +657,7 @@ function parseCSV(text) {
         if (isNaN(scadenza)) scadenza = null;
       }
     }
-    const qty = parseFloat(obj['QUANTITÀ'] || obj['QUANTITA'] || '0') || 0;
+    const qty = parseFloat(get(obj, 'QUANTIT') || '0') || 0;
     let status = 'ok';
     if (scadenza) {
       if (scadenza < TODAY) status = 'scaduto';
@@ -652,18 +665,18 @@ function parseCSV(text) {
       else if (scadenza <= D90) status = 'attenzione';
     }
     items.push({
-      area:      obj['AREA'] || 'ALTRO',
-      box:       obj['BOX'] || '?',
+      area:      get(obj, 'AREA') || 'ALTRO',
+      box:       get(obj, 'BOX') || '?',
       articolo,
-      principio: obj['PRINCIPIO ATTIVO'] || '',
-      misura:    obj['MISURA'] || '',
-      marca:     obj['MARCA'] || '',
-      categoria: obj['CATEGORIA'] || '',
+      principio: get(obj, 'PRINCIPIO') || '',
+      misura:    get(obj, 'MISURA') || '',
+      marca:     get(obj, 'MARCA') || '',
+      categoria: get(obj, 'CATEGORIA') || '',
       quantita:  qty,
       scadenza,
       scadStr:   scadenza ? scadenza.toLocaleDateString('it-IT') : '',
-      lotto:     obj['LOTTO'] || '',
-      note:      obj['NOTE'] || '',
+      lotto:     get(obj, 'LOTTO') || '',
+      note:      get(obj, 'NOTE') || '',
       status
     });
   }
@@ -700,6 +713,20 @@ async function loadData() {
     fill.style.width = '90%';
     ITEMS = parseCSV(text);
     fill.style.width = '100%';
+    // Debug info in console
+    const firstLine = text.split('\n')[0];
+    console.log('[PMA] CSV prima riga:', firstLine);
+    console.log('[PMA] Articoli caricati:', ITEMS.length);
+    if (ITEMS.length === 0) {
+      document.getElementById('content').innerHTML = `
+        <div class="error-banner">
+          ⚠️ Foglio caricato ma nessun articolo trovato.<br>
+          Intestazioni rilevate: <code>${firstLine.substring(0,200)}</code><br><br>
+          Verifica che il foglio pubblicato sia "INVENTARIO" e che le righe partano dalla riga 2.
+        </div>`;
+      setTimeout(hideLoading, 300);
+      return;
+    }
     setTimeout(hideLoading, 300);
     render();
   } catch(err) {
