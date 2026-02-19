@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>PMA · Inventario Scorte</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #C8192A;
+  --red-d: #9E1020;
+  --red-l: #FDECEA;
+  --orange: #C85000;
+  --orange-l: #FFF0E5;
+  --yellow: #8A6000;
+  --yellow-l: #FFF8E5;
+  --green: #1A6B30;
+  --green-l: #EDFAF2;
+  --ink: #1A1A18;
+  --ink-2: #444440;
+  --ink-3: #888884;
+  --rule: #E8E8E4;
+  --bg: #F5F5F2;
+  --surface: #FEFEFE;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+/* ── LOADING ── */
+#loading {
+  position: fixed; inset: 0;
+  background: var(--red);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 999; gap: 20px;
+  transition: opacity 0.4s;
+}
+#loading.fade { opacity: 0; pointer-events: none; }
+.load-cross {
+  width: 56px; height: 56px;
+  position: relative;
+}
+.load-cross::before, .load-cross::after {
+  content: '';
+  position: absolute;
+  background: white;
+  border-radius: 3px;
+}
+.load-cross::before { width: 18px; height: 56px; left: 19px; top: 0; animation: pulse 1s ease-in-out infinite; }
+.load-cross::after { width: 56px; height: 18px; top: 19px; left: 0; animation: pulse 1s ease-in-out infinite 0.15s; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.load-text {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.load-bar {
+  width: 160px; height: 2px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.load-bar-fill {
+  height: 100%; width: 0;
+  background: white;
+  border-radius: 1px;
+  transition: width 0.4s ease;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--red);
+  position: sticky; top: 0; z-index: 100;
+  border-bottom: 2px solid var(--red-d);
+}
+.header-main {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 10px;
+}
+.brand {
+  display: flex; align-items: center; gap: 10px;
+}
+.brand-cross {
+  width: 30px; height: 30px;
+  background: white; border-radius: 50%;
+  position: relative; flex-shrink: 0;
+}
+.brand-cross::before, .brand-cross::after {
+  content: ''; position: absolute;
+  background: var(--red); border-radius: 1px;
+}
+.brand-cross::before { width: 6px; height: 18px; left: 12px; top: 6px; }
+.brand-cross::after { width: 18px; height: 6px; top: 12px; left: 6px; }
+.brand-name {
+  font-family: var(--mono);
+  font-size: 13px; font-weight: 600;
+  color: white; letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+.brand-sub {
+  font-family: var(--sans);
+  font-size: 10px; font-weight: 300;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.02em;
+}
+.header-pills {
+  display: flex; gap: 5px;
+}
+.hpill {
+  background: rgba(0,0,0,0.25);
+  border-radius: 6px;
+  padding: 4px 9px;
+  text-align: center;
+}
+.hpill-n {
+  font-family: var(--mono);
+  font-size: 15px; font-weight: 600;
+  color: white; line-height: 1;
+}
+.hpill-l {
+  font-size: 8px; font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.hpill.warn { background: rgba(0,0,0,0.35); }
+
+/* ── SEARCH BAR ── */
+.searchbar {
+  padding: 10px 16px 12px;
+  background: var(--red);
+}
+.search-inner {
+  display: flex; align-items: center;
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+  padding: 0 12px;
+  gap: 8px;
+}
+.search-inner svg { color: rgba(255,255,255,0.6); flex-shrink: 0; }
+.search-inner input {
+  flex: 1; background: none; border: none;
+  font-family: var(--sans); font-size: 15px;
+  color: white; padding: 10px 0;
+  outline: none;
+}
+.search-inner input::placeholder { color: rgba(255,255,255,0.5); }
+
+/* ── AREA TABS ── */
+.area-tabs {
+  display: flex; gap: 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--rule);
+  overflow-x: auto; scrollbar-width: none;
+}
+.area-tabs::-webkit-scrollbar { display: none; }
+.atab {
+  flex-shrink: 0;
+  padding: 10px 16px;
+  font-family: var(--mono);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border: none; background: none;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.atab.active {
+  color: var(--red);
+  border-bottom-color: var(--red);
+}
+.atab .n {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+/* ── STATUS FILTERS ── */
+.status-filters {
+  display: flex; gap: 6px;
+  padding: 10px 16px;
+  overflow-x: auto; scrollbar-width: none;
+  background: var(--bg);
+}
+.status-filters::-webkit-scrollbar { display: none; }
+.sfil {
+  flex-shrink: 0;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1.5px solid transparent;
+  font-size: 12px; font-weight: 500;
+  font-family: var(--mono);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.sfil[data-f="all"] { background: var(--ink); color: white; border-color: var(--ink); }
+.sfil[data-f="scaduto"] { background: var(--red-l); color: var(--red); border-color: #F5C0C4; }
+.sfil[data-f="critico"] { background: var(--orange-l); color: var(--orange); border-color: #F5CEB0; }
+.sfil[data-f="attenzione"] { background: var(--yellow-l); color: var(--yellow); border-color: #F0D890; }
+.sfil[data-f="ok"] { background: var(--green-l); color: var(--green); border-color: #B0DFC0; }
+.sfil.dim { opacity: 0.35; }
+
+/* ── CONTENT ── */
+#content { padding: 0 16px 100px; }
+
+/* ── BOX CARD ── */
+.box-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.box-head {
+  display: flex; align-items: center;
+  padding: 12px 14px;
+  cursor: pointer; gap: 10px;
+  user-select: none;
+}
+.box-head:active { background: var(--bg); }
+.box-tag {
+  font-family: var(--mono);
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.06em;
+  color: white;
+  background: var(--ink-2);
+  padding: 3px 7px; border-radius: 5px;
+  flex-shrink: 0;
+}
+.box-label {
+  flex: 1;
+  font-size: 13px; font-weight: 500;
+  color: var(--ink);
+  min-width: 0;
+  white-space: nowrap; overflow: hidden;
+  text-overflow: ellipsis;
+}
+.box-badges { display: flex; gap: 4px; align-items: center; flex-shrink: 0; }
+.badge {
+  width: 7px; height: 7px; border-radius: 50%;
+}
+.badge-r { background: var(--red); }
+.badge-o { background: var(--orange); }
+.badge-y { background: var(--yellow); }
+.chevron {
+  font-size: 14px; color: var(--ink-3);
+  transition: transform 0.2s; flex-shrink: 0;
+}
+.box-card.open .chevron { transform: rotate(90deg); }
+
+/* ── ITEMS ── */
+.box-items { display: none; border-top: 1px solid var(--rule); }
+.box-card.open .box-items { display: block; }
+
+.item {
+  display: flex; align-items: stretch;
+  border-bottom: 1px solid var(--rule);
+  min-height: 52px;
+}
+.item:last-child { border-bottom: none; }
+.item-stripe {
+  width: 3px; flex-shrink: 0;
+}
+.stripe-scaduto { background: var(--red); }
+.stripe-critico { background: var(--orange); }
+.stripe-attenzione { background: #D4A000; }
+.stripe-ok { background: var(--rule); }
+.item-body {
+  flex: 1; padding: 10px 12px;
+  min-width: 0;
+}
+.item-name {
+  font-size: 13px; font-weight: 500;
+  color: var(--ink); line-height: 1.3;
+  margin-bottom: 3px;
+}
+.item-meta {
+  display: flex; flex-wrap: wrap;
+  gap: 3px 8px; align-items: center;
+}
+.meta-tag {
+  font-family: var(--mono);
+  font-size: 10px; color: var(--ink-3);
+}
+.exp-badge {
+  font-family: var(--mono);
+  font-size: 10px; font-weight: 600;
+  padding: 1px 5px; border-radius: 3px;
+}
+.exp-scaduto { background: var(--red-l); color: var(--red); }
+.exp-critico { background: var(--orange-l); color: var(--orange); }
+.exp-attenzione { background: var(--yellow-l); color: var(--yellow); }
+.item-right {
+  display: flex; flex-direction: column;
+  align-items: flex-end; justify-content: center;
+  padding: 10px 12px; gap: 5px; flex-shrink: 0;
+}
+.qty {
+  font-family: var(--mono);
+  font-size: 14px; font-weight: 600;
+  color: var(--ink);
+}
+.qty.zero { color: var(--red); }
+.preleva-btn {
+  font-family: var(--mono);
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1.5px solid var(--rule);
+  background: var(--bg);
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: all 0.1s;
+  white-space: nowrap;
+}
+.preleva-btn:active {
+  background: var(--red); color: white; border-color: var(--red);
+}
+
+/* ── EMPTY / ERROR ── */
+.empty {
+  text-align: center; padding: 60px 20px;
+  color: var(--ink-3);
+}
+.empty-icon { font-size: 36px; margin-bottom: 12px; }
+.empty-text { font-size: 14px; }
+.error-banner {
+  margin: 16px; padding: 14px 16px;
+  background: var(--red-l); border: 1px solid #F5C0C4;
+  border-radius: 10px; color: var(--red);
+  font-size: 13px; line-height: 1.5;
+}
+
+/* ── PRELIEVO MODAL ── */
+.overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 200; align-items: flex-end;
+}
+.overlay.open { display: flex; }
+.modal {
+  background: var(--surface);
+  width: 100%; border-radius: 20px 20px 0 0;
+  padding: 20px 20px 36px;
+  animation: slideUp 0.22s ease;
+}
+@keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+.modal-handle {
+  width: 36px; height: 4px;
+  background: var(--rule); border-radius: 2px;
+  margin: 0 auto 18px;
+}
+.modal-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--ink-3); margin-bottom: 4px;
+}
+.modal-title {
+  font-size: 17px; font-weight: 600;
+  color: var(--ink); line-height: 1.2; margin-bottom: 3px;
+}
+.modal-sub {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--ink-3); margin-bottom: 22px;
+}
+.qty-row {
+  display: flex; align-items: center;
+  justify-content: center; gap: 18px;
+  margin-bottom: 18px;
+}
+.qty-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1.5px solid var(--rule);
+  background: var(--bg); font-size: 22px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--ink);
+  transition: all 0.1s;
+}
+.qty-btn:active { background: var(--ink); color: white; border-color: var(--ink); }
+.qty-num {
+  font-family: var(--mono);
+  font-size: 34px; font-weight: 600;
+  min-width: 56px; text-align: center;
+}
+.modal-operatore {
+  width: 100%; padding: 10px 14px;
+  border-radius: 10px; border: 1.5px solid var(--rule);
+  font-family: var(--sans); font-size: 14px;
+  outline: none; margin-bottom: 10px;
+  color: var(--ink); background: var(--surface);
+  transition: border-color 0.15s;
+}
+.modal-operatore:focus { border-color: var(--red); }
+.modal-note {
+  width: 100%; padding: 10px 14px;
+  border-radius: 10px; border: 1.5px solid var(--rule);
+  font-family: var(--sans); font-size: 14px;
+  outline: none; resize: none; margin-bottom: 16px;
+  color: var(--ink); background: var(--surface);
+  transition: border-color 0.15s;
+}
+.modal-note:focus { border-color: var(--red); }
+.modal-confirm {
+  width: 100%; padding: 15px;
+  background: var(--red); color: white; border: none;
+  border-radius: 12px; font-family: var(--mono);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer; transition: opacity 0.1s;
+}
+.modal-confirm:active { opacity: 0.85; }
+.modal-confirm:disabled { opacity: 0.5; }
+.modal-cancel {
+  width: 100%; padding: 12px;
+  background: none; border: none; color: var(--ink-3);
+  font-family: var(--sans); font-size: 13px;
+  cursor: pointer; margin-top: 6px;
+}
+
+/* ── LOG PANEL ── */
+.log-fab {
+  position: fixed; bottom: 24px; right: 16px;
+  width: 50px; height: 50px; border-radius: 50%;
+  background: var(--ink); color: white; border: none;
+  font-size: 20px; cursor: pointer;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.22);
+  z-index: 150; display: flex; align-items: center; justify-content: center;
+  transition: transform 0.15s;
+}
+.log-fab:active { transform: scale(0.92); }
+.log-panel {
+  display: none; position: fixed; inset: 0;
+  background: var(--surface); z-index: 300;
+  flex-direction: column;
+}
+.log-panel.open { display: flex; }
+.log-panel-head {
+  background: var(--ink); color: white;
+  padding: 14px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.log-panel-title {
+  font-family: var(--mono); font-size: 13px;
+  font-weight: 600; letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.log-close {
+  background: none; border: none;
+  color: white; font-size: 20px; cursor: pointer; padding: 4px;
+}
+.log-body { flex: 1; overflow-y: auto; padding: 16px; }
+.log-empty {
+  text-align: center; padding: 60px 20px;
+  color: var(--ink-3); font-size: 14px;
+}
+.log-entry {
+  padding: 12px 0; border-bottom: 1px solid var(--rule);
+  display: flex; gap: 10px;
+}
+.log-entry:last-child { border-bottom: none; }
+.log-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--red); flex-shrink: 0; margin-top: 4px;
+}
+.log-info { flex: 1; }
+.log-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+.log-meta {
+  font-family: var(--mono); font-size: 10px; color: var(--ink-3);
+}
+.log-qty {
+  font-family: var(--mono); font-size: 13px;
+  font-weight: 600; color: var(--red); flex-shrink: 0;
+}
+.log-footer {
+  padding: 14px 16px; border-top: 1px solid var(--rule);
+}
+.export-btn {
+  width: 100%; padding: 13px;
+  background: var(--ink); color: white; border: none;
+  border-radius: 10px; font-family: var(--mono);
+  font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; cursor: pointer;
+}
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; top: 76px; left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  background: var(--ink); color: white;
+  padding: 9px 18px; border-radius: 20px;
+  font-family: var(--mono); font-size: 11px;
+  font-weight: 500; letter-spacing: 0.04em;
+  opacity: 0; transition: all 0.22s;
+  z-index: 500; white-space: nowrap; pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.err { background: var(--red); }
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading">
+  <div class="load-cross"></div>
+  <div class="load-text">Caricamento inventario…</div>
+  <div class="load-bar"><div class="load-bar-fill" id="load-fill"></div></div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-main">
+    <div class="brand">
+      <div class="brand-cross"></div>
+      <div>
+        <div class="brand-name">PMA · INVENTARIO</div>
+        <div class="brand-sub">Croce Rossa Italiana — Veneto</div>
+      </div>
+    </div>
+    <div class="header-pills">
+      <div class="hpill warn">
+        <div class="hpill-n" id="stat-scad">—</div>
+        <div class="hpill-l">Scaduti</div>
+      </div>
+      <div class="hpill warn">
+        <div class="hpill-n" id="stat-crit">—</div>
+        <div class="hpill-l">Critici</div>
+      </div>
+    </div>
+  </div>
+  <div class="searchbar">
+    <div class="search-inner">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="search" placeholder="Cerca articolo, marca, box…"
+             autocomplete="off" autocorrect="off" spellcheck="false">
+    </div>
+  </div>
+</header>
+
+<div class="area-tabs" id="area-tabs"></div>
+<div class="status-filters" id="status-filters"></div>
+<div id="content"></div>
+
+<button class="log-fab" onclick="openLog()">📋</button>
+
+<!-- PRELIEVO MODAL -->
+<div class="overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-eyebrow">Registra prelievo</div>
+    <div class="modal-title" id="m-name">—</div>
+    <div class="modal-sub" id="m-sub">—</div>
+    <div class="qty-row">
+      <button class="qty-btn" onclick="changeQty(-1)">−</button>
+      <div class="qty-num" id="m-qty">1</div>
+      <button class="qty-btn" onclick="changeQty(+1)">+</button>
+    </div>
+    <input class="modal-operatore" id="m-op" type="text" placeholder="Operatore (nome)">
+    <textarea class="modal-note" id="m-note" rows="2" placeholder="Note opzionali…"></textarea>
+    <button class="modal-confirm" id="m-confirm" onclick="confirmPrelievo()">Registra</button>
+    <button class="modal-cancel" onclick="closeModal()">Annulla</button>
+  </div>
+</div>
+
+<!-- LOG PANEL -->
+<div class="log-panel" id="log-panel">
+  <div class="log-panel-head">
+    <div class="log-panel-title">📋 Registro Prelievi</div>
+    <button class="log-close" onclick="closeLog()">✕</button>
+  </div>
+  <div class="log-body" id="log-body"></div>
+  <div class="log-footer">
+    <button class="export-btn" onclick="exportCSV()">⬇ Esporta CSV</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ──
+const CSV_URL   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRW0M_io4d_728eB3KMJjcQUCK6n5n08Ig8lm4eAR00b_OFkzTdKv7R4CBZKfjXMQn2KhXBvFNlHQ4p/pub?gid=1400335926&single=true&output=csv';
+const SCRIPT_URL = 'https://script.google.com/a/macros/veneto.cri.it/s/AKfycbxeR9I3kkarQDf3SRM_ui2Ii98o2gSgN1dOyhZysksjVs6PsLqvlIEf6FPqkpk-OmaYug/exec';
+
+const TODAY = new Date('2026-02-18');
+const D60   = new Date(TODAY); D60.setDate(D60.getDate() + 60);
+const D90   = new Date(TODAY); D90.setDate(D90.getDate() + 90);
+
+// ── STATE ──
+let ITEMS = [];
+let area = 'TUTTI';
+let filter = 'all';
+let search = '';
+let prelievo = null;
+let prelievoQty = 1;
+let log = [];
+
+try { const s = localStorage.getItem('pma_log_v2'); if(s) log = JSON.parse(s); } catch(e){}
+function saveLog(){ try{ localStorage.setItem('pma_log_v2', JSON.stringify(log)); }catch(e){} }
+
+// ── PARSE CSV ──
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  if (lines.length < 2) return [];
+  const headers = parseCSVLine(lines[0]).map(h => h.trim().toUpperCase());
+  const items = [];
+  for (let i = 1; i < lines.length; i++) {
+    const vals = parseCSVLine(lines[i]);
+    const obj = {};
+    headers.forEach((h, idx) => { obj[h] = (vals[idx] || '').trim(); });
+    // Map to standard fields
+    const articolo = obj['ARTICOLO'] || '';
+    if (!articolo || articolo.length < 2) continue;
+    const scadStr = obj['SCADENZA'] || '';
+    let scadenza = null;
+    if (scadStr) {
+      // Try DD/MM/YYYY
+      const parts = scadStr.split('/');
+      if (parts.length === 3) {
+        scadenza = new Date(`${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`);
+        if (isNaN(scadenza)) scadenza = null;
+      } else {
+        scadenza = new Date(scadStr);
+        if (isNaN(scadenza)) scadenza = null;
+      }
+    }
+    const qty = parseFloat(obj['QUANTITÀ'] || obj['QUANTITA'] || '0') || 0;
+    let status = 'ok';
+    if (scadenza) {
+      if (scadenza < TODAY) status = 'scaduto';
+      else if (scadenza <= D60) status = 'critico';
+      else if (scadenza <= D90) status = 'attenzione';
+    }
+    items.push({
+      area:      obj['AREA'] || 'ALTRO',
+      box:       obj['BOX'] || '?',
+      articolo,
+      principio: obj['PRINCIPIO ATTIVO'] || '',
+      misura:    obj['MISURA'] || '',
+      marca:     obj['MARCA'] || '',
+      categoria: obj['CATEGORIA'] || '',
+      quantita:  qty,
+      scadenza,
+      scadStr:   scadenza ? scadenza.toLocaleDateString('it-IT') : '',
+      lotto:     obj['LOTTO'] || '',
+      note:      obj['NOTE'] || '',
+      status
+    });
+  }
+  return items;
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let cur = '', inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"') {
+      if (inQ && line[i+1] === '"') { cur += '"'; i++; }
+      else inQ = !inQ;
+    } else if (c === ',' && !inQ) {
+      result.push(cur); cur = '';
+    } else {
+      cur += c;
+    }
+  }
+  result.push(cur);
+  return result;
+}
+
+// ── LOAD DATA ──
+async function loadData() {
+  const fill = document.getElementById('load-fill');
+  fill.style.width = '30%';
+  try {
+    const res = await fetch(CSV_URL);
+    fill.style.width = '70%';
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+    fill.style.width = '90%';
+    ITEMS = parseCSV(text);
+    fill.style.width = '100%';
+    setTimeout(hideLoading, 300);
+    render();
+  } catch(err) {
+    fill.style.width = '100%';
+    setTimeout(hideLoading, 300);
+    // Fallback: show error but still render empty state
+    document.getElementById('content').innerHTML = `
+      <div class="error-banner">
+        ⚠️ Impossibile caricare i dati dal foglio Google.<br>
+        Verifica che il foglio sia pubblicato correttamente e che la connessione internet funzioni.<br><br>
+        <small>Errore: ${err.message}</small>
+      </div>`;
+  }
+}
+
+function hideLoading() {
+  const el = document.getElementById('loading');
+  el.classList.add('fade');
+  setTimeout(() => el.style.display = 'none', 400);
+}
+
+// ── RENDER ──
+function getFiltered() {
+  let items = area === 'TUTTI' ? ITEMS : ITEMS.filter(i => i.area === area);
+  if (filter !== 'all') items = items.filter(i => i.status === filter);
+  if (search) {
+    const q = search.toLowerCase();
+    items = items.filter(i =>
+      i.articolo.toLowerCase().includes(q) ||
+      i.marca.toLowerCase().includes(q) ||
+      i.box.toLowerCase().includes(q) ||
+      i.principio.toLowerCase().includes(q)
+    );
+  }
+  return items;
+}
+
+function render() {
+  // Stats
+  const scad = ITEMS.filter(i => i.status === 'scaduto').length;
+  const crit = ITEMS.filter(i => i.status === 'critico').length;
+  document.getElementById('stat-scad').textContent = scad;
+  document.getElementById('stat-crit').textContent = crit;
+
+  renderTabs();
+  renderFilters();
+  renderContent();
+}
+
+function renderTabs() {
+  const areas = ['TUTTI', ...new Set(ITEMS.map(i => i.area))];
+  document.getElementById('area-tabs').innerHTML = areas.map(a => {
+    const n = a === 'TUTTI' ? ITEMS.length : ITEMS.filter(i => i.area === a).length;
+    return `<button class="atab ${a===area?'active':''}" onclick="setArea('${a}')">
+      ${a}<span class="n">${n}</span>
+    </button>`;
+  }).join('');
+}
+
+function renderFilters() {
+  const base = area === 'TUTTI' ? ITEMS : ITEMS.filter(i => i.area === area);
+  const counts = {
+    all: base.length,
+    scaduto: base.filter(i => i.status==='scaduto').length,
+    critico:  base.filter(i => i.status==='critico').length,
+    attenzione: base.filter(i => i.status==='attenzione').length,
+    ok: base.filter(i => i.status==='ok').length,
+  };
+  const labels = {all:'Tutti', scaduto:'Scaduti', critico:'Critici', attenzione:'Attenzione', ok:'OK'};
+  document.getElementById('status-filters').innerHTML = Object.entries(counts).map(([k,v]) =>
+    `<button class="sfil ${k===filter?'':'dim'}" data-f="${k}" onclick="setFilter('${k}')">
+      ${labels[k]} ${v}
+    </button>`
+  ).join('');
+}
+
+function renderContent() {
+  const items = getFiltered();
+  const el = document.getElementById('content');
+  if (!items.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div><div class="empty-text">Nessun articolo trovato</div></div>`;
+    return;
+  }
+
+  // Group by box
+  const byBox = {};
+  items.forEach(i => {
+    const k = i.box;
+    if (!byBox[k]) byBox[k] = [];
+    byBox[k].push(i);
+  });
+
+  const sortedBoxes = Object.keys(byBox).sort((a,b) => {
+    const na = parseFloat(a), nb = parseFloat(b);
+    if (!isNaN(na) && !isNaN(nb)) return na - nb;
+    if (!isNaN(na)) return -1;
+    if (!isNaN(nb)) return 1;
+    return a.localeCompare(b);
+  });
+
+  el.innerHTML = sortedBoxes.map(box => {
+    const bItems = byBox[box];
+    const worst = bItems.reduce((acc, i) => {
+      const rank = {scaduto:3, critico:2, attenzione:1, ok:0};
+      return rank[i.status] > rank[acc] ? i.status : acc;
+    }, 'ok');
+
+    const badges = worst === 'scaduto' ? '<div class="badge badge-r"></div>' :
+                   worst === 'critico' ? '<div class="badge badge-o"></div>' :
+                   worst === 'attenzione' ? '<div class="badge badge-y"></div>' : '';
+
+    const label = bItems.length === 1
+      ? bItems[0].articolo.split(' ').slice(0,4).join(' ')
+      : [...new Set(bItems.map(i=>i.articolo.split(' ')[0]))].slice(0,2).join(', ') + (bItems.length > 2 ? ` +${bItems.length-2}` : '');
+
+    const itemsHTML = bItems.map(item => {
+      const expHTML = item.scadStr ? `<span class="exp-badge exp-${item.status}">${item.scadStr}</span>` : '';
+      const detail = [item.marca, item.misura].filter(Boolean).join(' · ');
+      const qClass = item.quantita === 0 ? 'qty zero' : 'qty';
+      // Escape for inline onclick
+      const esc = s => s.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+      return `<div class="item">
+        <div class="item-stripe stripe-${item.status}"></div>
+        <div class="item-body">
+          <div class="item-name">${item.articolo}</div>
+          <div class="item-meta">
+            ${detail ? `<span class="meta-tag">${detail}</span>` : ''}
+            ${expHTML}
+          </div>
+        </div>
+        <div class="item-right">
+          <div class="${qClass}">×${item.quantita}</div>
+          <button class="preleva-btn" onclick="openModal('${esc(item.articolo)}','${esc(item.marca)}','${esc(item.box)}','${esc(item.area)}',${item.quantita})">PRELEVA</button>
+        </div>
+      </div>`;
+    }).join('');
+
+    return `<div class="box-card" id="bc-${box}">
+      <div class="box-head" onclick="toggleBox('${box}')">
+        <div class="box-tag">BOX ${box}</div>
+        <div class="box-label">${label}</div>
+        <div class="box-badges">${badges}</div>
+        <div class="chevron">›</div>
+      </div>
+      <div class="box-items">${itemsHTML}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleBox(box) {
+  document.getElementById('bc-' + box)?.classList.toggle('open');
+}
+
+function setArea(a) { area = a; filter = 'all'; render(); }
+function setFilter(f) { filter = f; renderFilters(); renderContent(); }
+
+document.getElementById('search').addEventListener('input', function() {
+  search = this.value.trim();
+  renderContent();
+});
+
+// ── PRELIEVO ──
+function openModal(articolo, marca, box, areaVal, qty) {
+  prelievo = { articolo, marca, box, area: areaVal, qty };
+  prelievoQty = 1;
+  document.getElementById('m-name').textContent = articolo;
+  document.getElementById('m-sub').textContent = [marca, 'Box '+box, areaVal].filter(Boolean).join(' · ') +
+    (qty > 0 ? ` · Disponibili: ${qty}` : ' · ESAURITO');
+  document.getElementById('m-qty').textContent = '1';
+  document.getElementById('m-note').value = '';
+  document.getElementById('m-confirm').disabled = false;
+  document.getElementById('m-confirm').textContent = 'Registra';
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function changeQty(d) {
+  prelievoQty = Math.max(1, prelievoQty + d);
+  document.getElementById('m-qty').textContent = prelievoQty;
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  prelievo = null;
+}
+
+async function confirmPrelievo() {
+  if (!prelievo) return;
+  const btn = document.getElementById('m-confirm');
+  const operatore = document.getElementById('m-op').value.trim();
+  const note = document.getElementById('m-note').value.trim();
+
+  btn.disabled = true;
+  btn.textContent = 'Invio…';
+
+  const entry = {
+    ts: new Date().toLocaleString('it-IT'),
+    articolo: prelievo.articolo,
+    marca: prelievo.marca,
+    box: prelievo.box,
+    area: prelievo.area,
+    quantita: prelievoQty,
+    operatore,
+    note
+  };
+
+  // Try to send to Apps Script
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(entry)
+    });
+    showToast('✓ Prelievo registrato su Google Sheets');
+  } catch(e) {
+    showToast('⚠ Salvato in locale (offline)', true);
+  }
+
+  // Always save locally as backup
+  log.unshift(entry);
+  saveLog();
+  closeModal();
+}
+
+// ── LOG ──
+function openLog() {
+  const body = document.getElementById('log-body');
+  if (!log.length) {
+    body.innerHTML = '<div class="log-empty">Nessun prelievo registrato ancora.</div>';
+  } else {
+    body.innerHTML = log.map(e => `
+      <div class="log-entry">
+        <div class="log-dot"></div>
+        <div class="log-info">
+          <div class="log-name">${e.articolo}</div>
+          <div class="log-meta">${e.ts} · Box ${e.box}${e.operatore ? ' · ' + e.operatore : ''}${e.note ? ' · ' + e.note : ''}</div>
+        </div>
+        <div class="log-qty">−${e.quantita}</div>
+      </div>`).join('');
+  }
+  document.getElementById('log-panel').classList.add('open');
+}
+
+function closeLog() {
+  document.getElementById('log-panel').classList.remove('open');
+}
+
+function exportCSV() {
+  if (!log.length) { showToast('Nessun prelievo da esportare', true); return; }
+  const rows = [['Data/Ora','Articolo','Marca','Box','Area','Quantità','Operatore','Note']];
+  log.forEach(e => rows.push([e.ts, e.articolo, e.marca||'', e.box, e.area||'', e.quantita, e.operatore||'', e.note||'']));
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `prelievi_pma_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  showToast('CSV esportato');
+}
+
+// ── TOAST ──
+function showToast(msg, isErr=false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isErr ? ' err' : '');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// Close modal on overlay click
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ── INIT ──
+loadData();
+</script>
+</body>
+</html>
