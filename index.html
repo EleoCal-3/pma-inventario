@@ -932,13 +932,20 @@ async function confirmPrelievo() {
     note
   };
 
-  // Try to send to Apps Script
+  // Try to send to Apps Script via FormData (bypasses CORS)
   try {
+    var form = new FormData();
+    form.append('articolo', entry.articolo);
+    form.append('marca', entry.marca || '');
+    form.append('box', entry.box);
+    form.append('area', entry.area || '');
+    form.append('quantita', entry.quantita);
+    form.append('operatore', entry.operatore || '');
+    form.append('note', entry.note || '');
     await fetch(SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(entry)
+      body: form
     });
     showToast('✓ Prelievo registrato su Google Sheets');
   } catch(e) {
