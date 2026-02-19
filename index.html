@@ -932,7 +932,7 @@ async function confirmPrelievo() {
     note
   };
 
-  // Send via GET - script e foglio sullo stesso account, nessun problema CORS
+  // Usa iframe invisibile - funziona sempre con Google Apps Script
   try {
     var params = new URLSearchParams({
       articolo:  entry.articolo,
@@ -943,7 +943,11 @@ async function confirmPrelievo() {
       operatore: entry.operatore || '',
       note:      entry.note || ''
     });
-    await fetch(SCRIPT_URL + '?' + params.toString(), { mode: 'no-cors' });
+    var iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = SCRIPT_URL + '?' + params.toString();
+    document.body.appendChild(iframe);
+    setTimeout(function() { document.body.removeChild(iframe); }, 5000);
     showToast('✓ Prelievo registrato su Google Sheets');
   } catch(e) {
     showToast('⚠ Salvato in locale (offline)', true);
