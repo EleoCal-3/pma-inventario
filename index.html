@@ -599,8 +599,8 @@ header {
 
 <script>
 // ── CONFIG ──
-const CSV_URL   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRW0M_io4d_728eB3KMJjcQUCK6n5n08Ig8lm4eAR00b_OFkzTdKv7R4CBZKfjXMQn2KhXBvFNlHQ4p/pub?gid=1400335926&single=true&output=csv';
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyxrKYQzO7L6fcAaElaphfzQZqOBvs5qG_63bMXTFHiUjTZRRoKsrI4Yjlwg-0G6ogd7g/exec';
+const CSV_URL   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQW1C2Lk-YFP88rhXTrEZkK1GWF7GlmKwK-z-tlztbVFzmZAZez7fkN93EKmI47uZ5VROJX7cSYALD2/pub?gid=1949112992&single=true&output=csv';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynYsDuRGPW289-qMfjwqB9QR--u01U1Z86uwT6_1oecbZPyM2ij33xHXcTjW1pxby7_w/exec';
 
 const TODAY = new Date('2026-02-18');
 const D60   = new Date(TODAY); D60.setDate(D60.getDate() + 60);
@@ -932,21 +932,18 @@ async function confirmPrelievo() {
     note
   };
 
-  // Try to send to Apps Script via FormData (bypasses CORS)
+  // Send via GET - script e foglio sullo stesso account, nessun problema CORS
   try {
-    var form = new FormData();
-    form.append('articolo', entry.articolo);
-    form.append('marca', entry.marca || '');
-    form.append('box', entry.box);
-    form.append('area', entry.area || '');
-    form.append('quantita', entry.quantita);
-    form.append('operatore', entry.operatore || '');
-    form.append('note', entry.note || '');
-    await fetch(SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: form
+    var params = new URLSearchParams({
+      articolo:  entry.articolo,
+      marca:     entry.marca || '',
+      box:       entry.box,
+      area:      entry.area || '',
+      quantita:  entry.quantita,
+      operatore: entry.operatore || '',
+      note:      entry.note || ''
     });
+    await fetch(SCRIPT_URL + '?' + params.toString(), { mode: 'no-cors' });
     showToast('✓ Prelievo registrato su Google Sheets');
   } catch(e) {
     showToast('⚠ Salvato in locale (offline)', true);
