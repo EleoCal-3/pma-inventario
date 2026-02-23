@@ -519,14 +519,12 @@ header {
 </head>
 <body>
 
-<!-- LOADING -->
 <div id="loading">
   <div class="load-cross"></div>
   <div class="load-text">Caricamento inventario…</div>
   <div class="load-bar"><div class="load-bar-fill" id="load-fill"></div></div>
 </div>
 
-<!-- HEADER -->
 <header>
   <div class="header-main">
     <div class="brand">
@@ -564,7 +562,6 @@ header {
 
 <button class="log-fab" onclick="openLog()">📋</button>
 
-<!-- PRELIEVO MODAL -->
 <div class="overlay" id="modal-overlay">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -583,7 +580,6 @@ header {
   </div>
 </div>
 
-<!-- LOG PANEL -->
 <div class="log-panel" id="log-panel">
   <div class="log-panel-head">
     <div class="log-panel-title">📋 Registro Prelievi</div>
@@ -602,10 +598,6 @@ header {
 const CSV_URL   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQW1C2Lk-YFP88rhXTrEZkK1GWF7GlmKwK-z-tlztbVFzmZAZez7fkN93EKmI47uZ5VROJX7cSYALD2/pub?gid=1949112992&single=true&output=csv';
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynYsDuRGPW289-qMfjwqB9QR--u01U1Z86uwT6_1oecbZPyM2ij33xHXcTjW1pxby7_w/exec';
 
-const TODAY = new Date('2026-02-18');
-const D60   = new Date(TODAY); D60.setDate(D60.getDate() + 60);
-const D90   = new Date(TODAY); D90.setDate(D90.getDate() + 90);
-
 // ── STATE ──
 let ITEMS = [];
 let area = 'TUTTI';
@@ -622,48 +614,50 @@ function saveLog(){ try{ localStorage.setItem('pma_log_v2', JSON.stringify(log))
 function parseCSV(text) {
   const lines = text.trim().split('\n');
   if (lines.length < 2) return [];
-  // Normalize headers: uppercase, remove accents, trim
+
   function normalizeHeader(h) {
     return h.trim()
       .toUpperCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')  // remove accents
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
       .replace(/[''`]/g, '')
       .trim();
   }
+
   const rawHeaders = parseCSVLine(lines[0]);
   const headers = rawHeaders.map(normalizeHeader);
   const items = [];
-  // Helper: find value by normalized key prefix
+
   function get(obj, prefix) {
     const key = Object.keys(obj).find(k => k.startsWith(prefix));
     return key ? obj[key] : '';
   }
+
   for (let i = 1; i < lines.length; i++) {
     const vals = parseCSVLine(lines[i]);
+    if (vals.length < 3) continue;
     const obj = {};
     headers.forEach((h, idx) => { obj[h] = (vals[idx] || '').trim(); });
-    // Map to standard fields
+
     const articolo = get(obj, 'ARTICOLO');
     if (!articolo || articolo.length < 2) continue;
-    const scadStr = get(obj, 'SCADENZA');
-    let scadenza = null;
-    if (scadStr) {
-      const parts = scadStr.split('/');
-      if (parts.length === 3) {
-        scadenza = new Date(`${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`);
-        if (isNaN(scadenza)) scadenza = null;
-      } else {
-        scadenza = new Date(scadStr);
-        if (isNaN(scadenza)) scadenza = null;
-      }
-    }
+
+    // --- LOGICA AGGIORNATA ---
+    // Leggiamo lo stato direttamente dalle colonne di appoggio di Excel
+    const statoScadenza = get(obj, 'STATO SCADENZA');
+    const statoQuantita = get(obj, 'STATO QUANTIT');
     const qty = parseFloat(get(obj, 'QUANTIT') || '0') || 0;
+
     let status = 'ok';
-    if (scadenza) {
-      if (scadenza < TODAY) status = 'scaduto';
-      else if (scadenza <= D60) status = 'critico';
-      else if (scadenza <= D90) status = 'attenzione';
+    if (statoScadenza.includes("🚫 SCADUTO")) {
+      status = 'scaduto';
+    } else if (statoScadenza.includes("🟠 IN SCADENZA")) {
+      status = 'critico';
+    } else if (statoQuantita.includes("🔴 ESAURITO") || qty <= 0) {
+      status = 'scaduto'; // Visualizzazione rossa se finito
+    } else if (statoQuantita.includes("🟡 SOTTO SOGLIA")) {
+      status = 'attenzione';
     }
+
     items.push({
       area:      get(obj, 'AREA') || 'ALTRO',
       box:       get(obj, 'BOX') || '?',
@@ -673,8 +667,7 @@ function parseCSV(text) {
       marca:     get(obj, 'MARCA') || '',
       categoria: get(obj, 'CATEGORIA') || '',
       quantita:  qty,
-      scadenza,
-      scadStr:   scadenza ? scadenza.toLocaleDateString('it-IT') : '',
+      scadStr:   get(obj, 'SCADENZA') || '',
       lotto:     get(obj, 'LOTTO') || '',
       note:      get(obj, 'NOTE') || '',
       status
@@ -713,31 +706,15 @@ async function loadData() {
     fill.style.width = '90%';
     ITEMS = parseCSV(text);
     fill.style.width = '100%';
-    // Debug info in console
-    const firstLine = text.split('\n')[0];
-    console.log('[PMA] CSV prima riga:', firstLine);
-    console.log('[PMA] Articoli caricati:', ITEMS.length);
-    if (ITEMS.length === 0) {
-      document.getElementById('content').innerHTML = `
-        <div class="error-banner">
-          ⚠️ Foglio caricato ma nessun articolo trovato.<br>
-          Intestazioni rilevate: <code>${firstLine.substring(0,200)}</code><br><br>
-          Verifica che il foglio pubblicato sia "INVENTARIO" e che le righe partano dalla riga 2.
-        </div>`;
-      setTimeout(hideLoading, 300);
-      return;
-    }
     setTimeout(hideLoading, 300);
     render();
   } catch(err) {
     fill.style.width = '100%';
     setTimeout(hideLoading, 300);
-    // Fallback: show error but still render empty state
     document.getElementById('content').innerHTML = `
       <div class="error-banner">
-        ⚠️ Impossibile caricare i dati dal foglio Google.<br>
-        Verifica che il foglio sia pubblicato correttamente e che la connessione internet funzioni.<br><br>
-        <small>Errore: ${err.message}</small>
+        ⚠️ Errore caricamento dati.<br>
+        <small>${err.message}</small>
       </div>`;
   }
 }
@@ -757,15 +734,13 @@ function getFiltered() {
     items = items.filter(i =>
       i.articolo.toLowerCase().includes(q) ||
       i.marca.toLowerCase().includes(q) ||
-      i.box.toLowerCase().includes(q) ||
-      i.principio.toLowerCase().includes(q)
+      i.box.toLowerCase().includes(q)
     );
   }
   return items;
 }
 
 function render() {
-  // Stats
   const scad = ITEMS.filter(i => i.status === 'scaduto').length;
   const crit = ITEMS.filter(i => i.status === 'critico').length;
   document.getElementById('stat-scad').textContent = scad;
@@ -795,7 +770,7 @@ function renderFilters() {
     attenzione: base.filter(i => i.status==='attenzione').length,
     ok: base.filter(i => i.status==='ok').length,
   };
-  const labels = {all:'Tutti', scaduto:'Scaduti', critico:'Critici', attenzione:'Attenzione', ok:'OK'};
+  const labels = {all:'Tutti', scaduto:'Sca/Esa', critico:'Imminente', attenzione:'SottoSoglia', ok:'OK'};
   document.getElementById('status-filters').innerHTML = Object.entries(counts).map(([k,v]) =>
     `<button class="sfil ${k===filter?'':'dim'}" data-f="${k}" onclick="setFilter('${k}')">
       ${labels[k]} ${v}
@@ -811,7 +786,6 @@ function renderContent() {
     return;
   }
 
-  // Group by box
   const byBox = {};
   items.forEach(i => {
     const k = i.box;
@@ -822,8 +796,6 @@ function renderContent() {
   const sortedBoxes = Object.keys(byBox).sort((a,b) => {
     const na = parseFloat(a), nb = parseFloat(b);
     if (!isNaN(na) && !isNaN(nb)) return na - nb;
-    if (!isNaN(na)) return -1;
-    if (!isNaN(nb)) return 1;
     return a.localeCompare(b);
   });
 
@@ -839,15 +811,15 @@ function renderContent() {
                    worst === 'attenzione' ? '<div class="badge badge-y"></div>' : '';
 
     const label = bItems.length === 1
-      ? bItems[0].articolo.split(' ').slice(0,4).join(' ')
+      ? bItems[0].articolo
       : [...new Set(bItems.map(i=>i.articolo.split(' ')[0]))].slice(0,2).join(', ') + (bItems.length > 2 ? ` +${bItems.length-2}` : '');
 
     const itemsHTML = bItems.map(item => {
       const expHTML = item.scadStr ? `<span class="exp-badge exp-${item.status}">${item.scadStr}</span>` : '';
       const detail = [item.marca, item.misura].filter(Boolean).join(' · ');
       const qClass = item.quantita === 0 ? 'qty zero' : 'qty';
-      // Escape for inline onclick
       const esc = s => s.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+      
       return `<div class="item">
         <div class="item-stripe stripe-${item.status}"></div>
         <div class="item-body">
@@ -897,8 +869,6 @@ function openModal(articolo, marca, box, areaVal, qty) {
     (qty > 0 ? ` · Disponibili: ${qty}` : ' · ESAURITO');
   document.getElementById('m-qty').textContent = '1';
   document.getElementById('m-note').value = '';
-  document.getElementById('m-confirm').disabled = false;
-  document.getElementById('m-confirm').textContent = 'Registra';
   document.getElementById('modal-overlay').classList.add('open');
 }
 
@@ -932,28 +902,18 @@ async function confirmPrelievo() {
     note
   };
 
-  // Usa iframe invisibile - funziona sempre con Google Apps Script
   try {
-    var params = new URLSearchParams({
-      articolo:  entry.articolo,
-      marca:     entry.marca || '',
-      box:       entry.box,
-      area:      entry.area || '',
-      quantita:  entry.quantita,
-      operatore: entry.operatore || '',
-      note:      entry.note || ''
-    });
-    var iframe = document.createElement('iframe');
+    const params = new URLSearchParams(entry);
+    const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
     iframe.src = SCRIPT_URL + '?' + params.toString();
     document.body.appendChild(iframe);
-    setTimeout(function() { document.body.removeChild(iframe); }, 5000);
-    showToast('✓ Prelievo registrato su Google Sheets');
+    setTimeout(() => document.body.removeChild(iframe), 5000);
+    showToast('✓ Registrato');
   } catch(e) {
-    showToast('⚠ Salvato in locale (offline)', true);
+    showToast('⚠ Errore invio', true);
   }
 
-  // Always save locally as backup
   log.unshift(entry);
   saveLog();
   closeModal();
@@ -963,14 +923,14 @@ async function confirmPrelievo() {
 function openLog() {
   const body = document.getElementById('log-body');
   if (!log.length) {
-    body.innerHTML = '<div class="log-empty">Nessun prelievo registrato ancora.</div>';
+    body.innerHTML = '<div class="log-empty">Nessun prelievo.</div>';
   } else {
     body.innerHTML = log.map(e => `
       <div class="log-entry">
         <div class="log-dot"></div>
         <div class="log-info">
           <div class="log-name">${e.articolo}</div>
-          <div class="log-meta">${e.ts} · Box ${e.box}${e.operatore ? ' · ' + e.operatore : ''}${e.note ? ' · ' + e.note : ''}</div>
+          <div class="log-meta">${e.ts} · Box ${e.box}</div>
         </div>
         <div class="log-qty">−${e.quantita}</div>
       </div>`).join('');
@@ -983,19 +943,17 @@ function closeLog() {
 }
 
 function exportCSV() {
-  if (!log.length) { showToast('Nessun prelievo da esportare', true); return; }
-  const rows = [['Data/Ora','Articolo','Marca','Box','Area','Quantità','Operatore','Note']];
-  log.forEach(e => rows.push([e.ts, e.articolo, e.marca||'', e.box, e.area||'', e.quantita, e.operatore||'', e.note||'']));
-  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const blob = new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8'});
+  if (!log.length) return;
+  const rows = [['Data','Articolo','Marca','Box','Area','Qtà','Op','Note']];
+  log.forEach(e => rows.push([e.ts, e.articolo, e.marca, e.box, e.area, e.quantita, e.operatore, e.note]));
+  const csv = rows.map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `prelievi_pma_${new Date().toISOString().slice(0,10)}.csv`;
+  a.download = `log_pma.csv`;
   a.click();
-  showToast('CSV esportato');
 }
 
-// ── TOAST ──
 function showToast(msg, isErr=false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -1004,12 +962,10 @@ function showToast(msg, isErr=false) {
   setTimeout(() => t.classList.remove('show'), 2800);
 }
 
-// Close modal on overlay click
 document.getElementById('modal-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
-// ── INIT ──
 loadData();
 </script>
 </body>
