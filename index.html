@@ -926,6 +926,8 @@ function onArticoloSelect(idx) {
   infoEl.style.display='';
   document.getElementById('prefill-text').textContent = '✓ ' + [it.area,`Box ${it.box}`,it.marca,it.misura].filter(Boolean).join(' · ');
 }
+
+function setModeCarico(mode) {
   caricoMode = mode;
   document.getElementById('carico-esistente').style.display = mode==='esistente' ? '' : 'none';
   document.getElementById('carico-nuovo').style.display = mode==='nuovo' ? '' : 'none';
