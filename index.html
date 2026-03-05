@@ -245,6 +245,12 @@ textarea.modal-field { resize: none; }
 .log-footer { padding: 14px 16px; border-top: 1px solid var(--rule); display: flex; gap: 8px; }
 .export-btn { flex: 1; padding: 13px; background: var(--ink); color: white; border: none; border-radius: 10px; font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; }
 
+/* ITEM INFO TAGS */
+.item-tags { margin-top: 5px; display: flex; flex-direction: column; gap: 2px; }
+.itag { font-family: var(--mono); font-size: 10px; color: var(--ink); }
+.itag-label { color: var(--ink-3); font-weight: 400; }
+.itag-value { font-weight: 500; }
+
 /* AUTOCOMPLETE */
 .art-opt { padding: 10px 14px; font-size: 13px; cursor: pointer; border-bottom: 1px solid var(--rule); line-height: 1.3; }
 .art-opt:last-child { border-bottom: none; }
@@ -542,7 +548,9 @@ function parseCSV(text) {
       articolo,
       principio: get(obj, 'PRINCIPIO') || '',
       misura: get(obj, 'MISURA') || '',
+      colore: get(obj, 'COLORE') || '',
       marca: get(obj, 'MARCA') || '',
+      tipo: get(obj, 'TIPO') || '',
       qtaUnit, qtaConf,
       scadStr: scadRaw,
       scadDate,
@@ -686,15 +694,28 @@ function renderContent() {
 
     const itemsHTML = bItems.map(item => {
       const scadText = (item.scadStr && item.scadStr!=='ND' && item.scadStr!=='nd') ? `📅 ${item.scadStr}` : '📅 n/a';
-      const detail = [item.marca, item.misura].filter(Boolean).join(' · ');
       const esc = s => s.replace(/'/g,"\\'").replace(/"/g,'&quot;');
       const confStr = item.qtaConf > 0 ? `<div class="qty-conf">${item.qtaConf} conf.</div>` : '';
+      const isFarmaco = item.area === 'FARMACI' || item.tipo === 'FARMACO' || item.tipo === 'Farmaco';
+
+      const tagFields = [
+        ['Marca',           item.marca],
+        ['Misura',          item.misura],
+        ['Colore',          item.colore],
+        ['Tipo',            item.tipo],
+        ...(isFarmaco && item.principio ? [['Principio attivo', item.principio]] : []),
+      ];
+      const tags = tagFields
+        .filter(([, v]) => v)
+        .map(([l, v]) => `<div class="itag"><span class="itag-label">${l}: </span><span class="itag-value">${v}</span></div>`)
+        .join('');
+
       return `<div class="item">
         <div class="item-stripe stripe-${item.status}"></div>
         <div class="item-body">
           <div class="item-name">${item.articolo}</div>
-          <div class="item-meta">
-            ${detail?`<span class="meta-tag">${detail}</span>`:''}
+          ${tags ? `<div class="item-tags">${tags}</div>` : ''}
+          <div class="item-meta" style="margin-top:4px">
             <span class="exp-badge exp-${item.status}">${scadText}</span>
           </div>
         </div>
