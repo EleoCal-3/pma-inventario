@@ -941,11 +941,11 @@ async function confirmCarico() {
 function sendViaIframe(url, params) {
   const p = new URLSearchParams();
   Object.entries(params).forEach(([k,v]) => p.set(k, v ?? ''));
-  const iframe = document.createElement('iframe');
-  iframe.style.display='none';
-  iframe.src = url + '?' + p.toString();
-  document.body.appendChild(iframe);
-  setTimeout(() => document.body.removeChild(iframe), 6000);
+  fetch(url + '?' + p.toString(), {
+    method: 'GET',
+    credentials: 'include',
+    mode: 'no-cors'
+  }).catch(() => {});
 }
 
 // ── LOG ──
