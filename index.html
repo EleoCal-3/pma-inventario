@@ -274,7 +274,7 @@ textarea.modal-field { resize: none; }
       </div>
       <div class="hpill warn" onclick="switchTab('dashboard'); setDashFilter('critico')" title="Vai a dashboard imminenti">
         <div class="hpill-n" id="stat-crit">—</div>
-        <div class="hpill-l">Imminenti</div>
+        <div class="hpill-l">In scadenza</div>
       </div>
     </div>
   </div>
@@ -450,7 +450,7 @@ textarea.modal-field { resize: none; }
 <script>
 // ── CONFIG ──
 const CSV_URL    = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQW1C2Lk-YFP88rhXTrEZkK1GWF7GlmKwK-z-tlztbVFzmZAZez7fkN93EKmI47uZ5VROJX7cSYALD2/pub?gid=1949112992&single=true&output=csv';
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynYsDuRGPW289-qMfjwqB9QR--u01U1Z86uwT6_1oecbZPyM2ij33xHXcTjW1pxby7_w/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyu1uKSUz9CPJRnZWyN_U-eGQbGzN8WjLe4-dImWzxKmZ6v1vt2RnDGfL9x9GmjEQ3n/exec';
 
 // ── STATE ──
 let ITEMS = [];
@@ -665,7 +665,10 @@ function renderContent() {
         ['Misura',          item.misura],
         ['Colore',          item.colore],
         ['Tipo',            item.tipo],
-        ...(isFarmaco && item.principio ? [['Principio attivo', item.principio]] : []),
+        ['Principio attivo', item.principio],
+        ['Scadenza',        (item.scadStr && item.scadStr!=='ND' && item.scadStr!=='nd') ? item.scadStr : ''],
+        ['Qtà confezioni',  item.qtaConf > 0 ? String(item.qtaConf) : ''],
+        ['Qtà unitaria',    String(item.qtaUnit)],
       ];
       const tags = tagFields
         .filter(([, v]) => v)
@@ -723,12 +726,10 @@ function renderDashboard() {
   const max = Math.max(...areas.map(a=>ITEMS.filter(i=>i.area===a).length));
   document.getElementById('area-chart').innerHTML = areas.map(a => {
     const n = ITEMS.filter(i=>i.area===a).length;
-    const pct = max > 0 ? (n/max*100).toFixed(1) : 0;
     const col = areaColor(a);
     return `<div class="bar-row">
-      <div class="bar-name">${a}</div>
-      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${col}"></div></div>
-      <div class="bar-count">${n}</div>
+      <div class="bar-name" style="width:auto;flex:1">${a}</div>
+      <div class="bar-count" style="font-size:13px;font-weight:600;color:${col};width:auto">${n}</div>
     </div>`;
   }).join('');
 
