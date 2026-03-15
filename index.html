@@ -446,11 +446,31 @@ textarea.modal-field { resize: none; }
         <label class="form-label">Principio Attivo</label>
         <input class="form-input" id="c-principio-new" type="text" placeholder="es. Sodio Cloruro">
       </div>
+      <div class="form-row-2">
+        <div class="form-section">
+          <label class="form-label">Colore</label>
+          <input class="form-input" id="c-colore-new" type="text" placeholder="es. Blu">
+        </div>
+        <div class="form-section">
+          <label class="form-label">Tipo</label>
+          <input class="form-input" id="c-tipo-new" type="text" placeholder="es. FARMACO">
+        </div>
+      </div>
+      <div class="form-section">
+        <label class="form-label">Lotto</label>
+        <input class="form-input" id="c-lotto-new" type="text" placeholder="es. LOT2024A">
+      </div>
     </div>
     <hr class="form-divider">
-    <div class="form-section">
-      <label class="form-label">Scadenza</label>
-      <input class="form-input" id="c-scadenza" type="month">
+    <div class="form-row-2">
+      <div class="form-section">
+        <label class="form-label">Lotto</label>
+        <input class="form-input" id="c-lotto" type="text" placeholder="Numero lotto">
+      </div>
+      <div class="form-section">
+        <label class="form-label">Scadenza</label>
+        <input class="form-input" id="c-scadenza" type="month">
+      </div>
     </div>
     <div class="form-row-2">
       <div class="form-section">
@@ -525,16 +545,17 @@ function parseCSV(text) {
     const articolo = get(obj, 'ARTICOLO');
     if (!articolo || articolo.length < 2) continue;
 
-    const statoScad = get(obj, 'STATO SCADENZA');
-    const statoQta  = get(obj, 'STATO QUANTIT');
-    // Supporta sia "Quantità Unitaria" che "QUANTITA UNITARIA" normalizzati
-    const qtaUnit = parseFloat(get(obj, 'QUANTITA UNITARIA') || get(obj, 'QUANTIT') || '0') || 0;
-    const qtaConf = parseFloat(get(obj, 'QUANTITA CONFEZIONI') || '0') || 0;
+    const statoScad  = get(obj, 'STATO SCADENZA');
+    const statoQta   = get(obj, 'STATO QUANTIT');
+    const qtaUnit    = parseFloat(get(obj, 'QUANTITA UNITARIA') || get(obj, 'QUANTIT') || '0') || 0;
+    const qtaConf    = parseFloat(get(obj, 'QUANTITA CONFEZIONI') || '0') || 0;
+    const qtaOttimale= parseFloat(get(obj, 'QUANTITA OTTIMALE') || '0') || 0;
 
     let status = 'ok';
     if (statoScad.includes('🚫 SCADUTO')) status = 'scaduto';
     else if (statoScad.includes('🟠 IN SCADENZA')) status = 'critico';
     else if (statoQta.includes('🔴 ESAURITO') || qtaUnit <= 0) status = 'scaduto';
+    else if (qtaOttimale > 0 && qtaUnit < qtaOttimale) status = 'attenzione';
     else if (statoQta.includes('🟡 SOTTO SOGLIA')) status = 'attenzione';
 
     // Parsa la data di scadenza per la timeline
@@ -550,12 +571,13 @@ function parseCSV(text) {
       area: get(obj, 'AREA') || 'ALTRO',
       box: get(obj, 'BOX') || '?',
       articolo,
-      principio: get(obj, 'PRINCIPIO') || '',
+      principio: get(obj, 'PRINCIPIO ATTIVO') || get(obj, 'PRINCIPIO') || '',
       misura: get(obj, 'MISURA') || '',
       colore: get(obj, 'COLORE') || '',
       marca: get(obj, 'MARCA') || '',
       tipo: get(obj, 'TIPO') || '',
-      qtaUnit, qtaConf,
+      lotto: get(obj, 'LOTTO') || '',
+      qtaUnit, qtaConf, qtaOttimale,
       scadStr: scadRaw,
       scadDate,
       status
@@ -1046,7 +1068,7 @@ function stepQty(id, d) {
 
 function openCarico() {
   populateCaricoDropdowns();
-  ['c-art-search','c-articolo-new','c-marca-new','c-misura-new','c-area-new','c-box-new','c-principio-new','c-note'].forEach(id => {
+  ['c-art-search','c-articolo-new','c-marca-new','c-misura-new','c-area-new','c-box-new','c-principio-new','c-colore-new','c-tipo-new','c-lotto-new','c-lotto','c-note'].forEach(id => {
     const el = document.getElementById(id); if(el) el.value='';
   });
   document.getElementById('prefill-info').style.display='none';
@@ -1064,12 +1086,14 @@ async function confirmCarico() {
   const qtaUnit = parseInt(document.getElementById('c-qty-unit').value) || 0;
   if (qtaConf < 1 && qtaUnit < 1) { showToast('Inserisci almeno una quantità', true); return; }
 
-  let articolo, marca, misura, box, areaVal, principio;
+  let articolo, marca, misura, box, areaVal, principio, colore, tipo, lotto;
   if (caricoMode==='esistente') {
     const idx = parseInt(document.getElementById('c-articolo-sel').value);
     if (isNaN(idx) || !ITEMS[idx]) { showToast('Seleziona un articolo', true); return; }
     const it = ITEMS[idx];
-    articolo=it.articolo; marca=it.marca; misura=it.misura; box=it.box; areaVal=it.area; principio=it.principio;
+    articolo=it.articolo; marca=it.marca; misura=it.misura; box=it.box; areaVal=it.area;
+    principio=it.principio; colore=it.colore; tipo=it.tipo;
+    lotto = document.getElementById('c-lotto').value.trim();
   } else {
     articolo = document.getElementById('c-articolo-new').value.trim();
     if (!articolo) { showToast('Inserisci il nome articolo', true); return; }
@@ -1078,6 +1102,9 @@ async function confirmCarico() {
     box=document.getElementById('c-box-new').value.trim();
     areaVal=document.getElementById('c-area-new').value;
     principio=document.getElementById('c-principio-new').value.trim();
+    colore=document.getElementById('c-colore-new').value.trim();
+    tipo=document.getElementById('c-tipo-new').value.trim();
+    lotto=document.getElementById('c-lotto-new').value.trim();
     if (!box||!areaVal) { showToast('Inserisci Box e Area', true); return; }
   }
 
@@ -1089,6 +1116,7 @@ async function confirmCarico() {
   const entry = {
     ts: new Date().toLocaleString('it-IT'), tipo:'carico',
     articolo, marca, misura, box, area:areaVal, principio,
+    colore, tipo: tipo, lotto,
     scadenza, qtaConfezioni: qtaConf, quantita: qtaUnit,
     note: document.getElementById('c-note').value.trim()
   };
