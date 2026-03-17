@@ -558,6 +558,8 @@ textarea.modal-field { resize: none; }
 const CSV_URL    = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQW1C2Lk-YFP88rhXTrEZkK1GWF7GlmKwK-z-tlztbVFzmZAZez7fkN93EKmI47uZ5VROJX7cSYALD2/pub?gid=1949112992&single=true&output=csv';
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9pC_XCBFxlhYVyLcIz75uThfZCQNwAiBmAvdoWQU9cfkXOSe-ZQBGU3iC9hWxazE/exec';
 const CLIENT_ID  = '574135410442-4kff5ptr1u1mc3h38f1d0lfq8i44hgfs.apps.googleusercontent.com';
+const SS_ID      = '1S3uwE8p9BjVUJ9k4emXm6yCkxjnWBMUGbZPM1Sb81Vk';
+const SHEETS_BASE = 'https://sheets.googleapis.com/v4/spreadsheets/' + SS_ID;
 
 // ── AUTH STATE ──
 let googleToken = null;   // access token OAuth
@@ -1343,22 +1345,137 @@ function detailToPrelievo() {
   openModal(i.articolo, i.marca, i.box, i.area, i.qtaUnit, i.colore, i.misura, i.tipo, i.principio, i.scadStr||'', i.qtaConf);
 }
 
-// ── INVIO AUTENTICATO ──
+// ── SHEETS API v4 (scrittura diretta, nessun GAS) ──
+
+async function ensureToken() {
+  if (googleToken) return;
+  // Token non ancora disponibile: richiedilo silenziosamente
+  window._tokenClient.requestAccessToken({ prompt: '' });
+  for (let i = 0; i < 25; i++) {
+    await new Promise(r => setTimeout(r, 200));
+    if (googleToken) return;
+  }
+  throw new Error('Non autenticato — effettua il login');
+}
+
+async function sheetsRequest(method, path, body = null) {
+  await ensureToken();
+  const url = SHEETS_BASE + '/' + path;
+  const opts = {
+    method,
+    headers: { 'Authorization': 'Bearer ' + googleToken, 'Content-Type': 'application/json' }
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(url, opts);
+  if (res.status === 401) {
+    googleToken = null;
+    throw new Error('Token scaduto — riprova tra un momento');
+  }
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || 'Errore Sheets API ' + res.status);
+  }
+  return res.json();
+}
+
+async function sheetsGet(range) {
+  return sheetsRequest('GET', 'values/' + encodeURIComponent(range));
+}
+async function sheetsPut(range, values) {
+  return sheetsRequest('PUT', 'values/' + encodeURIComponent(range) + '?valueInputOption=USER_ENTERED', { values });
+}
+async function sheetsAppend(range, values) {
+  return sheetsRequest('POST', 'values/' + encodeURIComponent(range) + ':append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS', { values });
+}
+
+async function findArticoloRow(articolo) {
+  const resp = await sheetsGet('INVENTARIO!C:C');
+  const rows = resp.values || [];
+  const norm = s => (s || '').toString().trim().toLowerCase();
+  for (let i = 1; i < rows.length; i++) {
+    if (norm(rows[i][0]) === norm(articolo)) return i + 1; // riga 1-based
+  }
+  return -1;
+}
+
 async function sendToScript(params) {
   if (!userEmail) throw new Error('Non autenticato — effettua il login');
+  const action    = params.action;
+  const operatore = userEmail;
+  const now       = new Date().toLocaleString('it-IT');
 
-  const p = new URLSearchParams();
-  Object.entries(params).forEach(([k, v]) => p.set(k, v ?? ''));
-  p.set('operatore', userEmail || 'sconosciuto');
+  // ── CARICO ──
+  if (action === 'carico') {
+    const { articolo, scadenza = '', lotto = '', note = '' } = params;
+    const qtaConf = parseInt(params.qtaConfezioni) || 0;
+    const qtaUnit = parseInt(params.qtaUnitaria)   || 0;
 
-  const res = await fetch(SCRIPT_URL + '?' + p.toString(), {
-    method: 'GET',
-  });
+    const row = await findArticoloRow(articolo);
+    if (row === -1) throw new Error('Articolo non trovato: ' + articolo);
 
-  if (!res.ok) throw new Error('Errore HTTP ' + res.status);
-  const data = await res.json();
-  if (!data.ok) throw new Error(data.error || 'Errore sconosciuto');
-  return data;
+    // Leggi J:N per ottenere valori correnti (qtaConf, qtaUnit, qtaOtt, scadenza, lotto)
+    const cur = await sheetsGet(`INVENTARIO!J${row}:N${row}`);
+    const cv  = (cur.values || [[]])[0] || [];
+    const newConf  = (parseInt(cv[0]) || 0) + qtaConf;
+    const newUnit  = (parseInt(cv[1]) || 0) + qtaUnit;
+    const newOtt   = cv[2] !== undefined ? cv[2] : '';
+    const newScad  = scadenza || cv[3] || '';
+    const newLotto = lotto    || cv[4] || '';
+
+    await sheetsPut(`INVENTARIO!J${row}:N${row}`, [[newConf, newUnit, newOtt, newScad, newLotto]]);
+
+    // Dati per il log (da cache locale ITEMS)
+    const item = ITEMS.find(i => i.articolo.toLowerCase() === articolo.toLowerCase());
+    await sheetsAppend('LOG_CARICHI!A:K', [[
+      now, operatore, articolo,
+      item?.marca || '', item?.box || '', item?.area || '',
+      newScad, qtaConf, qtaUnit, newLotto, note
+    ]]);
+    return { ok: true };
+
+  // ── PRELIEVO ──
+  } else if (action === 'prelievo') {
+    const { articolo, note = '' } = params;
+    const qtaUnit = parseInt(params.qtaPrelevata) || 0;
+    const qtaConf = parseInt(params.quantitaConf) || 0;
+
+    const row = await findArticoloRow(articolo);
+    if (row === -1) throw new Error('Articolo non trovato: ' + articolo);
+
+    const cur = await sheetsGet(`INVENTARIO!J${row}:K${row}`);
+    const cv  = (cur.values || [[]])[0] || [];
+    const newConf = Math.max(0, (parseInt(cv[0]) || 0) - qtaConf);
+    const newUnit = Math.max(0, (parseInt(cv[1]) || 0) - qtaUnit);
+
+    await sheetsPut(`INVENTARIO!J${row}:K${row}`, [[newConf, newUnit]]);
+
+    const item = ITEMS.find(i => i.articolo.toLowerCase() === articolo.toLowerCase());
+    await sheetsAppend('LOG_PRELIEVI!A:G', [[
+      now, operatore, articolo,
+      item?.box || params.box || '', item?.area || params.area || '',
+      qtaUnit, note
+    ]]);
+    return { ok: true };
+
+  // ── NUOVO ARTICOLO ──
+  } else if (action === 'nuovoArticolo') {
+    const {
+      articolo, area = '', box = '', principioAttivo = '', misura = '',
+      colore = '', marca = '', tipo = '', categoria = '',
+      qtaConfezioni = 0, qtaUnitaria = 0, qtaOttimale = 0,
+      scadenza = '', lotto = '', note = ''
+    } = params;
+    const noteOp = (note ? note + ' ' : '') + `[aggiunto da: ${operatore}]`;
+    await sheetsAppend('INVENTARIO!A:O', [[
+      area, box, articolo, principioAttivo, misura, colore, marca, tipo, categoria,
+      parseInt(qtaConfezioni) || 0, parseInt(qtaUnitaria) || 0, parseInt(qtaOttimale) || 0,
+      scadenza, lotto, noteOp
+    ]]);
+    return { ok: true };
+
+  } else {
+    throw new Error('Azione non riconosciuta: ' + action);
+  }
 }
 
 // ── LOG ──
