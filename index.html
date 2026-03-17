@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>PMA · Inventario Scorte</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://accounts.google.com/gsi/client" async></script>
 <style>
 :root {
   --red: #C8192A; --red-d: #9E1020; --red-l: #FDECEA;
@@ -27,6 +26,13 @@
 .login-title { font-family:var(--mono);font-size:22px;font-weight:600;color:white;letter-spacing:0.04em; }
 .login-sub { font-family:var(--sans);font-size:14px;color:rgba(255,255,255,0.75);text-align:center;max-width:260px; }
 .login-btn-wrap { background:white;border-radius:12px;padding:4px;box-shadow:0 4px 20px rgba(0,0,0,0.2); }
+.login-form { width:100%;max-width:320px;display:flex;flex-direction:column;gap:10px; }
+.login-form input { width:100%;padding:13px 16px;border-radius:10px;border:none;font-family:var(--sans);font-size:15px;color:var(--ink);background:rgba(255,255,255,0.95);outline:none; }
+.login-form input::placeholder { color:#aaa; }
+.login-form .login-submit { width:100%;padding:14px;border-radius:10px;border:none;background:rgba(0,0,0,0.35);color:white;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:background 0.15s; }
+.login-form .login-submit:active { background:rgba(0,0,0,0.55); }
+#login-err { color:rgba(255,255,255,0.9);font-size:12px;text-align:center;min-height:16px;font-family:var(--sans); }
+.login-hint { font-size:11px;color:rgba(255,255,255,0.55);text-align:center;max-width:280px;line-height:1.5; }
 /* USER BADGE in header */
 .user-badge { display:flex;align-items:center;gap:6px;background:var(--bg);border-radius:20px;padding:4px 10px 4px 4px;border:1px solid var(--rule);cursor:pointer; }
 .user-avatar { width:26px;height:26px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;color:white;flex-shrink:0; }
@@ -270,6 +276,15 @@ textarea.modal-field { resize: none; }
 
 /* DA ORDINARE */
 #daordinare { display: none; padding: 16px 16px 120px; }
+#avanzate-tab { display: none; padding: 24px 16px 120px; }
+.avanzate-section-title { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 16px; }
+.avanzate-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 20px; margin-bottom: 14px; }
+.avanzate-card-title { font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.avanzate-card-desc { font-size: 13px; color: var(--ink-2); margin-bottom: 16px; line-height: 1.5; }
+.avanzate-btn { width: 100%; padding: 14px; border: none; border-radius: 10px; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; transition: opacity 0.15s; }
+.avanzate-btn:active { opacity: 0.75; }
+.avanzate-btn.green { background: var(--green-l); color: var(--green); }
+.avanzate-btn.blue  { background: var(--blue-l);  color: var(--blue);  }
 .ord-area { margin-bottom: 20px; }
 .ord-area-title { font-family: var(--mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); margin-bottom: 8px; padding: 0 2px; }
 .ord-list { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; }
@@ -324,9 +339,13 @@ textarea.modal-field { resize: none; }
 <div id="login-screen">
   <div class="login-cross"></div>
   <div class="login-title">PMA · Inventario</div>
-  <div class="login-sub">Croce Rossa Italiana · Padova<br>Accedi con il tuo account Google per continuare</div>
-  <div class="login-btn-wrap">
-    <div id="g_id_signin"></div>
+  <div class="login-sub">Croce Rossa Italiana · Padova</div>
+  <div class="login-form">
+    <input id="login-name"  type="text"     placeholder="Nome operatore (es. Mario Rossi)" autocomplete="name">
+    <input id="login-pat"   type="password" placeholder="Token di accesso GitHub (PAT)"   autocomplete="off">
+    <button class="login-submit" onclick="handleLogin()">Accedi →</button>
+    <div id="login-err"></div>
+    <div class="login-hint">Il token viene salvato solo su questo dispositivo.<br>Non viene mai trasmesso a terzi.</div>
   </div>
 </div>
 
@@ -368,6 +387,7 @@ textarea.modal-field { resize: none; }
     <div class="nav-item" id="ttab-inv" onclick="switchTab('inventario');closeNav()"><span class="nav-item-icon">📦</span>Inventario</div>
     <div class="nav-item" id="ttab-ord" onclick="switchTab('daordinare');closeNav()"><span class="nav-item-icon">🛒</span>Da ordinare</div>
     <div class="nav-item" id="ttab-log" onclick="switchTab('log');closeNav()"><span class="nav-item-icon">📋</span>Log movimenti</div>
+    <div class="nav-item" id="ttab-avanzate" onclick="switchTab('avanzate');closeNav()"><span class="nav-item-icon">⚙️</span>Avanzate</div>
   </div>
 </div>
 
@@ -553,134 +573,96 @@ textarea.modal-field { resize: none; }
 
 <div class="toast" id="toast"></div>
 
-<script>
-// ── Rileva access_token dal redirect OAuth Google ──
-(function () {
-  if (!window.location.hash) return;
-  const p = new URLSearchParams(window.location.hash.slice(1));
-  const tok = p.get('access_token');
-  if (tok) {
-    const expiresIn = parseInt(p.get('expires_in')) || 3600;
-    sessionStorage.setItem('pma_gtoken',     tok);
-    sessionStorage.setItem('pma_gtoken_exp', String(Date.now() + expiresIn * 1000));
-    history.replaceState(null, '', window.location.pathname);
-  }
-})();
-</script>
+
 <script>
 // ── CONFIG ──
-const CSV_URL    = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQW1C2Lk-YFP88rhXTrEZkK1GWF7GlmKwK-z-tlztbVFzmZAZez7fkN93EKmI47uZ5VROJX7cSYALD2/pub?gid=1949112992&single=true&output=csv';
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9pC_XCBFxlhYVyLcIz75uThfZCQNwAiBmAvdoWQU9cfkXOSe-ZQBGU3iC9hWxazE/exec';
-const CLIENT_ID  = '574135410442-4kff5ptr1u1mc3h38f1d0lfq8i44hgfs.apps.googleusercontent.com';
-const SS_ID      = '1S3uwE8p9BjVUJ9k4emXm6yCkxjnWBMUGbZPM1Sb81Vk';
-const SHEETS_BASE = 'https://sheets.googleapis.com/v4/spreadsheets/' + SS_ID;
+// CSV Google Sheets — usato solo per la migrazione iniziale
+const CSV_URL      = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQW1C2Lk-YFP88rhXTrEZkK1GWF7GlmKwK-z-tlztbVFzmZAZez7fkN93EKmI47uZ5VROJX7cSYALD2/pub?gid=1949112992&single=true&output=csv';
+// GitHub — database JSON
+const GITHUB_OWNER = 'eleocal-3';
+const GITHUB_REPO  = 'pma-inventario';
+const GITHUB_FILE  = 'db/inventario.json';
+const GITHUB_API   = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
 
 // ── AUTH STATE ──
-let googleToken = null;   // access token OAuth
-let userEmail   = '';
-let userName    = '';
+let githubPAT     = '';
+let operatorName  = '';
+let operatorEmail = '';
+let userEmail     = '';   // alias usato dai moduli prelievo/carico
+let userName      = '';   // alias usato dai moduli prelievo/carico
+let dbSHA         = '';   // SHA corrente del file JSON su GitHub (richiesta per ogni PUT)
+let DB            = null; // database completo in memoria
 
-// ── GOOGLE SIGN-IN ──
-function initGoogleAuth() {
-  google.accounts.id.initialize({
-    client_id: CLIENT_ID,
-    callback: handleCredentialResponse,
-    auto_select: false,  // disabilitato: evita loop con redirect OAuth
-  });
-  google.accounts.id.renderButton(
-    document.getElementById('g_id_signin'),
-    { theme: 'outline', size: 'large', text: 'signin_with', shape: 'rectangular', locale: 'it' }
-  );
-  // NB: google.accounts.id.prompt() rimosso — usava FedCM che fallisce su GitHub Pages
+// ── GITHUB PAT AUTH ──────────────────────────────────────────────────────
 
-  // Token OAuth per le chiamate API — redirect mode (evita blocchi COOP)
-  const tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: CLIENT_ID,
-    scope: 'https://www.googleapis.com/auth/spreadsheets',
-    ux_mode: 'redirect',
-    redirect_uri: 'https://eleocal-3.github.io/pma-inventario/',
-    callback: (resp) => {
-      // In redirect mode questo callback non viene usato
-      if (resp && resp.access_token) googleToken = resp.access_token;
-    },
-  });
-  window._tokenClient = tokenClient;
+function initAuth() {
+  const savedPAT   = localStorage.getItem('pma_pat');
+  const savedName  = localStorage.getItem('pma_opname');
+  const savedEmail = localStorage.getItem('pma_opemail');
+  if (savedPAT && savedName) {
+    githubPAT     = savedPAT;
+    operatorName  = savedName;
+    operatorEmail = savedEmail || savedName;
+    userEmail     = operatorEmail;
+    userName      = operatorName;
+    _showUserBadge();
+    document.getElementById('login-screen').style.display = 'none';
+    loadData();
+  }
+  // altrimenti la login screen rimane visibile
+}
 
-  // ── Ripristina stato dopo redirect OAuth ──
-  const savedToken  = sessionStorage.getItem('pma_gtoken');
-  const savedExpStr = sessionStorage.getItem('pma_gtoken_exp');
-  const tokenValid  = savedToken && savedExpStr && Date.now() < parseInt(savedExpStr) - 60000;
-  if (tokenValid) {
-    googleToken = savedToken;
-    sessionStorage.removeItem('pma_gtoken');
-    sessionStorage.removeItem('pma_gtoken_exp');
+async function handleLogin() {
+  const pat   = document.getElementById('login-pat').value.trim();
+  const name  = document.getElementById('login-name').value.trim();
+  const errEl = document.getElementById('login-err');
+  errEl.textContent = '';
+  if (!name) { errEl.textContent = '⚠️ Inserisci il tuo nome.'; return; }
+  if (!pat)  { errEl.textContent = '⚠️ Inserisci il token di accesso.'; return; }
+  errEl.textContent = 'Verifica token…';
+  try {
+    const res = await fetch(GITHUB_API, {
+      headers: { 'Authorization': 'token ' + pat, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (res.status === 401) throw new Error('Token non valido o scaduto.');
+    if (res.status === 403) throw new Error('Permessi insufficienti — il token deve avere accesso in scrittura al repo.');
+    // 404 = file non esiste ancora, ma il token è valido → accettiamo
+    if (!res.ok && res.status !== 404) throw new Error('Errore GitHub ' + res.status);
 
-    // Ripristina email e nome salvati prima del redirect
-    const savedEmail = localStorage.getItem('pma_pending_email');
-    const savedName  = localStorage.getItem('pma_pending_name');
-    if (savedEmail) {
-      userEmail = savedEmail;
-      userName  = savedName || savedEmail;
-      localStorage.removeItem('pma_pending_email');
-      localStorage.removeItem('pma_pending_name');
-
-      // Ripristina UI utente
-      const initials = userName.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-      document.getElementById('user-avatar').textContent = initials;
-      document.getElementById('user-name').textContent   = userName.split(' ')[0];
-      document.getElementById('login-screen').style.display = 'none';
-
-      // Carica dati
-      if (!ITEMS.length) loadData();
-    }
+    localStorage.setItem('pma_pat',    pat);
+    localStorage.setItem('pma_opname', name);
+    githubPAT     = pat;
+    operatorName  = name;
+    operatorEmail = name;
+    userEmail     = name;
+    userName      = name;
+    _showUserBadge();
+    document.getElementById('login-screen').style.display = 'none';
+    errEl.textContent = '';
+    loadData();
+  } catch(err) {
+    errEl.textContent = '❌ ' + err.message;
   }
 }
 
-function handleCredentialResponse(response) {
-  // Decodifica il JWT ID token (non serve libreria — solo base64)
-  const payload = JSON.parse(atob(response.credential.split('.')[1]));
-  userEmail = payload.email || '';
-  userName  = payload.name  || payload.email || '';
-
-  // Aggiorna badge
-  const initials = userName.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+function _showUserBadge() {
+  const initials = operatorName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
   document.getElementById('user-avatar').textContent = initials;
-  document.getElementById('user-name').textContent   = userName.split(' ')[0];
-
-  // Nascondi login screen
-  document.getElementById('login-screen').style.display = 'none';
-
-  if (googleToken) {
-    // Token già disponibile (ripristinato dal redirect precedente) → carica direttamente
-    if (!ITEMS.length) loadData();
-    return;
-  }
-
-  // Token non disponibile → salva identità e lancia redirect OAuth
-  localStorage.setItem('pma_pending_email', userEmail);
-  localStorage.setItem('pma_pending_name',  userName);
-  window._tokenClient.requestAccessToken({ prompt: '' });
-  // Dopo requestAccessToken la pagina viene redirezionata a Google.
-  // Al ritorno il blocco "Ripristina stato" in initGoogleAuth gestirà tutto.
+  document.getElementById('user-name').textContent   = operatorName.split(' ')[0];
 }
 
 function handleSignOut() {
-  if (!confirm('Vuoi uscire da ' + userEmail + '?')) return;
-  google.accounts.id.disableAutoSelect();
-  googleToken = null; userEmail = ''; userName = '';
-  // Pulizia di tutti i dati temporanei
-  sessionStorage.removeItem('pma_gtoken');
-  sessionStorage.removeItem('pma_gtoken_exp');
-  localStorage.removeItem('pma_pending_email');
-  localStorage.removeItem('pma_pending_name');
+  if (!confirm('Vuoi disconnetterti da ' + operatorName + '?')) return;
+  githubPAT = ''; operatorName = ''; operatorEmail = '';
+  userEmail = ''; userName = ''; ITEMS = []; DB = null; dbSHA = '';
+  localStorage.removeItem('pma_pat');
+  localStorage.removeItem('pma_opname');
+  localStorage.removeItem('pma_opemail');
   document.getElementById('login-screen').style.display = 'flex';
 }
 
-// Avvia Google Auth quando la libreria GSI è pronta
-window.addEventListener('load', () => {
-  if (typeof google !== 'undefined') initGoogleAuth();
-  else document.querySelector('script[src*="gsi"]').addEventListener('load', initGoogleAuth);
-});
+// Avvia auth al caricamento pagina
+window.addEventListener('load', initAuth);
 
 // ── STATE ──
 let ITEMS = [];
@@ -691,10 +673,9 @@ let caricoMode = 'esistente';
 let currentTab = 'dashboard';
 let dashFilter = 'scaduto';
 
-try { const s = localStorage.getItem('pma_log_v2'); if(s) logPrelievi = JSON.parse(s); } catch(e){}
-try { const s = localStorage.getItem('pma_log_carichi'); if(s) logCarichi = JSON.parse(s); } catch(e){}
-function saveLogPrelievi(){ try{ localStorage.setItem('pma_log_v2', JSON.stringify(logPrelievi)); }catch(e){} }
-function saveLogCarichi(){ try{ localStorage.setItem('pma_log_carichi', JSON.stringify(logCarichi)); }catch(e){} }
+// I log sono ora gestiti nel database GitHub
+function saveLogPrelievi(){}
+function saveLogCarichi(){}
 
 // ── PARSE CSV ──
 function parseCSV(text) {
@@ -765,14 +746,16 @@ function parseCSVLine(line) {
   result.push(cur); return result;
 }
 
-// ── LOAD ──
+// ── LOAD (da GitHub JSON) ──
 async function loadData() {
   const fill = document.getElementById('load-fill');
   fill.style.width = '30%';
   try {
-    const res = await fetch(CSV_URL);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    ITEMS = parseCSV(await res.text());
+    const db  = await githubRead();
+    DB         = db;
+    logPrelievi = db.log_prelievi || [];
+    logCarichi  = db.log_carichi  || [];
+    ITEMS = (db.inventario || []).map(parseDBItem);
     fill.style.width = '100%';
     document.getElementById('load-text').textContent = `✓ ${ITEMS.length} articoli caricati`;
     setTimeout(hideLoading, 600);
@@ -783,7 +766,14 @@ async function loadData() {
   } catch(err) {
     fill.style.width = '100%';
     setTimeout(hideLoading, 300);
-    document.getElementById('content').innerHTML = `<div style="padding:40px;text-align:center;color:var(--red)">⚠️ Errore: ${err.message}</div>`;
+    const isNotFound = err.message.includes('non trovato') || err.message.includes('404');
+    document.getElementById('content').innerHTML = isNotFound
+      ? `<div style="padding:40px;text-align:center">
+           <div style="font-family:var(--mono);font-size:18px;margin-bottom:12px">📦 Database non trovato</div>
+           <div style="font-size:14px;color:var(--ink-2);margin-bottom:20px">Il file database non esiste ancora su GitHub.<br>Usa il menu ☰ per importare i dati da Google Sheets.</div>
+           <button onclick="migraCSV()" style="padding:12px 24px;background:var(--red);color:white;border:none;border-radius:10px;font-family:var(--mono);font-size:13px;font-weight:700;cursor:pointer">🔄 Importa da Fogli Google</button>
+         </div>`
+      : `<div style="padding:40px;text-align:center;color:var(--red)">⚠️ Errore: ${err.message}</div>`;
   }
 }
 function hideLoading() {
@@ -860,19 +850,20 @@ document.addEventListener('click', function(e) {
 
 function switchTab(tab) {
   currentTab = tab;
-  ['ttab-dash','ttab-inv','ttab-ord','ttab-log'].forEach(id => {
-    document.getElementById(id).classList.remove('active');
+  ['ttab-dash','ttab-inv','ttab-ord','ttab-log','ttab-avanzate'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.classList.remove('active');
   });
-  const tabMap = {dashboard:'ttab-dash', inventario:'ttab-inv', daordinare:'ttab-ord', log:'ttab-log'};
+  const tabMap = {dashboard:'ttab-dash', inventario:'ttab-inv', daordinare:'ttab-ord', log:'ttab-log', avanzate:'ttab-avanzate'};
   if (tabMap[tab]) document.getElementById(tabMap[tab]).classList.add('active');
-  document.getElementById('inv-view').style.display = tab==='inventario' ? '' : 'none';
-  document.getElementById('dashboard').style.display = tab==='dashboard' ? 'block' : 'none';
-  document.getElementById('daordinare').style.display = tab==='daordinare' ? 'block' : 'none';
-  document.getElementById('log-tab').style.display = tab==='log' ? 'block' : 'none';
+  document.getElementById('inv-view').style.display     = tab==='inventario' ? '' : 'none';
+  document.getElementById('dashboard').style.display    = tab==='dashboard'  ? 'block' : 'none';
+  document.getElementById('daordinare').style.display   = tab==='daordinare' ? 'block' : 'none';
+  document.getElementById('log-tab').style.display      = tab==='log'        ? 'block' : 'none';
+  document.getElementById('avanzate-tab').style.display = tab==='avanzate'   ? 'block' : 'none';
   document.querySelector('.searchbar').style.display = tab==='inventario' ? '' : 'none';
-  if (tab === 'dashboard') renderDashboard();
+  if (tab === 'dashboard')  renderDashboard();
   if (tab === 'daordinare') renderDaOrdinare();
-  if (tab === 'log') renderLog();
+  if (tab === 'log')        renderLog();
 }
 
 // ── INVENTARIO RENDER ──
@@ -1147,7 +1138,7 @@ async function confirmPrelievo() {
       area: entry.area,
       note: entry.note
     });
-    logPrelievi.unshift(entry); saveLogPrelievi();
+    logPrelievi = DB ? (DB.log_prelievi || []) : logPrelievi;
     const item = ITEMS.find(i => i.articolo === prelievo.articolo && i.box === prelievo.box);
     if (item) {
       item.qtaUnit = Math.max(0, item.qtaUnit - quantitaUnit);
@@ -1329,7 +1320,7 @@ async function confirmCarico() {
         lotto, note: entry.note
       });
     }
-    logCarichi.unshift(entry); saveLogCarichi();
+    logCarichi = DB ? (DB.log_carichi || []) : logCarichi;
     // Aggiorna localmente se articolo esistente
     if (caricoMode === 'esistente') {
       const idx = parseInt(document.getElementById('c-articolo-sel').value);
@@ -1401,95 +1392,167 @@ function detailToPrelievo() {
   openModal(i.articolo, i.marca, i.box, i.area, i.qtaUnit, i.colore, i.misura, i.tipo, i.principio, i.scadStr||'', i.qtaConf);
 }
 
-// ── SHEETS API v4 (scrittura diretta, nessun GAS) ──
+// ── GITHUB CONTENTS API (legge e scrive il database JSON) ──
 
-async function ensureToken() {
-  if (googleToken) return;
-  // Token scaduto o mancante: salva identità e rilancia redirect
-  if (userEmail) {
-    localStorage.setItem('pma_pending_email', userEmail);
-    localStorage.setItem('pma_pending_name',  userName);
-  }
-  window._tokenClient.requestAccessToken({ prompt: '' });
-  // Con ux_mode:'redirect' la pagina viene redirezionata immediatamente.
-  // Il codice sotto serve solo come fallback (non dovrebbe mai essere raggiunto).
-  await new Promise(r => setTimeout(r, 3000));
-  throw new Error('Sessione scaduta — rieffettua il login');
+// Legge il file JSON da GitHub, aggiorna dbSHA
+async function githubRead() {
+  if (!githubPAT) throw new Error('Non autenticato — effettua il login.');
+  const res = await fetch(GITHUB_API, {
+    headers: { 'Authorization': 'token ' + githubPAT, 'Accept': 'application/vnd.github.v3+json' }
+  });
+  if (res.status === 401) throw new Error('Token scaduto — disconnettiti e riaccedi.');
+  if (res.status === 404) throw new Error('Database non trovato su GitHub (404).');
+  if (!res.ok) throw new Error('Lettura fallita: ' + res.status);
+  const data    = await res.json();
+  dbSHA         = data.sha;
+  const decoded = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
+  return JSON.parse(decoded);
 }
 
-async function sheetsRequest(method, path, body = null) {
-  await ensureToken();
-  const url = SHEETS_BASE + '/' + path;
-  const opts = {
-    method,
-    headers: { 'Authorization': 'Bearer ' + googleToken, 'Content-Type': 'application/json' }
-  };
-  if (body) opts.body = JSON.stringify(body);
-  const res = await fetch(url, opts);
-  if (res.status === 401) {
-    googleToken = null;
-    throw new Error('Token scaduto — riprova tra un momento');
-  }
+// Scrive il file JSON su GitHub con un commit firmato dall'operatore
+async function githubWrite(db, commitMsg) {
+  if (!githubPAT) throw new Error('Non autenticato.');
+  db.lastUpdated = new Date().toISOString();
+  const json    = JSON.stringify(db, null, 2);
+  const encoded = btoa(unescape(encodeURIComponent(json)));
+  const body    = { message: commitMsg, content: encoded };
+  if (dbSHA) body.sha = dbSHA;
+  const res = await fetch(GITHUB_API, {
+    method: 'PUT',
+    headers: {
+      'Authorization': 'token ' + githubPAT,
+      'Accept':        'application/vnd.github.v3+json',
+      'Content-Type':  'application/json'
+    },
+    body: JSON.stringify(body)
+  });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || 'Errore Sheets API ' + res.status);
+    if (res.status === 409) throw new Error('Conflitto di scrittura — ricarica la pagina e riprova.');
+    throw new Error(err.message || 'Scrittura fallita: ' + res.status);
   }
-  return res.json();
+  const result = await res.json();
+  dbSHA = result.content.sha;  // aggiorna SHA per la prossima scrittura
+  return result;
 }
 
-async function sheetsGet(range) {
-  return sheetsRequest('GET', 'values/' + encodeURIComponent(range));
-}
-async function sheetsPut(range, values) {
-  return sheetsRequest('PUT', 'values/' + encodeURIComponent(range) + '?valueInputOption=USER_ENTERED', { values });
-}
-async function sheetsAppend(range, values) {
-  return sheetsRequest('POST', 'values/' + encodeURIComponent(range) + ':append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS', { values });
-}
-
-async function findArticoloRow(articolo) {
-  const resp = await sheetsGet('INVENTARIO!C:C');
-  const rows = resp.values || [];
-  const norm = s => (s || '').toString().trim().toLowerCase();
-  for (let i = 1; i < rows.length; i++) {
-    if (norm(rows[i][0]) === norm(articolo)) return i + 1; // riga 1-based
+// Converte un item grezzo del JSON nei campi calcolati usati dall'app (status, scadDate)
+function parseDBItem(item) {
+  const qtaUnit     = parseFloat(item.qtaUnit)     || 0;
+  const qtaConf     = parseFloat(item.qtaConf)     || 0;
+  const qtaOttimale = parseFloat(item.qtaOttimale) || 0;
+  const scadRaw     = item.scadStr || '';
+  let scadDate = null;
+  if (scadRaw && scadRaw !== 'ND' && scadRaw !== 'nd') {
+    const m = scadRaw.match(/(\d{1,2})[\/-](\d{4})/);
+    if (m) scadDate = new Date(parseInt(m[2]), parseInt(m[1]) - 1, 1);
+    else { const d = new Date(scadRaw); if (!isNaN(d)) scadDate = d; }
   }
-  return -1;
+  let status = 'ok';
+  if (qtaUnit <= 0) {
+    status = 'scaduto';
+  } else if (scadDate && scadDate < new Date()) {
+    status = 'scaduto';
+  } else if (scadDate) {
+    const days = (scadDate - new Date()) / 86400000;
+    if (days <= 60)                                  status = 'critico';
+    else if (qtaOttimale > 0 && qtaUnit < qtaOttimale) status = 'attenzione';
+  } else if (qtaOttimale > 0 && qtaUnit < qtaOttimale) {
+    status = 'attenzione';
+  }
+  return { ...item, qtaUnit, qtaConf, qtaOttimale, scadDate, status };
 }
 
+// Download del database completo come JSON (backup locale)
+function downloadDB() {
+  if (!DB) { showToast('Nessun database caricato', true); return; }
+  const json = JSON.stringify(DB, null, 2);
+  const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = `pma_backup_${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  showToast('✓ Backup scaricato', false, true);
+}
+
+// Migrazione one-shot: legge CSV da Google Sheets, crea db JSON su GitHub
+async function migraCSV() {
+  if (!githubPAT) { showToast('Accedi prima', true); return; }
+  if (!confirm('Leggerà il foglio Google e creerà il database iniziale su GitHub.\nProcedere?')) return;
+  showToast('Lettura foglio Google…');
+  try {
+    const res = await fetch(CSV_URL);
+    if (!res.ok) throw new Error('Impossibile leggere il foglio Google (' + res.status + ')');
+    const items = parseCSV(await res.text());
+    if (!items.length) throw new Error('Nessun articolo trovato nel foglio');
+
+    // Verifica se il file esiste già (per recuperare il SHA)
+    const check = await fetch(GITHUB_API, {
+      headers: { 'Authorization': 'token ' + githubPAT, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (check.ok) {
+      const existing = await check.json();
+      dbSHA = existing.sha;
+    } else {
+      dbSHA = '';
+    }
+
+    const newDB = {
+      version: 1,
+      lastUpdated: new Date().toISOString(),
+      inventario: items.map(({ scadDate, status, ...rest }) => rest),
+      log_carichi:  [],
+      log_prelievi: []
+    };
+    await githubWrite(newDB, `Migrazione iniziale: ${items.length} articoli — ${operatorName}`);
+    DB          = newDB;
+    logCarichi  = [];
+    logPrelievi = [];
+    ITEMS = newDB.inventario.map(parseDBItem);
+    populateCaricoDropdowns();
+    render();
+    updateOrdCounter();
+    showToast(`✓ Database creato: ${items.length} articoli`, false, true);
+  } catch(err) {
+    showToast('❌ ' + err.message, true);
+  }
+}
+
+// ── OPERAZIONI SU DATABASE (sostituisce Sheets API) ──
 async function sendToScript(params) {
-  if (!userEmail) throw new Error('Non autenticato — effettua il login');
+  if (!githubPAT) throw new Error('Non autenticato — effettua il login.');
   const action    = params.action;
-  const operatore = userEmail;
+  const operatore = operatorName + (operatorEmail && operatorEmail !== operatorName ? ' <' + operatorEmail + '>' : '');
   const now       = new Date().toLocaleString('it-IT');
+
+  // Rilegge sempre il DB da GitHub per evitare conflitti di versione
+  const db   = await githubRead();
+  const norm = s => (s || '').toString().trim().toLowerCase();
 
   // ── CARICO ──
   if (action === 'carico') {
     const { articolo, scadenza = '', lotto = '', note = '' } = params;
     const qtaConf = parseInt(params.qtaConfezioni) || 0;
     const qtaUnit = parseInt(params.qtaUnitaria)   || 0;
-
-    const row = await findArticoloRow(articolo);
-    if (row === -1) throw new Error('Articolo non trovato: ' + articolo);
-
-    // Leggi J:N per ottenere valori correnti (qtaConf, qtaUnit, qtaOtt, scadenza, lotto)
-    const cur = await sheetsGet(`INVENTARIO!J${row}:N${row}`);
-    const cv  = (cur.values || [[]])[0] || [];
-    const newConf  = (parseInt(cv[0]) || 0) + qtaConf;
-    const newUnit  = (parseInt(cv[1]) || 0) + qtaUnit;
-    const newOtt   = cv[2] !== undefined ? cv[2] : '';
-    const newScad  = scadenza || cv[3] || '';
-    const newLotto = lotto    || cv[4] || '';
-
-    await sheetsPut(`INVENTARIO!J${row}:N${row}`, [[newConf, newUnit, newOtt, newScad, newLotto]]);
-
-    // Dati per il log (da cache locale ITEMS)
-    const item = ITEMS.find(i => i.articolo.toLowerCase() === articolo.toLowerCase());
-    await sheetsAppend('LOG_CARICHI!A:K', [[
-      now, operatore, articolo,
-      item?.marca || '', item?.box || '', item?.area || '',
-      newScad, qtaConf, qtaUnit, newLotto, note
-    ]]);
+    const idx = db.inventario.findIndex(i => norm(i.articolo) === norm(articolo));
+    if (idx === -1) throw new Error('Articolo non trovato: ' + articolo);
+    db.inventario[idx].qtaConf = (parseFloat(db.inventario[idx].qtaConf) || 0) + qtaConf;
+    db.inventario[idx].qtaUnit = (parseFloat(db.inventario[idx].qtaUnit) || 0) + qtaUnit;
+    if (scadenza) db.inventario[idx].scadStr = scadenza;
+    if (lotto)    db.inventario[idx].lotto   = lotto;
+    db.log_carichi = db.log_carichi || [];
+    db.log_carichi.unshift({
+      ts: now, operatore, articolo,
+      marca:  db.inventario[idx].marca  || '',
+      box:    db.inventario[idx].box    || '',
+      area:   db.inventario[idx].area   || '',
+      misura: db.inventario[idx].misura || '',
+      colore: db.inventario[idx].colore || '',
+      tipo:   db.inventario[idx].tipo   || '',
+      scadenza, qtaConfezioni: qtaConf, quantita: qtaUnit, lotto, note
+    });
+    await githubWrite(db, `Carico: ${articolo} +${qtaUnit}u +${qtaConf}conf — ${operatorName}`);
+    DB = db; logCarichi = db.log_carichi;
     return { ok: true };
 
   // ── PRELIEVO ──
@@ -1497,23 +1560,23 @@ async function sendToScript(params) {
     const { articolo, note = '' } = params;
     const qtaUnit = parseInt(params.qtaPrelevata) || 0;
     const qtaConf = parseInt(params.quantitaConf) || 0;
-
-    const row = await findArticoloRow(articolo);
-    if (row === -1) throw new Error('Articolo non trovato: ' + articolo);
-
-    const cur = await sheetsGet(`INVENTARIO!J${row}:K${row}`);
-    const cv  = (cur.values || [[]])[0] || [];
-    const newConf = Math.max(0, (parseInt(cv[0]) || 0) - qtaConf);
-    const newUnit = Math.max(0, (parseInt(cv[1]) || 0) - qtaUnit);
-
-    await sheetsPut(`INVENTARIO!J${row}:K${row}`, [[newConf, newUnit]]);
-
-    const item = ITEMS.find(i => i.articolo.toLowerCase() === articolo.toLowerCase());
-    await sheetsAppend('LOG_PRELIEVI!A:G', [[
-      now, operatore, articolo,
-      item?.box || params.box || '', item?.area || params.area || '',
-      qtaUnit, note
-    ]]);
+    const idx = db.inventario.findIndex(i => norm(i.articolo) === norm(articolo));
+    if (idx === -1) throw new Error('Articolo non trovato: ' + articolo);
+    db.inventario[idx].qtaConf = Math.max(0, (parseFloat(db.inventario[idx].qtaConf) || 0) - qtaConf);
+    db.inventario[idx].qtaUnit = Math.max(0, (parseFloat(db.inventario[idx].qtaUnit) || 0) - qtaUnit);
+    db.log_prelievi = db.log_prelievi || [];
+    db.log_prelievi.unshift({
+      ts: now, operatore, articolo,
+      marca:  db.inventario[idx].marca  || '',
+      box:    db.inventario[idx].box    || params.box  || '',
+      area:   db.inventario[idx].area   || params.area || '',
+      misura: db.inventario[idx].misura || '',
+      colore: db.inventario[idx].colore || '',
+      tipo:   db.inventario[idx].tipo   || '',
+      quantita: qtaUnit, qtaConfezioni: qtaConf, note
+    });
+    await githubWrite(db, `Prelievo: ${articolo} -${qtaUnit} unità — ${operatorName}`);
+    DB = db; logPrelievi = db.log_prelievi;
     return { ok: true };
 
   // ── NUOVO ARTICOLO ──
@@ -1525,11 +1588,15 @@ async function sendToScript(params) {
       scadenza = '', lotto = '', note = ''
     } = params;
     const noteOp = (note ? note + ' ' : '') + `[aggiunto da: ${operatore}]`;
-    await sheetsAppend('INVENTARIO!A:O', [[
-      area, box, articolo, principioAttivo, misura, colore, marca, tipo, categoria,
-      parseInt(qtaConfezioni) || 0, parseInt(qtaUnitaria) || 0, parseInt(qtaOttimale) || 0,
-      scadenza, lotto, noteOp
-    ]]);
+    db.inventario.push({
+      area, box, articolo, principio: principioAttivo, misura, colore, marca, tipo, categoria,
+      qtaConf: parseInt(qtaConfezioni) || 0,
+      qtaUnit: parseInt(qtaUnitaria)   || 0,
+      qtaOttimale: parseInt(qtaOttimale) || 0,
+      scadStr: scadenza, lotto, note: noteOp
+    });
+    await githubWrite(db, `Nuovo articolo: ${articolo} — ${operatorName}`);
+    DB = db;
     return { ok: true };
 
   } else {
@@ -1587,9 +1654,24 @@ function showToast(msg, isErr=false, isOk=false) {
 
 document.getElementById('modal-overlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
 
-// Non auto-caricare: aspetta il login Google
-// loadData() viene chiamato da handleCredentialResponse dopo il login
 </script>
+
+<!-- AVANZATE -->
+<div id="avanzate-tab">
+  <div class="avanzate-section-title">Strumenti avanzati</div>
+
+  <div class="avanzate-card">
+    <div class="avanzate-card-title">💾 Backup database</div>
+    <div class="avanzate-card-desc">Scarica una copia locale del database completo in formato JSON. Conservala come duplicato di sicurezza in caso di necessità.</div>
+    <button class="avanzate-btn green" onclick="downloadDB()">Scarica backup JSON</button>
+  </div>
+
+  <div class="avanzate-card">
+    <div class="avanzate-card-title">🔄 Importa da Fogli Google</div>
+    <div class="avanzate-card-desc">Legge il foglio Google Sheets e sovrascrive il database su GitHub con i dati aggiornati. Da usare solo per la migrazione iniziale o per ripristino da Sheets.</div>
+    <button class="avanzate-btn blue" onclick="migraCSV()">Importa da Fogli Google</button>
+  </div>
+</div>
 
 <!-- DETAIL MODAL -->
 <div class="detail-overlay" id="detail-overlay" onclick="if(event.target===this)closeDetail()">
