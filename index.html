@@ -554,6 +554,18 @@ textarea.modal-field { resize: none; }
 <div class="toast" id="toast"></div>
 
 <script>
+// ── Rileva access_token dal redirect OAuth Google ──
+(function () {
+  if (!window.location.hash) return;
+  const p = new URLSearchParams(window.location.hash.slice(1));
+  const tok = p.get('access_token');
+  if (tok) {
+    sessionStorage.setItem('pma_gtoken', tok);
+    history.replaceState(null, '', window.location.pathname);
+  }
+})();
+</script>
+<script>
 // ── CONFIG ──
 const CSV_URL    = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQW1C2Lk-YFP88rhXTrEZkK1GWF7GlmKwK-z-tlztbVFzmZAZez7fkN93EKmI47uZ5VROJX7cSYALD2/pub?gid=1949112992&single=true&output=csv';
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9pC_XCBFxlhYVyLcIz75uThfZCQNwAiBmAvdoWQU9cfkXOSe-ZQBGU3iC9hWxazE/exec';
@@ -580,16 +592,44 @@ function initGoogleAuth() {
   // Prova auto-login se sessione attiva
   google.accounts.id.prompt();
 
-  // Token OAuth per le chiamate API (separato dall'ID token)
+  // Token OAuth per le chiamate API — redirect mode (evita blocchi COOP)
   const tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: CLIENT_ID,
     scope: 'https://www.googleapis.com/auth/spreadsheets',
+    ux_mode: 'redirect',
+    redirect_uri: 'https://eleocal-3.github.io/pma-inventario/',
     callback: (resp) => {
-      if (resp.error) return;
-      googleToken = resp.access_token;
+      // In redirect mode questo callback non viene usato
+      if (resp && resp.access_token) googleToken = resp.access_token;
     },
   });
   window._tokenClient = tokenClient;
+
+  // ── Ripristina stato dopo redirect OAuth ──
+  const savedToken = sessionStorage.getItem('pma_gtoken');
+  if (savedToken) {
+    googleToken = savedToken;
+    sessionStorage.removeItem('pma_gtoken');
+
+    // Ripristina email e nome salvati prima del redirect
+    const savedEmail = localStorage.getItem('pma_pending_email');
+    const savedName  = localStorage.getItem('pma_pending_name');
+    if (savedEmail) {
+      userEmail = savedEmail;
+      userName  = savedName || savedEmail;
+      localStorage.removeItem('pma_pending_email');
+      localStorage.removeItem('pma_pending_name');
+
+      // Ripristina UI utente
+      const initials = userName.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+      document.getElementById('user-avatar').textContent = initials;
+      document.getElementById('user-name').textContent   = userName.split(' ')[0];
+      document.getElementById('login-screen').style.display = 'none';
+
+      // Carica dati
+      if (!ITEMS.length) loadData();
+    }
+  }
 }
 
 function handleCredentialResponse(response) {
@@ -606,11 +646,16 @@ function handleCredentialResponse(response) {
   // Nascondi login, mostra app
   document.getElementById('login-screen').style.display = 'none';
 
-  // Richiedi access token per le scritture
+  // Salva email/nome in localStorage prima del redirect OAuth
+  localStorage.setItem('pma_pending_email', userEmail);
+  localStorage.setItem('pma_pending_name',  userName);
+
+  // Richiedi access token → redirect a Google → torna con token nell'URL
   window._tokenClient.requestAccessToken({ prompt: '' });
 
-  // Carica dati se non già caricati
-  if (!ITEMS.length) loadData();
+  // Nota: dopo requestAccessToken la pagina viene redirezionata,
+  // il codice sotto non verrà eseguito. I dati vengono caricati
+  // al ritorno dal redirect (vedi blocco "Ripristina stato" sopra).
 }
 
 function handleSignOut() {
