@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>PMA · Inventario Scorte</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async></script>
 <style>
 :root {
   --red: #C8192A; --red-d: #9E1020; --red-l: #FDECEA;
@@ -17,6 +18,19 @@
   --mono: 'IBM Plex Mono', monospace;
   --sans: 'IBM Plex Sans', sans-serif;
 }
+/* LOGIN SCREEN */
+#login-screen { position:fixed;inset:0;background:var(--red);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1000;gap:24px;padding:32px; }
+.login-cross { width:64px;height:64px;position:relative;margin-bottom:8px; }
+.login-cross::before,.login-cross::after { content:'';position:absolute;background:white;border-radius:3px; }
+.login-cross::before { width:20px;height:64px;left:22px;top:0; }
+.login-cross::after { width:64px;height:20px;top:22px;left:0; }
+.login-title { font-family:var(--mono);font-size:22px;font-weight:600;color:white;letter-spacing:0.04em; }
+.login-sub { font-family:var(--sans);font-size:14px;color:rgba(255,255,255,0.75);text-align:center;max-width:260px; }
+.login-btn-wrap { background:white;border-radius:12px;padding:4px;box-shadow:0 4px 20px rgba(0,0,0,0.2); }
+/* USER BADGE in header */
+.user-badge { display:flex;align-items:center;gap:6px;background:var(--bg);border-radius:20px;padding:4px 10px 4px 4px;border:1px solid var(--rule);cursor:pointer; }
+.user-avatar { width:26px;height:26px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;color:white;flex-shrink:0; }
+.user-name { font-family:var(--mono);font-size:10px;font-weight:600;color:var(--ink-2);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { height: 100%; }
 body { font-family: var(--sans); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; overscroll-behavior: none; }
@@ -282,6 +296,16 @@ textarea.modal-field { resize: none; }
 </head>
 <body>
 
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-cross"></div>
+  <div class="login-title">PMA · Inventario</div>
+  <div class="login-sub">Croce Rossa Italiana · Padova<br>Accedi con il tuo account Google per continuare</div>
+  <div class="login-btn-wrap">
+    <div id="g_id_signin"></div>
+  </div>
+</div>
+
 <div id="loading">
   <div class="load-cross"></div>
   <div class="load-text" id="load-text">Carica inventario…</div>
@@ -301,6 +325,10 @@ textarea.modal-field { resize: none; }
       <div class="hpill warn" onclick="switchTab('dashboard'); setDashFilter('critico'); closeNav()" title="Vai a dashboard imminenti">
         <div class="hpill-n" id="stat-crit">—</div>
         <div class="hpill-l">In scadenza</div>
+      </div>
+      <div class="user-badge" id="user-badge" onclick="handleSignOut()" title="Clicca per uscire">
+        <div class="user-avatar" id="user-avatar">?</div>
+        <div class="user-name" id="user-name">—</div>
       </div>
       <button class="nav-btn" onclick="toggleNav()" id="nav-toggle" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -386,7 +414,6 @@ textarea.modal-field { resize: none; }
       <input class="qty-num" id="m-qty" type="number" value="1" min="1" inputmode="numeric" style="border:none;background:none;outline:none;width:72px;text-align:center;-moz-appearance:textfield;" oninput="prelievoQty=Math.max(1,parseInt(this.value)||1);this.value=prelievoQty">
       <button class="qty-btn" onclick="changeQty(+1)">+</button>
     </div>
-    <input class="modal-field" id="m-op" type="text" placeholder="Operatore (nome)">
     <textarea class="modal-field" id="m-note" rows="2" placeholder="Note opzionali…"></textarea>
     <button class="modal-confirm" id="m-confirm" onclick="confirmPrelievo()">Registra prelievo</button>
     <button class="modal-cancel" onclick="closeModal()">Annulla</button>
@@ -512,7 +539,73 @@ textarea.modal-field { resize: none; }
 <script>
 // ── CONFIG ──
 const CSV_URL    = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQW1C2Lk-YFP88rhXTrEZkK1GWF7GlmKwK-z-tlztbVFzmZAZez7fkN93EKmI47uZ5VROJX7cSYALD2/pub?gid=1949112992&single=true&output=csv';
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyu1uKSUz9CPJRnZWyN_U-eGQbGzN8WjLe4-dImWzxKmZ6v1vt2RnDGfL9x9GmjEQ3n/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9pC_XCBFxlhYVyLcIz75uThfZCQNwAiBmAvdoWQU9cfkXOSe-ZQBGU3iC9hWxazE/exec';
+const CLIENT_ID  = '574135410442-4kff5ptr1u1mc3h38f1d0lfq8i44hgfs.apps.googleusercontent.com';
+
+// ── AUTH STATE ──
+let googleToken = null;   // access token OAuth
+let userEmail   = '';
+let userName    = '';
+
+// ── GOOGLE SIGN-IN ──
+function initGoogleAuth() {
+  google.accounts.id.initialize({
+    client_id: CLIENT_ID,
+    callback: handleCredentialResponse,
+    auto_select: true,
+  });
+  google.accounts.id.renderButton(
+    document.getElementById('g_id_signin'),
+    { theme: 'outline', size: 'large', text: 'signin_with', shape: 'rectangular', locale: 'it' }
+  );
+  // Prova auto-login se sessione attiva
+  google.accounts.id.prompt();
+
+  // Token OAuth per le chiamate API (separato dall'ID token)
+  const tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID,
+    scope: 'https://www.googleapis.com/auth/spreadsheets',
+    callback: (resp) => {
+      if (resp.error) return;
+      googleToken = resp.access_token;
+    },
+  });
+  window._tokenClient = tokenClient;
+}
+
+function handleCredentialResponse(response) {
+  // Decodifica il JWT ID token (non serve libreria — solo base64)
+  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+  userEmail = payload.email || '';
+  userName  = payload.name  || payload.email || '';
+
+  // Aggiorna badge
+  const initials = userName.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('user-avatar').textContent = initials;
+  document.getElementById('user-name').textContent   = userName.split(' ')[0];
+
+  // Nascondi login, mostra app
+  document.getElementById('login-screen').style.display = 'none';
+
+  // Richiedi access token per le scritture
+  window._tokenClient.requestAccessToken({ prompt: '' });
+
+  // Carica dati se non già caricati
+  if (!ITEMS.length) loadData();
+}
+
+function handleSignOut() {
+  if (!confirm('Vuoi uscire da ' + userEmail + '?')) return;
+  google.accounts.id.disableAutoSelect();
+  googleToken = null; userEmail = ''; userName = '';
+  document.getElementById('login-screen').style.display = 'flex';
+}
+
+// Avvia Google Auth quando la libreria GSI è pronta
+window.addEventListener('load', () => {
+  if (typeof google !== 'undefined') initGoogleAuth();
+  else document.querySelector('script[src*="gsi"]').addEventListener('load', initGoogleAuth);
+});
 
 // ── STATE ──
 let ITEMS = [];
@@ -957,7 +1050,6 @@ async function confirmPrelievo() {
   btn.disabled=true; btn.textContent='Invio…';
   const qtyInput = parseInt(document.getElementById('m-qty').value)||prelievoQty;
   const upcInput = parseInt(document.getElementById('m-upc').value) || 1;
-  // Se prelievo per confezione, converti in unità usando il valore inserito
   const quantitaUnit = tipoPrelievo === 'conf' ? qtyInput * upcInput : qtyInput;
   const quantitaConf = tipoPrelievo === 'conf' ? qtyInput : 0;
   const entry = {
@@ -970,23 +1062,34 @@ async function confirmPrelievo() {
     quantita: quantitaUnit,
     quantitaConf: quantitaConf,
     tipoPrelievo,
-    operatore: document.getElementById('m-op').value.trim(),
+    operatore: userEmail,
     note: document.getElementById('m-note').value.trim()
   };
-  sendViaIframe(SCRIPT_URL, { action:'prelievo', ...entry });
-  logPrelievi.unshift(entry); saveLogPrelievi();
-  // Feedback visivo: aggiorna quantità localmente
-  const item = ITEMS.find(i => i.articolo === prelievo.articolo && i.box === prelievo.box);
-  if (item) {
-    item.qtaUnit = Math.max(0, item.qtaUnit - quantitaUnit);
-    if (quantitaConf > 0) item.qtaConf = Math.max(0, item.qtaConf - quantitaConf);
-    if (item.qtaUnit <= 0) item.status = 'scaduto';
-    render();
-    updateOrdCounter();
+  try {
+    await sendToScript({
+      action: 'prelievo',
+      articolo: entry.articolo,
+      qtaPrelevata: quantitaUnit,
+      quantitaConf,
+      box: entry.box,
+      area: entry.area,
+      note: entry.note
+    });
+    logPrelievi.unshift(entry); saveLogPrelievi();
+    const item = ITEMS.find(i => i.articolo === prelievo.articolo && i.box === prelievo.box);
+    if (item) {
+      item.qtaUnit = Math.max(0, item.qtaUnit - quantitaUnit);
+      if (quantitaConf > 0) item.qtaConf = Math.max(0, item.qtaConf - quantitaConf);
+      if (item.qtaUnit <= 0) item.status = 'scaduto';
+      render(); updateOrdCounter();
+    }
+    const tipoStr = tipoPrelievo === 'conf' ? `${qtyInput} conf (${quantitaUnit} unità)` : `${quantitaUnit} unità`;
+    closeModal(); showToast(`✓ Prelevato: ${tipoStr} di ${prelievo.articolo}`, false, true);
+  } catch(err) {
+    showToast('❌ ' + err.message, true);
+  } finally {
+    btn.disabled=false; btn.textContent='Registra prelievo';
   }
-  btn.disabled=false; btn.textContent='Registra prelievo';
-  const tipoStr = tipoPrelievo === 'conf' ? `${qtyInput} conf (${quantitaUnit} unità)` : `${quantitaUnit} unità`;
-  closeModal(); showToast(`✓ Prelevato: ${tipoStr} di ${prelievo.articolo}`);
 }
 
 // ── CARICO ──
@@ -1118,23 +1221,75 @@ async function confirmCarico() {
     articolo, marca, misura, box, area:areaVal, principio,
     colore, tipo: tipo, lotto,
     scadenza, qtaConfezioni: qtaConf, quantita: qtaUnit,
+    operatore: userEmail,
     note: document.getElementById('c-note').value.trim()
   };
-  sendViaIframe(SCRIPT_URL, { action:'carico', ...entry, qtaConfezioni: qtaConf, qtaUnitaria: qtaUnit });
-  logCarichi.unshift(entry); saveLogCarichi();
-  btn.disabled=false; btn.textContent='📦 Registra Carico';
-  closeCarico(); showToast('✓ Carico registrato', false, true);
+  try {
+    if (caricoMode === 'esistente') {
+      await sendToScript({
+        action: 'carico',
+        articolo, scadenza, lotto,
+        qtaConfezioni: qtaConf, qtaUnitaria: qtaUnit,
+        note: entry.note
+      });
+    } else {
+      await sendToScript({
+        action: 'nuovoArticolo',
+        articolo, principioAttivo: principio, misura, colore, tipo, marca,
+        categoria: document.getElementById('c-categoria-new')?.value.trim() || '',
+        area: areaVal, box, scadenza,
+        qtaConfezioni: qtaConf, qtaUnitaria: qtaUnit,
+        qtaOttimale: document.getElementById('c-ottimale-new')?.value || 0,
+        lotto, note: entry.note
+      });
+    }
+    logCarichi.unshift(entry); saveLogCarichi();
+    // Aggiorna localmente se articolo esistente
+    if (caricoMode === 'esistente') {
+      const idx = parseInt(document.getElementById('c-articolo-sel').value);
+      if (!isNaN(idx) && ITEMS[idx]) {
+        ITEMS[idx].qtaUnit += qtaUnit;
+        ITEMS[idx].qtaConf += qtaConf;
+        if (scadenza) ITEMS[idx].scadStr = scadenza;
+        render(); updateOrdCounter();
+      }
+    }
+    closeCarico(); showToast('✓ Carico registrato', false, true);
+  } catch(err) {
+    showToast('❌ ' + err.message, true);
+  } finally {
+    btn.disabled=false; btn.textContent='📦 Registra Carico';
+  }
 }
 
-// ── IFRAME SEND ──
-function sendViaIframe(url, params) {
+// ── INVIO AUTENTICATO ──
+async function sendToScript(params) {
+  if (!googleToken) {
+    // Prova a richiedere un token fresco
+    await new Promise((resolve) => {
+      window._tokenClient.requestAccessToken({ prompt: '' });
+      // Aspetta max 3s
+      let tries = 0;
+      const interval = setInterval(() => {
+        tries++;
+        if (googleToken || tries > 15) { clearInterval(interval); resolve(); }
+      }, 200);
+    });
+  }
+  if (!googleToken) throw new Error('Non autenticato — effettua il login');
+
   const p = new URLSearchParams();
-  Object.entries(params).forEach(([k,v]) => p.set(k, v ?? ''));
-  fetch(url + '?' + p.toString(), {
+  Object.entries(params).forEach(([k, v]) => p.set(k, v ?? ''));
+
+  const res = await fetch(SCRIPT_URL + '?' + p.toString(), {
     method: 'GET',
-    credentials: 'include',
-    mode: 'no-cors'
-  }).catch(() => {});
+    headers: { 'Authorization': 'Bearer ' + googleToken },
+  });
+
+  if (!res.ok) throw new Error('Errore HTTP ' + res.status);
+  const data = await res.json();
+  if (!data.ok) throw new Error(data.error || 'Errore sconosciuto');
+  return data;
 }
 
 // ── LOG ──
@@ -1187,7 +1342,8 @@ function showToast(msg, isErr=false, isOk=false) {
 
 document.getElementById('modal-overlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
 
-loadData();
+// Non auto-caricare: aspetta il login Google
+// loadData() viene chiamato da handleCredentialResponse dopo il login
 </script>
 </body>
 </html>
