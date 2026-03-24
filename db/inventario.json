@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-03-24T09:02:47.970Z",
+  "lastUpdated": "2026-03-24T09:22:26.418Z",
   "inventario": [
     {
       "area": "GONDOLA",
@@ -7140,7 +7140,7 @@
       "tipo": "",
       "categoria": "",
       "qtaConf": 5,
-      "qtaUnit": 1,
+      "qtaUnit": 0,
       "qtaOttimale": 0,
       "scadStr": "",
       "lotto": "",
@@ -7182,5 +7182,20 @@
       "note": "[aggiunto da: Eleonora]"
     }
   ],
-  "log_prelievi": []
+  "log_prelievi": [
+    {
+      "ts": "24/03/2026, 10:22:26",
+      "operatore": "Eleonora",
+      "articolo": "Test sera",
+      "marca": "",
+      "box": "1",
+      "area": "GONDOLA",
+      "misura": "",
+      "colore": "",
+      "tipo": "",
+      "quantita": 1,
+      "qtaConfezioni": 0,
+      "note": ""
+    }
+  ]
 }
