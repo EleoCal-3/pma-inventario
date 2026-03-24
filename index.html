@@ -1331,6 +1331,12 @@ async function confirmCarico() {
         render(); updateOrdCounter();
       }
     }
+    // Se nuovo articolo: aggiunge a ITEMS locali e ridisegna
+    if (caricoMode !== 'esistente' && DB) {
+      ITEMS = (DB.inventario || []).map(parseDBItem);
+      populateCaricoDropdowns();
+      render(); updateOrdCounter();
+    }
     closeCarico(); showToast('✓ Carico registrato', false, true);
   } catch(err) {
     showToast('❌ ' + err.message, true);
@@ -1587,16 +1593,25 @@ async function sendToScript(params) {
       qtaConfezioni = 0, qtaUnitaria = 0, qtaOttimale = 0,
       scadenza = '', lotto = '', note = ''
     } = params;
-    const noteOp = (note ? note + ' ' : '') + `[aggiunto da: ${operatore}]`;
+    const qtaConf = parseInt(qtaConfezioni) || 0;
+    const qtaUnit = parseInt(qtaUnitaria)   || 0;
+    const noteOp  = (note ? note + ' ' : '') + `[aggiunto da: ${operatore}]`;
     db.inventario.push({
       area, box, articolo, principio: principioAttivo, misura, colore, marca, tipo, categoria,
-      qtaConf: parseInt(qtaConfezioni) || 0,
-      qtaUnit: parseInt(qtaUnitaria)   || 0,
-      qtaOttimale: parseInt(qtaOttimale) || 0,
+      qtaConf, qtaUnit, qtaOttimale: parseInt(qtaOttimale) || 0,
       scadStr: scadenza, lotto, note: noteOp
     });
-    await githubWrite(db, `Nuovo articolo: ${articolo} — ${operatorName}`);
+    // Registra anche nel log carichi
+    db.log_carichi = db.log_carichi || [];
+    db.log_carichi.unshift({
+      ts: now, operatore, articolo,
+      marca, box, area,
+      misura, colore, tipo,
+      scadenza, qtaConfezioni: qtaConf, quantita: qtaUnit, lotto, note: noteOp
+    });
+    await githubWrite(db, `Nuovo articolo: ${articolo} +${qtaUnit}u — ${operatorName}`);
     DB = db;
+    logCarichi = db.log_carichi;
     return { ok: true };
 
   } else {
