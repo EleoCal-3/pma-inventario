@@ -1073,7 +1073,7 @@ function openModal(articolo, marca, box, areaVal, qty, colore='', misura='', tip
   document.getElementById('m-name').textContent = articolo;
   document.getElementById('m-sub').textContent = [marca,'Box '+box,areaVal].filter(Boolean).join(' · ')+(qty>0?` · Disp: ${qty}`:' · ESAURITO');
   document.getElementById('m-qty').value = '1';
-  document.getElementById('m-op').value = '';
+  // operatore impostato dall'auth — campo m-op non presente nel DOM
   document.getElementById('m-note').value = '';
   // Mostra toggle solo se ha sia confezioni che unità
   const hasConf = qtaConf > 0 && qty > 0;
