@@ -1470,6 +1470,27 @@ function parseDBItem(item) {
 }
 
 // Download del database completo come JSON (backup locale)
+function exportInventarioCSV() {
+  if (!DB || !DB.inventario || !DB.inventario.length) { showToast('Nessun dato da esportare', true); return; }
+  const headers = ['AREA','BOX','ARTICOLO','PRINCIPIO ATTIVO','MISURA','COLORE','MARCA','TIPO','CATEGORIA',
+                   'QUANTITÀ CONFEZIONI','QUANTITÀ UNITARIA','QUANTITÀ OTTIMALE','SCADENZA','LOTTO','NOTE'];
+  const rows = DB.inventario.map(i => [
+    i.area||'', i.box||'', i.articolo||'', i.principio||'', i.misura||'',
+    i.colore||'', i.marca||'', i.tipo||'', i.categoria||'',
+    i.qtaConf||0, i.qtaUnit||0, i.qtaOttimale||0,
+    i.scadStr||'', i.lotto||'', i.note||''
+  ]);
+  const csv = [headers, ...rows]
+    .map(r => r.map(v => `"${v.toString().replace(/"/g,'""')}"`).join(','))
+    .join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `pma_inventario_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  showToast('✓ CSV scaricato', false, true);
+}
+
 function downloadDB() {
   if (!DB) { showToast('Nessun database caricato', true); return; }
   const json = JSON.stringify(DB, null, 2);
@@ -1676,8 +1697,14 @@ document.getElementById('modal-overlay').addEventListener('click', function(e){ 
   <div class="avanzate-section-title">Strumenti avanzati</div>
 
   <div class="avanzate-card">
-    <div class="avanzate-card-title">💾 Backup database</div>
-    <div class="avanzate-card-desc">Scarica una copia locale del database completo in formato JSON. Conservala come duplicato di sicurezza in caso di necessità.</div>
+    <div class="avanzate-card-title">📊 Esporta inventario per Google Sheets</div>
+    <div class="avanzate-card-desc">Scarica l'inventario corrente in formato CSV, pronto per essere importato in Google Sheets (File → Importa → Carica).</div>
+    <button class="avanzate-btn green" onclick="exportInventarioCSV()">Esporta CSV Inventario</button>
+  </div>
+
+  <div class="avanzate-card">
+    <div class="avanzate-card-title">💾 Backup completo (JSON)</div>
+    <div class="avanzate-card-desc">Scarica una copia completa del database in formato JSON, inclusi i log dei movimenti. Da conservare come duplicato di sicurezza.</div>
     <button class="avanzate-btn green" onclick="downloadDB()">Scarica backup JSON</button>
   </div>
 
