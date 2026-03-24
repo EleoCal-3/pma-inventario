@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-03-19T19:29:55.809Z",
+  "lastUpdated": "2026-03-24T09:02:47.970Z",
   "inventario": [
     {
       "area": "GONDOLA",
@@ -7145,8 +7145,42 @@
       "scadStr": "",
       "lotto": "",
       "note": "[aggiunto da: Eleonora]"
+    },
+    {
+      "area": "GONDOLA",
+      "box": "1",
+      "articolo": "Test di Log",
+      "principio": "",
+      "misura": "",
+      "colore": "",
+      "marca": "",
+      "tipo": "",
+      "categoria": "",
+      "qtaConf": 1,
+      "qtaUnit": 1,
+      "qtaOttimale": 0,
+      "scadStr": "",
+      "lotto": "",
+      "note": "[aggiunto da: Eleonora]"
     }
   ],
-  "log_carichi": [],
+  "log_carichi": [
+    {
+      "ts": "24/03/2026, 10:02:47",
+      "operatore": "Eleonora",
+      "articolo": "Test di Log",
+      "marca": "",
+      "box": "1",
+      "area": "GONDOLA",
+      "misura": "",
+      "colore": "",
+      "tipo": "",
+      "scadenza": "",
+      "qtaConfezioni": 1,
+      "quantita": 1,
+      "lotto": "",
+      "note": "[aggiunto da: Eleonora]"
+    }
+  ],
   "log_prelievi": []
 }
