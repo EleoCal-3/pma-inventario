@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-03-25T15:27:09.923Z",
+  "lastUpdated": "2026-03-25T15:27:47.331Z",
   "inventario": [
     {
       "area": "GONDOLA",
@@ -2487,7 +2487,7 @@
       "marca": "Hameln",
       "tipo": "Uso sottocutaneo intramuscolo, endovenoso",
       "lotto": "319008",
-      "qtaUnit": 5,
+      "qtaUnit": 4,
       "qtaConf": 1,
       "qtaOttimale": 1,
       "scadStr": "31/05/2026"
@@ -7232,6 +7232,20 @@
     }
   ],
   "log_prelievi": [
+    {
+      "ts": "25/03/2026, 16:27:46",
+      "operatore": "Porky",
+      "articolo": "Flumazenil Hameln",
+      "marca": "Hameln",
+      "box": "F-MI",
+      "area": "FARMACI",
+      "misura": "0,1mg/ml",
+      "colore": "",
+      "tipo": "Uso sottocutaneo intramuscolo, endovenoso",
+      "quantita": 1,
+      "qtaConfezioni": 0,
+      "note": ""
+    },
     {
       "ts": "25/03/2026, 16:27:09",
       "operatore": "Porky",
