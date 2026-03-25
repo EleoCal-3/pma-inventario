@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-03-25T15:24:57.355Z",
+  "lastUpdated": "2026-03-25T15:26:05.304Z",
   "inventario": [
     {
       "area": "GONDOLA",
@@ -7162,9 +7162,42 @@
       "scadStr": "",
       "lotto": "",
       "note": "[aggiunto da: Eleonora]"
+    },
+    {
+      "area": "KIT MEDICAZIONE n°2",
+      "box": "Borsa blu",
+      "articolo": "Deflussore",
+      "principio": "",
+      "misura": "",
+      "colore": "",
+      "marca": "Porky",
+      "tipo": "",
+      "categoria": "",
+      "qtaConf": 1,
+      "qtaUnit": 1,
+      "qtaOttimale": 0,
+      "scadStr": "",
+      "lotto": "",
+      "note": "[aggiunto da: Porky]"
     }
   ],
   "log_carichi": [
+    {
+      "ts": "25/03/2026, 16:26:04",
+      "operatore": "Porky",
+      "articolo": "Deflussore",
+      "marca": "Porky",
+      "box": "Borsa blu",
+      "area": "KIT MEDICAZIONE n°2",
+      "misura": "",
+      "colore": "",
+      "tipo": "",
+      "scadenza": "",
+      "qtaConfezioni": 1,
+      "quantita": 1,
+      "lotto": "",
+      "note": "[aggiunto da: Porky]"
+    },
     {
       "ts": "25/03/2026, 16:24:57",
       "operatore": "Porky",
