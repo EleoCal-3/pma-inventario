@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-03-25T15:26:05.304Z",
+  "lastUpdated": "2026-03-25T15:27:09.923Z",
   "inventario": [
     {
       "area": "GONDOLA",
@@ -117,7 +117,7 @@
       "marca": "Boscarol",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 5,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "ND"
@@ -7232,6 +7232,20 @@
     }
   ],
   "log_prelievi": [
+    {
+      "ts": "25/03/2026, 16:27:09",
+      "operatore": "Porky",
+      "articolo": "Benda elastica",
+      "marca": "Boscarol",
+      "box": "4",
+      "area": "GONDOLA",
+      "misura": "7x2,25 cm",
+      "colore": "",
+      "tipo": "",
+      "quantita": 4,
+      "qtaConfezioni": 0,
+      "note": ""
+    },
     {
       "ts": "24/03/2026, 10:22:26",
       "operatore": "Eleonora",
