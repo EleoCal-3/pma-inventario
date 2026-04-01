@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-03-25T15:28:15.902Z",
+  "lastUpdated": "2026-04-01T20:21:01.764Z",
   "inventario": [
     {
       "area": "GONDOLA",
@@ -117,10 +117,10 @@
       "marca": "Boscarol",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 5,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -135,7 +135,7 @@
       "qtaUnit": 30,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -147,10 +147,10 @@
       "marca": "Rays",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 10,
+      "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/12/2026"
+      "scadStr": "31/05/2026"
     },
     {
       "area": "GONDOLA",
@@ -162,10 +162,10 @@
       "marca": "Nexcare",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 3,
+      "qtaUnit": 6,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/05/2026"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -177,7 +177,7 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 6,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
@@ -191,11 +191,11 @@
       "colore": "",
       "marca": "",
       "tipo": "",
-      "lotto": "049",
-      "qtaUnit": 3,
-      "qtaConf": 1,
+      "lotto": "",
+      "qtaUnit": 1,
+      "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "03/2027"
+      "scadStr": "04/06/2026"
     },
     {
       "area": "GONDOLA",
@@ -207,10 +207,10 @@
       "marca": "Menarini",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 5,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "06/04/2026"
+      "scadStr": "01/05/2027"
     },
     {
       "area": "GONDOLA",
@@ -222,10 +222,10 @@
       "marca": "Menarini",
       "tipo": "lancette",
       "lotto": "",
-      "qtaUnit": 5,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "05/01/2027"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -237,7 +237,7 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
@@ -252,10 +252,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 26,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "31/01/2028"
     },
     {
       "area": "GONDOLA",
@@ -267,10 +267,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 26,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/01/2028"
+      "scadStr": "01/10/2026"
     },
     {
       "area": "GONDOLA",
@@ -285,7 +285,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "10/01/2026"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -300,7 +300,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "27/02/2027"
     },
     {
       "area": "GONDOLA",
@@ -315,7 +315,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "27/02/2027"
+      "scadStr": "30/05/2026"
     },
     {
       "area": "GONDOLA",
@@ -330,7 +330,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/05/2026"
+      "scadStr": "31/05/2026"
     },
     {
       "area": "GONDOLA",
@@ -342,10 +342,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/05/2026"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -387,7 +387,7 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 10,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
@@ -417,10 +417,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 10,
+      "qtaUnit": 6,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "31/08/2026"
     },
     {
       "area": "GONDOLA",
@@ -432,10 +432,10 @@
       "marca": "BD Microlance",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 6,
+      "qtaUnit": 14,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/08/2026"
+      "scadStr": "31/05/2026"
     },
     {
       "area": "GONDOLA",
@@ -450,7 +450,7 @@
       "qtaUnit": 14,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/05/2026"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -462,10 +462,10 @@
       "marca": "BD Microlance",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 77,
+      "qtaUnit": 6,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "28/02/2026"
+      "scadStr": "01/01/2028"
     },
     {
       "area": "GONDOLA",
@@ -477,10 +477,10 @@
       "marca": "Vasofix Safety PUR",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 6,
+      "qtaUnit": 7,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/01/2028"
+      "scadStr": "01/10/2027"
     },
     {
       "area": "GONDOLA",
@@ -492,10 +492,10 @@
       "marca": "Vasofix Safety PUR",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 7,
+      "qtaUnit": 10,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "10/01/2027"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -507,10 +507,10 @@
       "marca": "BD Ventlon Pro Safety",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 10,
+      "qtaUnit": 31,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "01/06/2026"
     },
     {
       "area": "GONDOLA",
@@ -522,10 +522,10 @@
       "marca": "Delta Med",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 31,
+      "qtaUnit": 34,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "06/01/2026"
+      "scadStr": "31/05/2026"
     },
     {
       "area": "GONDOLA",
@@ -537,10 +537,10 @@
       "marca": "Deltamed",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 34,
+      "qtaUnit": 6,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/05/2026"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -552,7 +552,7 @@
       "marca": "",
       "tipo": "bivalva",
       "lotto": "",
-      "qtaUnit": 6,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
@@ -567,7 +567,7 @@
       "marca": "",
       "tipo": "bivalva",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 6,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
@@ -597,7 +597,7 @@
       "marca": "",
       "tipo": "bivalva",
       "lotto": "",
-      "qtaUnit": 6,
+      "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
@@ -612,10 +612,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 4,
+      "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -627,10 +627,10 @@
       "marca": "Medix",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 3,
+      "qtaUnit": 15,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": "31/10/2026"
     },
     {
       "area": "GONDOLA",
@@ -642,10 +642,10 @@
       "marca": "Santex",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 7,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "28/02/2026"
+      "scadStr": "30/11/2028"
     },
     {
       "area": "GONDOLA",
@@ -657,10 +657,10 @@
       "marca": "Benefis",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 7,
+      "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/11/2028"
+      "scadStr": "30/10/2026"
     },
     {
       "area": "GONDOLA",
@@ -672,10 +672,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 3,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/10/2026"
+      "scadStr": "31/08/2027"
     },
     {
       "area": "GONDOLA",
@@ -687,10 +687,10 @@
       "marca": "Braun",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/08/2027"
+      "scadStr": "30/06/2026"
     },
     {
       "area": "GONDOLA",
@@ -705,7 +705,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/06/2026"
+      "scadStr": "30/07/2027"
     },
     {
       "area": "GONDOLA",
@@ -720,7 +720,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/07/2027"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -732,7 +732,7 @@
       "marca": "Helvei",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 33,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
@@ -747,10 +747,10 @@
       "marca": "ND",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 33,
+      "qtaUnit": 18,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "30/04/2030"
     },
     {
       "area": "GONDOLA",
@@ -762,21 +762,6 @@
       "marca": "MB Ice",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 18,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "30/04/1930"
-    },
-    {
-      "area": "GONDOLA",
-      "box": "29",
-      "articolo": "Ghiaccio spray",
-      "principio": "",
-      "misura": "",
-      "colore": "",
-      "marca": "",
-      "tipo": "",
-      "lotto": "",
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
@@ -784,8 +769,8 @@
     },
     {
       "area": "GONDOLA",
-      "box": "30",
-      "articolo": "Ghiaccio istantaneo",
+      "box": "29",
+      "articolo": "Ghiaccio spray",
       "principio": "",
       "misura": "",
       "colore": "",
@@ -799,8 +784,8 @@
     },
     {
       "area": "GONDOLA",
-      "box": "31",
-      "articolo": "Sfigmomanometro - adulto",
+      "box": "30",
+      "articolo": "Ghiaccio istantaneo",
       "principio": "",
       "misura": "",
       "colore": "",
@@ -810,7 +795,22 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
+    },
+    {
+      "area": "GONDOLA",
+      "box": "31",
+      "articolo": "Sfigmomanometro - adulto",
+      "principio": "",
+      "misura": "",
+      "colore": "",
+      "marca": "",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 3,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -822,10 +822,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 3,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -837,10 +837,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -852,10 +852,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -870,7 +870,7 @@
       "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -882,10 +882,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 86,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -897,10 +897,10 @@
       "marca": "Daser",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 86,
+      "qtaUnit": 19,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -912,10 +912,10 @@
       "marca": "Megapharma",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 19,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -927,10 +927,10 @@
       "marca": "ND",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -942,7 +942,7 @@
       "marca": "Sir Safety",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
@@ -957,7 +957,7 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
@@ -972,7 +972,7 @@
       "marca": "Medline",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 3,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
@@ -987,21 +987,6 @@
       "marca": "Sir Safety",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": ""
-    },
-    {
-      "area": "GONDOLA",
-      "box": "36",
-      "articolo": "Maschera ossigeno reservoir",
-      "principio": "",
-      "misura": "Adulti",
-      "colore": "",
-      "marca": "Intersurgical",
-      "tipo": "",
-      "lotto": "",
       "qtaUnit": 6,
       "qtaConf": 0,
       "qtaOttimale": 0,
@@ -1010,7 +995,7 @@
     {
       "area": "GONDOLA",
       "box": "36",
-      "articolo": "Maschera aerosol - adulto",
+      "articolo": "Maschera ossigeno reservoir",
       "principio": "",
       "misura": "Adulti",
       "colore": "",
@@ -1024,6 +1009,21 @@
     },
     {
       "area": "GONDOLA",
+      "box": "36",
+      "articolo": "Maschera aerosol - adulto",
+      "principio": "",
+      "misura": "Adulti",
+      "colore": "",
+      "marca": "Intersurgical",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 5,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "30/06/2029"
+    },
+    {
+      "area": "GONDOLA",
       "box": "37",
       "articolo": "Cannula nasale ossigeno - adulto",
       "principio": "",
@@ -1032,10 +1032,10 @@
       "marca": "Benefis",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 5,
+      "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/06/2029"
+      "scadStr": "30/08/2027"
     },
     {
       "area": "GONDOLA",
@@ -1047,10 +1047,10 @@
       "marca": "Benefis",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 4,
+      "qtaUnit": 5,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/08/2027"
+      "scadStr": "30/03/2029"
     },
     {
       "area": "GONDOLA",
@@ -1065,7 +1065,7 @@
       "qtaUnit": 5,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/03/2029"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -1077,10 +1077,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 0,
+      "qtaUnit": 11,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "30/01/2030"
     },
     {
       "area": "GONDOLA",
@@ -1095,7 +1095,7 @@
       "qtaUnit": 11,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/01/2030"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -1137,10 +1137,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 0,
+      "qtaUnit": 16,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "30/06/2026"
     },
     {
       "area": "GONDOLA",
@@ -1155,7 +1155,7 @@
       "qtaUnit": 16,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/06/2026"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -1167,10 +1167,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 0,
+      "qtaUnit": 48,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "31/08/2026"
     },
     {
       "area": "GONDOLA",
@@ -1182,10 +1182,10 @@
       "marca": "Intouch",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 48,
+      "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/08/2026"
+      "scadStr": "31/07/2026"
     },
     {
       "area": "GONDOLA",
@@ -1197,10 +1197,10 @@
       "marca": "Benefis",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 4,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/07/2026"
+      "scadStr": "01/10/2026"
     },
     {
       "area": "GONDOLA",
@@ -1215,7 +1215,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "10/01/2026"
+      "scadStr": "30/04/2026"
     },
     {
       "area": "GONDOLA",
@@ -1230,7 +1230,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/04/2026"
+      "scadStr": "30/08/2026"
     },
     {
       "area": "GONDOLA",
@@ -1245,7 +1245,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/08/2026"
+      "scadStr": "31/10/2026"
     },
     {
       "area": "GONDOLA",
@@ -1260,7 +1260,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/10/2026"
+      "scadStr": "31/05/2026"
     },
     {
       "area": "GONDOLA",
@@ -1275,7 +1275,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/05/2026"
+      "scadStr": "14/05/2026"
     },
     {
       "area": "GONDOLA",
@@ -1287,10 +1287,10 @@
       "marca": "Leukoplast",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "14/05/2026"
+      "scadStr": "30/04/2026"
     },
     {
       "area": "GONDOLA",
@@ -1302,10 +1302,10 @@
       "marca": "Mediprestil",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 6,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/04/2026"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -1317,10 +1317,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 6,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "31/05/2026"
     },
     {
       "area": "GONDOLA",
@@ -1335,7 +1335,7 @@
       "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/05/2026"
+      "scadStr": "30/11/2029"
     },
     {
       "area": "GONDOLA",
@@ -1347,7 +1347,7 @@
       "marca": "Covidien",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "30/11/2029"
@@ -1440,7 +1440,7 @@
       "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -1470,7 +1470,7 @@
       "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "11/09/2026"
+      "scadStr": "09/11/2026"
     },
     {
       "area": "GONDOLA",
@@ -1620,7 +1620,7 @@
       "qtaUnit": 11,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -1650,7 +1650,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -1665,7 +1665,7 @@
       "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -1710,7 +1710,7 @@
       "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -1725,7 +1725,7 @@
       "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -1890,7 +1890,7 @@
       "qtaUnit": 38,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -1905,7 +1905,7 @@
       "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "03/04/2027"
+      "scadStr": "04/03/2027"
     },
     {
       "area": "GONDOLA",
@@ -1962,7 +1962,7 @@
       "marca": "Biodrip",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 37,
+      "qtaUnit": 7,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "30/04/2026"
@@ -1980,7 +1980,7 @@
       "qtaUnit": 6,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/08/2026"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -1992,10 +1992,10 @@
       "marca": "Benefis",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 25,
+      "qtaUnit": 10,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/10/2026"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -2007,10 +2007,10 @@
       "marca": "Ambulatorio",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 0,
+      "qtaUnit": 5,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "A BISOGNO"
+      "scadStr": "31/08/2029"
     },
     {
       "area": "GONDOLA",
@@ -2022,7 +2022,7 @@
       "marca": "Danyang",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 10,
+      "qtaUnit": 6,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
@@ -2037,10 +2037,10 @@
       "marca": "Medline",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 5,
+      "qtaUnit": 11,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/08/2029"
+      "scadStr": ""
     },
     {
       "area": "GONDOLA",
@@ -2052,10 +2052,10 @@
       "marca": "Serres",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 6,
+      "qtaUnit": 5,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "31/07/2027"
     },
     {
       "area": "GONDOLA",
@@ -2067,10 +2067,10 @@
       "marca": "",
       "tipo": "Flacone",
       "lotto": "",
-      "qtaUnit": 11,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/09/2026"
+      "scadStr": "31/10/2026"
     },
     {
       "area": "GONDOLA",
@@ -2082,10 +2082,10 @@
       "marca": "Fresenius Kabi",
       "tipo": "Plastica",
       "lotto": "",
-      "qtaUnit": 5,
+      "qtaUnit": 7,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/07/2027"
+      "scadStr": "31/10/2026"
     },
     {
       "area": "GONDOLA",
@@ -2097,10 +2097,10 @@
       "marca": "Braun",
       "tipo": "Flacone",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/10/2026"
+      "scadStr": "30/04/2027"
     },
     {
       "area": "GONDOLA",
@@ -2112,10 +2112,10 @@
       "marca": "Braun",
       "tipo": "Flacone",
       "lotto": "",
-      "qtaUnit": 7,
+      "qtaUnit": 10,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/10/2026"
+      "scadStr": "30/06/2027"
     },
     {
       "area": "GONDOLA",
@@ -2260,7 +2260,7 @@
       "misura": "1mg/1ml",
       "colore": "",
       "marca": "S.A.L.F",
-      "tipo": "Soluzione  iniettabile",
+      "tipo": "Soluzione iniettabile",
       "lotto": "A23E2W",
       "qtaUnit": 10,
       "qtaConf": 2,
@@ -2275,7 +2275,7 @@
       "misura": "5mg/ml",
       "colore": "",
       "marca": "Janssen",
-      "tipo": "Soluzione  iniettabile",
+      "tipo": "Soluzione iniettabile",
       "lotto": "NHB2F00",
       "qtaUnit": 5,
       "qtaConf": 1,
@@ -2370,7 +2370,7 @@
       "qtaUnit": 5,
       "qtaConf": 5,
       "qtaOttimale": 5,
-      "scadStr": "07/06/2028"
+      "scadStr": "06/07/2028"
     },
     {
       "area": "FARMACI",
@@ -2487,10 +2487,10 @@
       "marca": "Hameln",
       "tipo": "Uso sottocutaneo intramuscolo, endovenoso",
       "lotto": "319008",
-      "qtaUnit": 4,
+      "qtaUnit": 5,
       "qtaConf": 1,
       "qtaOttimale": 1,
-      "scadStr": "31/05/2026"
+      "scadStr": ""
     },
     {
       "area": "FARMACI",
@@ -2501,11 +2501,11 @@
       "colore": "",
       "marca": "SANOFI",
       "tipo": "Compresse",
-      "lotto": "3U033",
-      "qtaUnit": 60,
-      "qtaConf": 2,
+      "lotto": "319008",
+      "qtaUnit": 5,
+      "qtaConf": 1,
       "qtaOttimale": 2,
-      "scadStr": "30/04/2026"
+      "scadStr": "31/05/2026"
     },
     {
       "area": "FARMACI",
@@ -2516,11 +2516,11 @@
       "colore": "",
       "marca": "GALENICA SENESE",
       "tipo": "Soluzione iniettabile",
-      "lotto": "23G10",
-      "qtaUnit": 6,
-      "qtaConf": 1,
+      "lotto": "3U033",
+      "qtaUnit": 60,
+      "qtaConf": 2,
       "qtaOttimale": 1,
-      "scadStr": "31/07/2026"
+      "scadStr": "30/04/2026"
     },
     {
       "area": "FARMACI",
@@ -2531,11 +2531,11 @@
       "colore": "",
       "marca": "Salf",
       "tipo": "Soluzione iniettabile",
-      "lotto": "A24M0X",
-      "qtaUnit": 10,
-      "qtaConf": 2,
+      "lotto": "23G10",
+      "qtaUnit": 6,
+      "qtaConf": 1,
       "qtaOttimale": 2,
-      "scadStr": "28/02/2027"
+      "scadStr": "31/07/2026"
     },
     {
       "area": "FARMACI",
@@ -2546,11 +2546,11 @@
       "colore": "",
       "marca": "Hexal",
       "tipo": "Compresse",
-      "lotto": "MU5937",
-      "qtaUnit": 20,
-      "qtaConf": 1,
+      "lotto": "A24M0X",
+      "qtaUnit": 10,
+      "qtaConf": 2,
       "qtaOttimale": 1,
-      "scadStr": "30/08/2027"
+      "scadStr": "28/02/2027"
     },
     {
       "area": "FARMACI",
@@ -2561,11 +2561,11 @@
       "colore": "",
       "marca": "Intramus endou",
       "tipo": "Soluzione iniettabile",
-      "lotto": "P0991",
-      "qtaUnit": 1,
+      "lotto": "MU5937",
+      "qtaUnit": 20,
       "qtaConf": 1,
       "qtaOttimale": 1,
-      "scadStr": "30/11/2026"
+      "scadStr": "30/08/2027"
     },
     {
       "area": "FARMACI",
@@ -2576,6 +2576,21 @@
       "colore": "",
       "marca": "Salf",
       "tipo": "Soluzione iniettabile",
+      "lotto": "P0991",
+      "qtaUnit": 4,
+      "qtaConf": 1,
+      "qtaOttimale": 1,
+      "scadStr": "30/11/2026"
+    },
+    {
+      "area": "FARMACI",
+      "box": "F-MI",
+      "articolo": "Moment",
+      "principio": "Ibuprofene",
+      "misura": "200mg",
+      "colore": "",
+      "marca": "SANOFI",
+      "tipo": "Compresse",
       "lotto": "A24F0L",
       "qtaUnit": 4,
       "qtaConf": 1,
@@ -2594,23 +2609,8 @@
       "lotto": "4036",
       "qtaUnit": 12,
       "qtaConf": 1,
-      "qtaOttimale": 1,
-      "scadStr": "31/12/2027"
-    },
-    {
-      "area": "FARMACI",
-      "box": "F-MI",
-      "articolo": "Moment",
-      "principio": "Ibuprofene",
-      "misura": "200mg",
-      "colore": "",
-      "marca": "SANOFI",
-      "tipo": "Compresse",
-      "lotto": "3889",
-      "qtaUnit": 19,
-      "qtaConf": 2,
       "qtaOttimale": 2,
-      "scadStr": "30/06/2026"
+      "scadStr": "31/12/2027"
     },
     {
       "area": "FARMACI",
@@ -2621,11 +2621,11 @@
       "colore": "",
       "marca": "DOC",
       "tipo": "Compresse uso orale",
-      "lotto": "212475",
-      "qtaUnit": 52,
-      "qtaConf": 5,
+      "lotto": "3889",
+      "qtaUnit": 19,
+      "qtaConf": 2,
       "qtaOttimale": 5,
-      "scadStr": "30/01/2027"
+      "scadStr": "30/06/2026"
     },
     {
       "area": "FARMACI",
@@ -2636,11 +2636,11 @@
       "colore": "",
       "marca": "EG sg",
       "tipo": "Compresse uso orale",
-      "lotto": "211250",
-      "qtaUnit": 30,
-      "qtaConf": 1,
+      "lotto": "212475",
+      "qtaUnit": 52,
+      "qtaConf": 5,
       "qtaOttimale": 1,
-      "scadStr": "31/07/2026"
+      "scadStr": "30/01/2027"
     },
     {
       "area": "FARMACI",
@@ -2651,11 +2651,11 @@
       "colore": "",
       "marca": "DOMPE'",
       "tipo": "Crema",
-      "lotto": "Z2011/09",
-      "qtaUnit": 1,
+      "lotto": "211250",
+      "qtaUnit": 30,
       "qtaConf": 1,
       "qtaOttimale": 1,
-      "scadStr": "30/09/2027"
+      "scadStr": "31/07/2026"
     },
     {
       "area": "FARMACI",
@@ -2666,11 +2666,11 @@
       "colore": "",
       "marca": "Fidia",
       "tipo": "Polvere e solvente per soluzione iniettabile per uso endovenoso",
-      "lotto": "310005 310003",
-      "qtaUnit": 3,
-      "qtaConf": 3,
+      "lotto": "Z2011/09",
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 3,
-      "scadStr": "31/10/2026"
+      "scadStr": "30/09/2027"
     },
     {
       "area": "FARMACI",
@@ -2681,11 +2681,11 @@
       "colore": "",
       "marca": "Alfasigma",
       "tipo": "Crema",
-      "lotto": "221570",
-      "qtaUnit": 1,
-      "qtaConf": 1,
+      "lotto": "310005 310003",
+      "qtaUnit": 3,
+      "qtaConf": 3,
       "qtaOttimale": 1,
-      "scadStr": "30/08/2027"
+      "scadStr": "31/10/2026"
     },
     {
       "area": "FARMACI",
@@ -2696,6 +2696,21 @@
       "colore": "",
       "marca": "RECORDATI",
       "tipo": "Soluzione Intramuscolare, Endovenosa",
+      "lotto": "221570",
+      "qtaUnit": 1,
+      "qtaConf": 1,
+      "qtaOttimale": 1,
+      "scadStr": "30/08/2027"
+    },
+    {
+      "area": "FARMACI",
+      "box": "F-MI",
+      "articolo": "Lidocaina cloridrato",
+      "principio": "Lidocaina",
+      "misura": "20mg/ml, 10ml",
+      "colore": "",
+      "marca": "GALENICA SENESE",
+      "tipo": "Soluzione iniettabile",
       "lotto": "R3036T30",
       "qtaUnit": 3,
       "qtaConf": 1,
@@ -2709,7 +2724,7 @@
       "principio": "Lidocaina",
       "misura": "20mg/ml, 10ml",
       "colore": "",
-      "marca": "GALENICA SENESE",
+      "marca": "SALF",
       "tipo": "Soluzione iniettabile",
       "lotto": "24B04",
       "qtaUnit": 10,
@@ -2720,32 +2735,17 @@
     {
       "area": "FARMACI",
       "box": "F-MI",
-      "articolo": "Lidocaina cloridrato",
-      "principio": "Lidocaina",
-      "misura": "20mg/ml, 10ml",
-      "colore": "",
-      "marca": "SALF",
-      "tipo": "Soluzione iniettabile",
-      "lotto": "A24N0L",
-      "qtaUnit": 5,
-      "qtaConf": 1,
-      "qtaOttimale": 1,
-      "scadStr": "30/04/2027"
-    },
-    {
-      "area": "FARMACI",
-      "box": "F-MI",
       "articolo": "Imodium",
       "principio": "Loperamide, Antipropulsivi",
       "misura": "2mg",
       "colore": "",
       "marca": "JOHNSON & JOHNSON",
       "tipo": "Capsule rigide",
-      "lotto": "",
-      "qtaUnit": 0,
-      "qtaConf": 0,
+      "lotto": "A24N0L",
+      "qtaUnit": 5,
+      "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "30/04/2027"
     },
     {
       "area": "FARMACI",
@@ -2760,7 +2760,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 1,
-      "scadStr": "31/05/2026"
+      "scadStr": ""
     },
     {
       "area": "FARMACI",
@@ -2771,11 +2771,11 @@
       "colore": "",
       "marca": "Sanofi",
       "tipo": "Soluzione intramuscolare e endovenoso",
-      "lotto": "5J0061",
-      "qtaUnit": 5,
+      "lotto": "B236284",
+      "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 1,
-      "scadStr": "30/05/2027"
+      "scadStr": "31/05/2026"
     },
     {
       "area": "FARMACI",
@@ -2786,11 +2786,11 @@
       "colore": "",
       "marca": "",
       "tipo": "Uso orale",
-      "lotto": "",
-      "qtaUnit": 0,
-      "qtaConf": 0,
+      "lotto": "5J0061",
+      "qtaUnit": 5,
+      "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "30/05/2027"
     },
     {
       "area": "FARMACI",
@@ -2805,7 +2805,7 @@
       "qtaUnit": 15,
       "qtaConf": 3,
       "qtaOttimale": 3,
-      "scadStr": "30/03/2026"
+      "scadStr": ""
     },
     {
       "area": "FARMACI",
@@ -2816,11 +2816,11 @@
       "colore": "",
       "marca": "Angelini",
       "tipo": "Sospensione orale",
-      "lotto": "1108",
-      "qtaUnit": 1,
-      "qtaConf": 1,
+      "lotto": "310513",
+      "qtaUnit": 15,
+      "qtaConf": 3,
       "qtaOttimale": 1,
-      "scadStr": "30/09/2027"
+      "scadStr": "30/03/2026"
     },
     {
       "area": "FARMACI",
@@ -2835,7 +2835,7 @@
       "qtaUnit": 40,
       "qtaConf": 2,
       "qtaOttimale": 2,
-      "scadStr": "30/04/2027"
+      "scadStr": ""
     },
     {
       "area": "FARMACI",
@@ -2846,41 +2846,41 @@
       "colore": "",
       "marca": "Abiogen pharma",
       "tipo": "Compresse",
+      "lotto": "1108",
+      "qtaUnit": 1,
+      "qtaConf": 1,
+      "qtaOttimale": 1,
+      "scadStr": "30/09/2027"
+    },
+    {
+      "area": "FARMACI",
+      "box": "ME-Z",
+      "articolo": "Paracetamolo salf",
+      "principio": "Paracetamolo",
+      "misura": "10mg/ml, 100ml",
+      "colore": "",
+      "marca": "S.A.L.F",
+      "tipo": "Soluzione per infusione",
+      "lotto": "1024",
+      "qtaUnit": 40,
+      "qtaConf": 2,
+      "qtaOttimale": 3,
+      "scadStr": "30/04/2027"
+    },
+    {
+      "area": "FARMACI",
+      "box": "ME-Z",
+      "articolo": "Paracetamolo salf",
+      "principio": "Paracetamolo",
+      "misura": "10mg/ml, 100ml",
+      "colore": "",
+      "marca": "S.A.L.F",
+      "tipo": "Soluzione per infusione",
       "lotto": "924",
       "qtaUnit": 20,
       "qtaConf": 1,
-      "qtaOttimale": 1,
-      "scadStr": "30/03/2027"
-    },
-    {
-      "area": "FARMACI",
-      "box": "ME-Z",
-      "articolo": "Paracetamolo salf",
-      "principio": "Paracetamolo",
-      "misura": "10mg/ml, 100ml",
-      "colore": "",
-      "marca": "S.A.L.F",
-      "tipo": "Soluzione per infusione",
-      "lotto": "F24X1W",
-      "qtaUnit": 3,
-      "qtaConf": 3,
-      "qtaOttimale": 3,
-      "scadStr": "31/10/2026"
-    },
-    {
-      "area": "FARMACI",
-      "box": "ME-Z",
-      "articolo": "Paracetamolo salf",
-      "principio": "Paracetamolo",
-      "misura": "10mg/ml, 100ml",
-      "colore": "",
-      "marca": "S.A.L.F",
-      "tipo": "Soluzione per infusione",
-      "lotto": "F25A47",
-      "qtaUnit": 2,
-      "qtaConf": 2,
       "qtaOttimale": 2,
-      "scadStr": "31/01/2027"
+      "scadStr": "30/03/2027"
     },
     {
       "area": "FARMACI",
@@ -2891,11 +2891,11 @@
       "colore": "",
       "marca": "Zambon",
       "tipo": "Gocce auricolari",
-      "lotto": "39163",
-      "qtaUnit": 1,
-      "qtaConf": 1,
+      "lotto": "F24X1W",
+      "qtaUnit": 3,
+      "qtaConf": 3,
       "qtaOttimale": 1,
-      "scadStr": "30/07/2026"
+      "scadStr": "31/10/2026"
     },
     {
       "area": "FARMACI",
@@ -2906,11 +2906,11 @@
       "colore": "",
       "marca": "Menarini",
       "tipo": "Compresse",
-      "lotto": "",
-      "qtaUnit": 120,
+      "lotto": "F25A47",
+      "qtaUnit": 2,
       "qtaConf": 2,
       "qtaOttimale": 2,
-      "scadStr": "30/11/2028"
+      "scadStr": "31/01/2027"
     },
     {
       "area": "FARMACI",
@@ -2921,11 +2921,11 @@
       "colore": "",
       "marca": "",
       "tipo": "Sospensioneda presurizzata per inalazione",
-      "lotto": "",
-      "qtaUnit": 0,
-      "qtaConf": 0,
+      "lotto": "39163",
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "30/07/2026"
     },
     {
       "area": "FARMACI",
@@ -2937,10 +2937,10 @@
       "marca": "",
       "tipo": "Sospensioneda nebulizzare",
       "lotto": "",
-      "qtaUnit": 0,
-      "qtaConf": 0,
+      "qtaUnit": 120,
+      "qtaConf": 2,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "30/11/2028"
     },
     {
       "area": "FARMACI",
@@ -2955,7 +2955,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 1,
-      "scadStr": "30/10/2026"
+      "scadStr": ""
     },
     {
       "area": "FARMACI",
@@ -2970,7 +2970,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 1,
-      "scadStr": "30/04/2027"
+      "scadStr": ""
     },
     {
       "area": "FARMACI",
@@ -2981,11 +2981,11 @@
       "colore": "",
       "marca": "Farmactive",
       "tipo": "Garze",
-      "lotto": "230243",
-      "qtaUnit": 29,
-      "qtaConf": 3,
+      "lotto": "143",
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 3,
-      "scadStr": "30/05/2028"
+      "scadStr": "30/10/2026"
     },
     {
       "area": "FARMACI",
@@ -2996,11 +2996,11 @@
       "colore": "",
       "marca": "Braun",
       "tipo": "",
-      "lotto": "",
-      "qtaUnit": 16,
+      "lotto": "225",
+      "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 1,
-      "scadStr": "30/04/2026"
+      "scadStr": "30/04/2027"
     },
     {
       "area": "FARMACI",
@@ -3011,11 +3011,11 @@
       "colore": "",
       "marca": "",
       "tipo": "",
-      "lotto": "",
-      "qtaUnit": 15,
-      "qtaConf": 0,
+      "lotto": "230243",
+      "qtaUnit": 29,
+      "qtaConf": 3,
       "qtaOttimale": 0,
-      "scadStr": "31/03/2026"
+      "scadStr": "30/05/2028"
     },
     {
       "area": "FARMACI",
@@ -3030,7 +3030,7 @@
       "qtaUnit": 9,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/05/2026"
+      "scadStr": ""
     },
     {
       "area": "FARMACI",
@@ -3042,10 +3042,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 12,
-      "qtaConf": 0,
+      "qtaUnit": 16,
+      "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "12/01/2025"
+      "scadStr": "30/04/2026"
     },
     {
       "area": "FARMACI",
@@ -3057,7 +3057,7 @@
       "marca": "Sella",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 15,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "31/03/2026"
@@ -3072,6 +3072,51 @@
       "marca": "Sella",
       "tipo": "",
       "lotto": "",
+      "qtaUnit": 9,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "30/05/2026"
+    },
+    {
+      "area": "FARMACI",
+      "box": "MIX",
+      "articolo": "Vivigel igenizzante",
+      "principio": "",
+      "misura": "",
+      "colore": "",
+      "marca": "",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 12,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "01/12/2025"
+    },
+    {
+      "area": "FARMACI",
+      "box": "MIX",
+      "articolo": "Siringa",
+      "principio": "",
+      "misura": "20ml",
+      "colore": "",
+      "marca": "",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 1,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "31/03/2026"
+    },
+    {
+      "area": "FARMACI",
+      "box": "MIX",
+      "articolo": "Siringa con ago",
+      "principio": "",
+      "misura": "5ml",
+      "colore": "",
+      "marca": "",
+      "tipo": "",
+      "lotto": "",
       "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
@@ -3080,9 +3125,9 @@
     {
       "area": "FARMACI",
       "box": "MIX",
-      "articolo": "Vivigel igenizzante",
+      "articolo": "Ago aspirazione grigio",
       "principio": "",
-      "misura": "",
+      "misura": "22G",
       "colore": "",
       "marca": "",
       "tipo": "",
@@ -3095,9 +3140,9 @@
     {
       "area": "FARMACI",
       "box": "MIX",
-      "articolo": "Siringa",
+      "articolo": "Ago aspirazione giallo",
       "principio": "",
-      "misura": "20ml",
+      "misura": "25G",
       "colore": "",
       "marca": "",
       "tipo": "",
@@ -3110,9 +3155,9 @@
     {
       "area": "FARMACI",
       "box": "MIX",
-      "articolo": "Siringa con ago",
+      "articolo": "Ago aspirazione rosa",
       "principio": "",
-      "misura": "5ml",
+      "misura": "18G",
       "colore": "",
       "marca": "",
       "tipo": "",
@@ -3125,9 +3170,9 @@
     {
       "area": "FARMACI",
       "box": "MIX",
-      "articolo": "Ago aspirazione grigio",
+      "articolo": "Ago aspirazione blu",
       "principio": "",
-      "misura": "22G",
+      "misura": "23G",
       "colore": "",
       "marca": "",
       "tipo": "",
@@ -3136,51 +3181,6 @@
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "30/11/2025"
-    },
-    {
-      "area": "FARMACI",
-      "box": "MIX",
-      "articolo": "Ago aspirazione giallo",
-      "principio": "",
-      "misura": "25G",
-      "colore": "",
-      "marca": "",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 3,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "30/04/2026"
-    },
-    {
-      "area": "FARMACI",
-      "box": "MIX",
-      "articolo": "Ago aspirazione rosa",
-      "principio": "",
-      "misura": "18G",
-      "colore": "",
-      "marca": "",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 15,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "31/03/2026"
-    },
-    {
-      "area": "FARMACI",
-      "box": "MIX",
-      "articolo": "Ago aspirazione blu",
-      "principio": "",
-      "misura": "23G",
-      "colore": "",
-      "marca": "",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 4,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "30/05/2026"
     },
     {
       "area": "FARMACI",
@@ -3195,7 +3195,7 @@
       "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/06/2026"
+      "scadStr": "30/04/2026"
     },
     {
       "area": "FARMACI",
@@ -3203,6 +3203,51 @@
       "articolo": "Achi cannula blu",
       "principio": "",
       "misura": "22G",
+      "colore": "",
+      "marca": "",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 15,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "31/03/2026"
+    },
+    {
+      "area": "FARMACI",
+      "box": "MIX",
+      "articolo": "Aghi cannula grigio",
+      "principio": "",
+      "misura": "16G",
+      "colore": "",
+      "marca": "",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 4,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "30/05/2026"
+    },
+    {
+      "area": "FARMACI",
+      "box": "MIX",
+      "articolo": "Aghi cannula arancione",
+      "principio": "",
+      "misura": "14G",
+      "colore": "",
+      "marca": "",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 3,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "30/06/2026"
+    },
+    {
+      "area": "FARMACI",
+      "box": "MIX",
+      "articolo": "Benda orlata",
+      "principio": "",
+      "misura": "10m x 4cm",
       "colore": "",
       "marca": "",
       "tipo": "",
@@ -3215,9 +3260,9 @@
     {
       "area": "FARMACI",
       "box": "MIX",
-      "articolo": "Aghi cannula grigio",
+      "articolo": "Cerotto ago cannula",
       "principio": "",
-      "misura": "16G",
+      "misura": "",
       "colore": "",
       "marca": "",
       "tipo": "",
@@ -3226,51 +3271,6 @@
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "31/10/2027"
-    },
-    {
-      "area": "FARMACI",
-      "box": "MIX",
-      "articolo": "Aghi cannula arancione",
-      "principio": "",
-      "misura": "14G",
-      "colore": "",
-      "marca": "",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 2,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "30/09/2027"
-    },
-    {
-      "area": "FARMACI",
-      "box": "MIX",
-      "articolo": "Benda orlata",
-      "principio": "",
-      "misura": "10m x 4cm",
-      "colore": "",
-      "marca": "",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 4,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "27/02/2029"
-    },
-    {
-      "area": "FARMACI",
-      "box": "MIX",
-      "articolo": "Cerotto ago cannula",
-      "principio": "",
-      "misura": "",
-      "colore": "",
-      "marca": "",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 7,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "30/01/2026"
     },
     {
       "area": "FARMACI",
@@ -3285,7 +3285,7 @@
       "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "30/09/2027"
     },
     {
       "area": "FARMACI",
@@ -3297,10 +3297,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 23,
+      "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/11/2026"
+      "scadStr": "27/02/2029"
     },
     {
       "area": "MEDICAZIONI",
@@ -3315,7 +3315,7 @@
       "qtaUnit": 4,
       "qtaConf": 4,
       "qtaOttimale": 0,
-      "scadStr": "10/01/2027"
+      "scadStr": "01/10/2027"
     },
     {
       "area": "MEDICAZIONI",
@@ -3390,7 +3390,7 @@
       "qtaUnit": 4,
       "qtaConf": 4,
       "qtaOttimale": 0,
-      "scadStr": "03/01/2026"
+      "scadStr": "01/03/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -3405,7 +3405,7 @@
       "qtaUnit": 8,
       "qtaConf": 8,
       "qtaOttimale": 0,
-      "scadStr": "10/01/2026"
+      "scadStr": "01/10/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -3435,7 +3435,7 @@
       "qtaUnit": 4,
       "qtaConf": 4,
       "qtaOttimale": 0,
-      "scadStr": "03/01/2029"
+      "scadStr": "01/03/2029"
     },
     {
       "area": "MEDICAZIONI",
@@ -3570,7 +3570,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "06/01/2027"
+      "scadStr": "01/06/2027"
     },
     {
       "area": "MEDICAZIONI",
@@ -3612,10 +3612,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 0,
-      "qtaConf": 0,
+      "qtaUnit": 6,
+      "qtaConf": 6,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "31/05/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -3627,10 +3627,10 @@
       "marca": "BRAUN B",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 6,
-      "qtaConf": 6,
+      "qtaUnit": 5,
+      "qtaConf": 5,
       "qtaOttimale": 0,
-      "scadStr": "31/05/2026"
+      "scadStr": ""
     },
     {
       "area": "MEDICAZIONI",
@@ -3642,8 +3642,8 @@
       "marca": "Lotus nl",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 5,
-      "qtaConf": 5,
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 0,
       "scadStr": ""
     },
@@ -3657,21 +3657,6 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 1,
-      "qtaOttimale": 0,
-      "scadStr": ""
-    },
-    {
-      "area": "MEDICAZIONI",
-      "box": "MEDICAZIONE",
-      "articolo": "GARZE STERILI",
-      "principio": "",
-      "misura": "18X40CM",
-      "colore": "",
-      "marca": "PICK DARE",
-      "tipo": "",
-      "lotto": "",
       "qtaUnit": 42,
       "qtaConf": 42,
       "qtaOttimale": 0,
@@ -3682,9 +3667,9 @@
       "box": "MEDICAZIONE",
       "articolo": "GARZE STERILI",
       "principio": "",
-      "misura": "36x40CM",
+      "misura": "18X40CM",
       "colore": "",
-      "marca": "MEDIPRESTIRIL",
+      "marca": "PICK DARE",
       "tipo": "",
       "lotto": "",
       "qtaUnit": 5,
@@ -3697,9 +3682,9 @@
       "box": "MEDICAZIONE",
       "articolo": "GARZE STERILI",
       "principio": "",
-      "misura": "",
+      "misura": "36x40CM",
       "colore": "",
-      "marca": "",
+      "marca": "MEDIPRESTIRIL",
       "tipo": "",
       "lotto": "",
       "qtaUnit": 5,
@@ -3727,9 +3712,9 @@
       "box": "MEDICAZIONE",
       "articolo": "GARZE STERILI",
       "principio": "",
-      "misura": "18X40CM",
+      "misura": "",
       "colore": "",
-      "marca": "MEDIPRESTIRIL",
+      "marca": "",
       "tipo": "",
       "lotto": "",
       "qtaUnit": 7,
@@ -3742,9 +3727,9 @@
       "box": "MEDICAZIONE",
       "articolo": "GARZE STERILI",
       "principio": "",
-      "misura": "",
+      "misura": "18X40CM",
       "colore": "",
-      "marca": "",
+      "marca": "MEDIPRESTIRIL",
       "tipo": "",
       "lotto": "",
       "qtaUnit": 5,
@@ -3757,9 +3742,9 @@
       "box": "MEDICAZIONE",
       "articolo": "GARZE STERILI",
       "principio": "",
-      "misura": "10X20CM",
+      "misura": "",
       "colore": "",
-      "marca": "SANTEX",
+      "marca": "",
       "tipo": "",
       "lotto": "",
       "qtaUnit": 2,
@@ -3772,9 +3757,9 @@
       "box": "MEDICAZIONE",
       "articolo": "GARZE STERILI",
       "principio": "",
-      "misura": "",
+      "misura": "10X20CM",
       "colore": "",
-      "marca": "",
+      "marca": "SANTEX",
       "tipo": "",
       "lotto": "",
       "qtaUnit": 1,
@@ -3785,9 +3770,9 @@
     {
       "area": "MEDICAZIONI",
       "box": "MEDICAZIONE",
-      "articolo": "BENDA COADESIVA",
+      "articolo": "GARZE STERILI",
       "principio": "",
-      "misura": "5CM",
+      "misura": "",
       "colore": "",
       "marca": "",
       "tipo": "",
@@ -3802,7 +3787,7 @@
       "box": "MEDICAZIONE",
       "articolo": "BENDA COADESIVA",
       "principio": "",
-      "misura": "",
+      "misura": "5CM",
       "colore": "",
       "marca": "",
       "tipo": "",
@@ -3810,12 +3795,27 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "02/01/2029"
+      "scadStr": "01/02/2029"
     },
     {
       "area": "MEDICAZIONI",
       "box": "MEDICAZIONE",
-      "articolo": "NASTRO  TELATO",
+      "articolo": "BENDA COADESIVA",
+      "principio": "",
+      "misura": "",
+      "colore": "",
+      "marca": "",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 3,
+      "qtaConf": 3,
+      "qtaOttimale": 0,
+      "scadStr": ""
+    },
+    {
+      "area": "MEDICAZIONI",
+      "box": "MEDICAZIONE",
+      "articolo": "NASTRO TELATO",
       "principio": "",
       "misura": "5 CM",
       "colore": "Bianco",
@@ -3830,7 +3830,7 @@
     {
       "area": "MEDICAZIONI",
       "box": "MEDICAZIONE",
-      "articolo": "NASTRO  TELATO",
+      "articolo": "NASTRO TELATO",
       "principio": "",
       "misura": "2.5 CM",
       "colore": "Bianco",
@@ -3852,8 +3852,8 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 3,
-      "qtaConf": 3,
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 0,
       "scadStr": ""
     },
@@ -3867,10 +3867,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 1,
+      "qtaUnit": 2,
+      "qtaConf": 2,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "31/07/2028"
     },
     {
       "area": "MEDICAZIONI",
@@ -3882,10 +3882,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
-      "qtaConf": 2,
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "31/07/2028"
+      "scadStr": "31/05/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -3897,10 +3897,10 @@
       "marca": "MEDIPRESTIRIL",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 1,
+      "qtaUnit": 5,
+      "qtaConf": 5,
       "qtaOttimale": 0,
-      "scadStr": "31/05/2026"
+      "scadStr": "31/07/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -3930,7 +3930,7 @@
       "qtaUnit": 5,
       "qtaConf": 5,
       "qtaOttimale": 0,
-      "scadStr": "31/07/2026"
+      "scadStr": "30/05/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -3942,10 +3942,10 @@
       "marca": "COATEN VICRYL",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 5,
-      "qtaConf": 5,
+      "qtaUnit": 2,
+      "qtaConf": 2,
       "qtaOttimale": 0,
-      "scadStr": "30/05/2026"
+      "scadStr": "26/02/2027"
     },
     {
       "area": "MEDICAZIONI",
@@ -3957,10 +3957,10 @@
       "marca": "INTOUCH",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
-      "qtaConf": 2,
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "26/02/2027"
+      "scadStr": "30/04/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -3975,7 +3975,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "30/04/2026"
+      "scadStr": "27/02/2027"
     },
     {
       "area": "MEDICAZIONI",
@@ -3985,21 +3985,6 @@
       "misura": "",
       "colore": "",
       "marca": "Bericah",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 1,
-      "qtaOttimale": 0,
-      "scadStr": "27/02/2027"
-    },
-    {
-      "area": "MEDICAZIONI",
-      "box": "CHIRURGICO",
-      "articolo": "GUANTI STERILI",
-      "principio": "",
-      "misura": "TAGLIA 7.5",
-      "colore": "",
-      "marca": "INTOUCH",
       "tipo": "",
       "lotto": "",
       "qtaUnit": 2,
@@ -4012,15 +3997,30 @@
       "box": "CHIRURGICO",
       "articolo": "GUANTI STERILI",
       "principio": "",
+      "misura": "TAGLIA 7.5",
+      "colore": "",
+      "marca": "INTOUCH",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 14,
+      "qtaConf": 14,
+      "qtaOttimale": 0,
+      "scadStr": "12/05/2026"
+    },
+    {
+      "area": "MEDICAZIONI",
+      "box": "CHIRURGICO",
+      "articolo": "GUANTI STERILI",
+      "principio": "",
       "misura": "TAGLIA 8",
       "colore": "",
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 0,
-      "qtaConf": 0,
+      "qtaUnit": 5,
+      "qtaConf": 5,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "31/12/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4032,10 +4032,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 14,
-      "qtaConf": 14,
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "05/12/2026"
+      "scadStr": ""
     },
     {
       "area": "MEDICAZIONI",
@@ -4047,10 +4047,10 @@
       "marca": "MEDLINE",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 5,
-      "qtaConf": 5,
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "31/12/2026"
+      "scadStr": "31/10/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4065,7 +4065,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "31/12/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4080,7 +4080,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "31/10/2026"
+      "scadStr": "30/05/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4095,7 +4095,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "31/12/2026"
+      "scadStr": "30/06/2027"
     },
     {
       "area": "MEDICAZIONI",
@@ -4110,7 +4110,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "30/05/2026"
+      "scadStr": "30/04/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4125,7 +4125,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "30/06/2027"
+      "scadStr": "30/11/2027"
     },
     {
       "area": "MEDICAZIONI",
@@ -4140,7 +4140,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "30/04/2026"
+      "scadStr": "30/05/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4155,7 +4155,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "30/11/2027"
+      "scadStr": "03/12/2029"
     },
     {
       "area": "MEDICAZIONI",
@@ -4170,7 +4170,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "30/05/2026"
+      "scadStr": "22/05/2029"
     },
     {
       "area": "MEDICAZIONI",
@@ -4185,7 +4185,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "12/03/2029"
+      "scadStr": "30/05/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4200,7 +4200,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "22/05/2029"
+      "scadStr": "31/05/2028"
     },
     {
       "area": "MEDICAZIONI",
@@ -4215,7 +4215,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "30/05/2026"
+      "scadStr": ""
     },
     {
       "area": "MEDICAZIONI",
@@ -4230,7 +4230,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "31/05/2028"
+      "scadStr": "28/05/2027"
     },
     {
       "area": "MEDICAZIONI",
@@ -4245,7 +4245,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "30/09/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4260,7 +4260,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "28/05/2027"
+      "scadStr": "28/02/2027"
     },
     {
       "area": "MEDICAZIONI",
@@ -4275,7 +4275,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "30/09/2026"
+      "scadStr": "31/07/2029"
     },
     {
       "area": "MEDICAZIONI",
@@ -4320,7 +4320,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "28/02/2027"
+      "scadStr": "31/10/2027"
     },
     {
       "area": "MEDICAZIONI",
@@ -4335,7 +4335,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "31/07/2029"
+      "scadStr": "31/10/2027"
     },
     {
       "area": "MEDICAZIONI",
@@ -4350,7 +4350,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "31/10/2027"
+      "scadStr": ""
     },
     {
       "area": "MEDICAZIONI",
@@ -4365,7 +4365,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "31/10/2027"
+      "scadStr": ""
     },
     {
       "area": "MEDICAZIONI",
@@ -4380,7 +4380,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "13/12/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4392,10 +4392,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 1,
+      "qtaUnit": 2,
+      "qtaConf": 2,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "30/06/2029"
     },
     {
       "area": "MEDICAZIONI",
@@ -4410,7 +4410,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "13/12/2026"
+      "scadStr": "31/10/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4422,10 +4422,10 @@
       "marca": "BENEFIS",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
-      "qtaConf": 2,
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "30/06/2029"
+      "scadStr": ""
     },
     {
       "area": "MEDICAZIONI",
@@ -4440,7 +4440,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "31/10/2026"
+      "scadStr": ""
     },
     {
       "area": "MEDICAZIONI",
@@ -4455,7 +4455,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "03/10/2029"
     },
     {
       "area": "MEDICAZIONI",
@@ -4470,7 +4470,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "15/02/2028"
     },
     {
       "area": "MEDICAZIONI",
@@ -4485,7 +4485,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "10/03/2029"
+      "scadStr": "09/11/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4497,10 +4497,10 @@
       "marca": "INTERSURGICAL",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 1,
+      "qtaUnit": 2,
+      "qtaConf": 2,
       "qtaOttimale": 0,
-      "scadStr": "15/02/2028"
+      "scadStr": ""
     },
     {
       "area": "MEDICAZIONI",
@@ -4512,10 +4512,10 @@
       "marca": "INTERSURGICAL",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 0,
-      "qtaConf": 0,
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "26/02/2027"
     },
     {
       "area": "MEDICAZIONI",
@@ -4530,7 +4530,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "11/09/2026"
+      "scadStr": "30/06/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4542,8 +4542,8 @@
       "marca": "GARR",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
-      "qtaConf": 2,
+      "qtaUnit": 0,
+      "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
     },
@@ -4557,10 +4557,10 @@
       "marca": "BENEFIS",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 1,
+      "qtaUnit": 2,
+      "qtaConf": 2,
       "qtaOttimale": 0,
-      "scadStr": "26/02/2027"
+      "scadStr": "30/11/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4575,7 +4575,7 @@
       "qtaUnit": 1,
       "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "30/06/2026"
+      "scadStr": "31/12/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4587,10 +4587,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 0,
-      "qtaConf": 0,
+      "qtaUnit": 2,
+      "qtaConf": 2,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "01/09/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4602,10 +4602,10 @@
       "marca": "BENEFIS",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 0,
-      "qtaConf": 0,
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "30/11/2027"
     },
     {
       "area": "MEDICAZIONI",
@@ -4617,10 +4617,10 @@
       "marca": "INTERSURGICAL",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
-      "qtaConf": 2,
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "30/11/2026"
+      "scadStr": ""
     },
     {
       "area": "MEDICAZIONI",
@@ -4632,10 +4632,10 @@
       "marca": "INTERSURGICAL",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 1,
+      "qtaUnit": 2,
+      "qtaConf": 2,
       "qtaOttimale": 0,
-      "scadStr": "31/12/2026"
+      "scadStr": "31/10/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4647,10 +4647,10 @@
       "marca": "INTERSURGICAL",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
-      "qtaConf": 2,
+      "qtaUnit": 20,
+      "qtaConf": 20,
       "qtaOttimale": 0,
-      "scadStr": "09/01/2026"
+      "scadStr": "30/04/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4662,10 +4662,10 @@
       "marca": "MOLTENI",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 1,
+      "qtaUnit": 3,
+      "qtaConf": 3,
       "qtaOttimale": 0,
-      "scadStr": "30/11/2027"
+      "scadStr": "30/09/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4677,10 +4677,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 1,
+      "qtaUnit": 2,
+      "qtaConf": 2,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "30/11/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4692,10 +4692,10 @@
       "marca": "BRAUN",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
-      "qtaConf": 2,
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "31/10/2026"
+      "scadStr": "30/07/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4710,7 +4710,7 @@
       "qtaUnit": 20,
       "qtaConf": 20,
       "qtaOttimale": 0,
-      "scadStr": "30/04/2026"
+      "scadStr": "30/09/2029"
     },
     {
       "area": "MEDICAZIONI",
@@ -4725,7 +4725,7 @@
       "qtaUnit": 3,
       "qtaConf": 3,
       "qtaOttimale": 0,
-      "scadStr": "30/09/2026"
+      "scadStr": ""
     },
     {
       "area": "MEDICAZIONI",
@@ -4737,10 +4737,10 @@
       "marca": "FRESENIUS KABI",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
-      "qtaConf": 2,
+      "qtaUnit": 1,
+      "qtaConf": 1,
       "qtaOttimale": 0,
-      "scadStr": "30/11/2026"
+      "scadStr": ""
     },
     {
       "area": "MEDICAZIONI",
@@ -4752,10 +4752,10 @@
       "marca": "EUROSET",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 1,
+      "qtaUnit": 2,
+      "qtaConf": 2,
       "qtaOttimale": 0,
-      "scadStr": "30/07/2026"
+      "scadStr": "04/02/2028"
     },
     {
       "area": "MEDICAZIONI",
@@ -4767,10 +4767,10 @@
       "marca": "VYGON",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 3,
-      "qtaConf": 3,
+      "qtaUnit": 4,
+      "qtaConf": 4,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "31/05/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4782,10 +4782,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 1,
+      "qtaUnit": 2,
+      "qtaConf": 2,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "30/06/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -4797,10 +4797,10 @@
       "marca": "PHARMAPLAST",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
-      "qtaConf": 2,
+      "qtaUnit": 5,
+      "qtaConf": 5,
       "qtaOttimale": 0,
-      "scadStr": "02/04/2028"
+      "scadStr": "30/01/2029"
     },
     {
       "area": "MEDICAZIONI",
@@ -4812,10 +4812,10 @@
       "marca": "PHARMAPLAST",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 4,
-      "qtaConf": 4,
+      "qtaUnit": 5,
+      "qtaConf": 5,
       "qtaOttimale": 0,
-      "scadStr": "31/05/2026"
+      "scadStr": "04/12/2029"
     },
     {
       "area": "MEDICAZIONI",
@@ -4827,10 +4827,10 @@
       "marca": "RUSCH",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
-      "qtaConf": 2,
+      "qtaUnit": 7,
+      "qtaConf": 7,
       "qtaOttimale": 0,
-      "scadStr": "30/06/2026"
+      "scadStr": "30/07/2029"
     },
     {
       "area": "MEDICAZIONI",
@@ -4887,10 +4887,10 @@
       "marca": "Biodrip",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 8,
+      "qtaUnit": 14,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/01/2027"
+      "scadStr": "27/02/2026"
     },
     {
       "area": "RISERVE",
@@ -4902,10 +4902,10 @@
       "marca": "Biodrip",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 52,
+      "qtaUnit": 7,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "28/02/2029"
+      "scadStr": "31/03/2026"
     },
     {
       "area": "RISERVE",
@@ -4915,6 +4915,51 @@
       "misura": "",
       "colore": "",
       "marca": "Benefis",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 31,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "30/04/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "L",
+      "articolo": "Deflussore",
+      "principio": "",
+      "misura": "",
+      "colore": "",
+      "marca": "Italiana Medicazione",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 6,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "31/08/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "L",
+      "articolo": "Deflussore",
+      "principio": "",
+      "misura": "",
+      "colore": "",
+      "marca": "Italiana Medicazione",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 25,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "31/10/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "L",
+      "articolo": "Deflussore",
+      "principio": "",
+      "misura": "",
+      "colore": "",
+      "marca": "Biodrip",
       "tipo": "",
       "lotto": "",
       "qtaUnit": 50,
@@ -4929,28 +4974,13 @@
       "principio": "",
       "misura": "",
       "colore": "",
-      "marca": "Italiana Medicazione",
+      "marca": "Biodrip",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 8,
+      "qtaUnit": 9,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/06/2030"
-    },
-    {
-      "area": "RISERVE",
-      "box": "L",
-      "articolo": "Deflussore",
-      "principio": "",
-      "misura": "",
-      "colore": "",
-      "marca": "Italiana Medicazione",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 4,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "21/08/2029"
+      "scadStr": "30/01/2027"
     },
     {
       "area": "RISERVE",
@@ -4962,7 +4992,7 @@
       "marca": "Biodrip",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 7,
+      "qtaUnit": 6,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "30/05/2027"
@@ -4974,43 +5004,13 @@
       "principio": "",
       "misura": "",
       "colore": "",
-      "marca": "Biodrip",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "30/06/2028"
-    },
-    {
-      "area": "RISERVE",
-      "box": "L",
-      "articolo": "Deflussore",
-      "principio": "",
-      "misura": "",
-      "colore": "",
-      "marca": "Biodrip",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 2,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "31/10/2028"
-    },
-    {
-      "area": "RISERVE",
-      "box": "L",
-      "articolo": "Deflussore",
-      "principio": "",
-      "misura": "",
-      "colore": "",
       "marca": "Sidam",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 20,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "20/05/2030"
+      "scadStr": "31/05/2026"
     },
     {
       "area": "RISERVE",
@@ -5022,10 +5022,10 @@
       "marca": "Ferrari",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 15,
+      "qtaUnit": 10,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/12/2029"
+      "scadStr": "31/07/2026"
     },
     {
       "area": "RISERVE",
@@ -5037,40 +5037,70 @@
       "marca": "Ferrari",
       "tipo": "",
       "lotto": "",
+      "qtaUnit": 10,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "30/09/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R1 _Rosso",
+      "articolo": "Sodio cloruro (NaCl)",
+      "principio": "",
+      "misura": "500ml",
+      "colore": "",
+      "marca": "Eurospital",
+      "tipo": "Vetro",
+      "lotto": "",
+      "qtaUnit": 10,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "30/11/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R1 _Rosso",
+      "articolo": "Sodio cloruro (NaCl)",
+      "principio": "",
+      "misura": "500ml",
+      "colore": "",
+      "marca": "Eurospital",
+      "tipo": "Vetro",
+      "lotto": "",
+      "qtaUnit": 10,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "31/12/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R1 _Rosso",
+      "articolo": "Sodio cloruro (NaCl)",
+      "principio": "",
+      "misura": "500ml",
+      "colore": "",
+      "marca": "Braun",
+      "tipo": "Plastica",
+      "lotto": "",
+      "qtaUnit": 3,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "11/01/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R1 _Rosso",
+      "articolo": "Sodio cloruro (NaCl)",
+      "principio": "",
+      "misura": "500ml",
+      "colore": "",
+      "marca": "Braun",
+      "tipo": "Plastica",
+      "lotto": "",
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "28/02/2030"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R1 _Rosso",
-      "articolo": "Sodio cloruro (NaCl)",
-      "principio": "",
-      "misura": "500ml",
-      "colore": "",
-      "marca": "Eurospital",
-      "tipo": "Vetro",
-      "lotto": "",
-      "qtaUnit": 8,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "31/10/2027"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R1 _Rosso",
-      "articolo": "Sodio cloruro (NaCl)",
-      "principio": "",
-      "misura": "500ml",
-      "colore": "",
-      "marca": "Eurospital",
-      "tipo": "Vetro",
-      "lotto": "",
-      "qtaUnit": 8,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "30/06/2028"
+      "scadStr": "11/03/2026"
     },
     {
       "area": "RISERVE",
@@ -5082,10 +5112,10 @@
       "marca": "Braun",
       "tipo": "Plastica",
       "lotto": "",
-      "qtaUnit": 23,
+      "qtaUnit": 64,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/12/2027"
+      "scadStr": "31/08/2026"
     },
     {
       "area": "RISERVE",
@@ -5097,7 +5127,52 @@
       "marca": "Braun",
       "tipo": "Plastica",
       "lotto": "",
-      "qtaUnit": 23,
+      "qtaUnit": 76,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "31/08/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R1 _Rosso",
+      "articolo": "Sodio cloruro (NaCl)",
+      "principio": "",
+      "misura": "100ml",
+      "colore": "",
+      "marca": "Braun",
+      "tipo": "Plastica",
+      "lotto": "",
+      "qtaUnit": 51,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "31/08/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R1 _Rosso",
+      "articolo": "Sodio cloruro (NaCl)",
+      "principio": "",
+      "misura": "100ml",
+      "colore": "",
+      "marca": "Braun",
+      "tipo": "Plastica",
+      "lotto": "",
+      "qtaUnit": 10,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "01/03/2029"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R1 _Rosso",
+      "articolo": "Sodio cloruro (NaCl)",
+      "principio": "",
+      "misura": "100ml",
+      "colore": "",
+      "marca": "Braun",
+      "tipo": "Plastica",
+      "lotto": "",
+      "qtaUnit": 11,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "31/07/2027"
@@ -5109,88 +5184,13 @@
       "principio": "",
       "misura": "500ml",
       "colore": "",
-      "marca": "Braun",
-      "tipo": "Plastica",
-      "lotto": "",
-      "qtaUnit": 30,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "30/06/2027"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R1 _Rosso",
-      "articolo": "Sodio cloruro (NaCl)",
-      "principio": "",
-      "misura": "500ml",
-      "colore": "",
-      "marca": "Braun",
-      "tipo": "Plastica",
-      "lotto": "",
-      "qtaUnit": 45,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "30/04/2027"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R1 _Rosso",
-      "articolo": "Sodio cloruro (NaCl)",
-      "principio": "",
-      "misura": "100ml",
-      "colore": "",
-      "marca": "Braun",
-      "tipo": "Plastica",
-      "lotto": "",
-      "qtaUnit": 2,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "30/06/2028"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R1 _Rosso",
-      "articolo": "Sodio cloruro (NaCl)",
-      "principio": "",
-      "misura": "100ml",
-      "colore": "",
-      "marca": "Braun",
-      "tipo": "Plastica",
-      "lotto": "",
-      "qtaUnit": 3,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "31/08/2028"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R1 _Rosso",
-      "articolo": "Sodio cloruro (NaCl)",
-      "principio": "",
-      "misura": "100ml",
-      "colore": "",
-      "marca": "Braun",
-      "tipo": "Plastica",
-      "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "30/09/2028"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R1 _Rosso",
-      "articolo": "Sodio cloruro (NaCl)",
-      "principio": "",
-      "misura": "500ml",
-      "colore": "",
       "marca": "Fresenius",
       "tipo": "Vetro",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 31,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/08/2028"
+      "scadStr": "30/06/2026"
     },
     {
       "area": "RISERVE",
@@ -5202,7 +5202,37 @@
       "marca": "Eurospital",
       "tipo": "Vetro",
       "lotto": "",
-      "qtaUnit": 5,
+      "qtaUnit": 95,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "06/05/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R1 _Rosso",
+      "articolo": "Sodio cloruro (NaCl)",
+      "principio": "",
+      "misura": "500ml",
+      "colore": "",
+      "marca": "Eurospital",
+      "tipo": "Vetro",
+      "lotto": "",
+      "qtaUnit": 4,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "31/03/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R1 _Rosso",
+      "articolo": "Glucosio 5%",
+      "principio": "",
+      "misura": "500ml",
+      "colore": "",
+      "marca": "Eurospital",
+      "tipo": "Vetro",
+      "lotto": "",
+      "qtaUnit": 12,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "30/09/2028"
@@ -5210,17 +5240,17 @@
     {
       "area": "RISERVE",
       "box": "R1 _Rosso",
-      "articolo": "Sodio cloruro (NaCl)",
+      "articolo": "Glucosio 5%",
       "principio": "",
       "misura": "500ml",
       "colore": "",
       "marca": "Eurospital",
       "tipo": "Vetro",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 12,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/08/2028"
+      "scadStr": "31/05/2026"
     },
     {
       "area": "RISERVE",
@@ -5232,82 +5262,7 @@
       "marca": "Eurospital",
       "tipo": "Vetro",
       "lotto": "",
-      "qtaUnit": 3,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "31/12/2026"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R1 _Rosso",
-      "articolo": "Glucosio 5%",
-      "principio": "",
-      "misura": "500ml",
-      "colore": "",
-      "marca": "Eurospital",
-      "tipo": "Vetro",
-      "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "30/09/2026"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R1 _Rosso",
-      "articolo": "Glucosio 5%",
-      "principio": "",
-      "misura": "500ml",
-      "colore": "",
-      "marca": "Eurospital",
-      "tipo": "Vetro",
-      "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "31/08/2026"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R1 _Rosso",
-      "articolo": "Glucosio 5%",
-      "principio": "",
-      "misura": "500ml",
-      "colore": "",
-      "marca": "Eurospital",
-      "tipo": "Vetro",
-      "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "30/11/2026"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R1 _Rosso",
-      "articolo": "Glucosio 5%",
-      "principio": "",
-      "misura": "500ml",
-      "colore": "",
-      "marca": "Eurospital",
-      "tipo": "Vetro",
-      "lotto": "",
-      "qtaUnit": 2,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "31/03/2027"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R1 _Rosso",
-      "articolo": "Glucosio 5%",
-      "principio": "",
-      "misura": "500ml",
-      "colore": "",
-      "marca": "Eurospital",
-      "tipo": "Vetro",
-      "lotto": "",
-      "qtaUnit": 5,
+      "qtaUnit": 12,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "31/05/2028"
@@ -5319,13 +5274,43 @@
       "principio": "",
       "misura": "500ml",
       "colore": "",
-      "marca": "Braun",
-      "tipo": "Plastica",
+      "marca": "Eurospital",
+      "tipo": "Vetro",
+      "lotto": "",
+      "qtaUnit": 8,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "27/02/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R1 _Rosso",
+      "articolo": "Glucosio 5%",
+      "principio": "",
+      "misura": "500ml",
+      "colore": "",
+      "marca": "Eurospital",
+      "tipo": "Vetro",
       "lotto": "",
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/09/2026"
+      "scadStr": "30/11/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R1 _Rosso",
+      "articolo": "Glucosio 5%",
+      "principio": "",
+      "misura": "500ml",
+      "colore": "",
+      "marca": "Eurospital",
+      "tipo": "Vetro",
+      "lotto": "",
+      "qtaUnit": 5,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": ""
     },
     {
       "area": "RISERVE",
@@ -5337,10 +5322,25 @@
       "marca": "Braun",
       "tipo": "Plastica",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 7,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/06/2027"
+      "scadStr": "31/10/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R1 _Rosso",
+      "articolo": "Glucosio 5%",
+      "principio": "",
+      "misura": "500ml",
+      "colore": "",
+      "marca": "Braun",
+      "tipo": "Plastica",
+      "lotto": "",
+      "qtaUnit": 20,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "30/04/2027"
     },
     {
       "area": "RISERVE",
@@ -5352,10 +5352,10 @@
       "marca": "Fresenius Kabi",
       "tipo": "Plastica",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 46,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/06/2026"
+      "scadStr": "30/04/2027"
     },
     {
       "area": "RISERVE",
@@ -5367,10 +5367,10 @@
       "marca": "Pic",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 10,
+      "qtaUnit": 30,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "20/11/2029"
+      "scadStr": "30/06/2027"
     },
     {
       "area": "RISERVE",
@@ -5382,10 +5382,10 @@
       "marca": "Benfis",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 70,
+      "qtaUnit": 25,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/08/2026"
+      "scadStr": "31/07/2027"
     },
     {
       "area": "RISERVE",
@@ -5397,10 +5397,10 @@
       "marca": "Pic",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 6,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/03/2029"
+      "scadStr": "30/09/2027"
     },
     {
       "area": "RISERVE",
@@ -5412,10 +5412,10 @@
       "marca": "Pic",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 9,
+      "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/05/2030"
+      "scadStr": "31/12/2027"
     },
     {
       "area": "RISERVE",
@@ -5427,10 +5427,10 @@
       "marca": "Rays",
       "tipo": "Cono Luer Lock",
       "lotto": "",
-      "qtaUnit": 29,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/04/2026"
+      "scadStr": "30/11/2027"
     },
     {
       "area": "RISERVE",
@@ -5442,10 +5442,10 @@
       "marca": "Bornova",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 100,
+      "qtaUnit": 11,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "07/01/2029"
+      "scadStr": "31/03/2026"
     },
     {
       "area": "RISERVE",
@@ -5457,10 +5457,10 @@
       "marca": "Rays",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 79,
+      "qtaUnit": 17,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "09/07/2028"
+      "scadStr": ""
     },
     {
       "area": "RISERVE",
@@ -5472,10 +5472,10 @@
       "marca": "Rays",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 45,
+      "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "19/02/2028"
+      "scadStr": "30/10/2026"
     },
     {
       "area": "RISERVE",
@@ -5487,10 +5487,10 @@
       "marca": "Rays",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 87,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "09/08/2028"
+      "scadStr": "31/03/2026"
     },
     {
       "area": "RISERVE",
@@ -5502,10 +5502,10 @@
       "marca": "Dr Marcus",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 10,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/11/2026"
+      "scadStr": "30/04/2026"
     },
     {
       "area": "RISERVE",
@@ -5517,10 +5517,10 @@
       "marca": "Dr Marcus",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 10,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/09/2026"
+      "scadStr": "31/12/2025"
     },
     {
       "area": "RISERVE",
@@ -5532,10 +5532,10 @@
       "marca": "Primia",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 10,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/12/2026"
+      "scadStr": "31/12/2025"
     },
     {
       "area": "RISERVE",
@@ -5547,10 +5547,10 @@
       "marca": "MicroTip",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 103,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "06/05/2026"
+      "scadStr": ""
     },
     {
       "area": "RISERVE",
@@ -5562,10 +5562,10 @@
       "marca": "Neo Delta Ven",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 3,
+      "qtaUnit": 5,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/05/2026"
+      "scadStr": "03/07/2029"
     },
     {
       "area": "RISERVE",
@@ -5577,7 +5577,7 @@
       "marca": "Neo Delta Ven",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 6,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "30/06/2026"
@@ -5592,10 +5592,10 @@
       "marca": "Vasofix",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 4,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/10/2027"
+      "scadStr": ""
     },
     {
       "area": "RISERVE",
@@ -5607,10 +5607,10 @@
       "marca": "Venflon",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 7,
+      "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/07/2027"
+      "scadStr": "31/01/2026"
     },
     {
       "area": "RISERVE",
@@ -5622,10 +5622,10 @@
       "marca": "BD Microlance",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 20,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/04/2030"
+      "scadStr": "31/07/2026"
     },
     {
       "area": "RISERVE",
@@ -5637,10 +5637,10 @@
       "marca": "BD Microlance",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 12,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/09/2028"
+      "scadStr": "01/05/2026"
     },
     {
       "area": "RISERVE",
@@ -5652,10 +5652,10 @@
       "marca": "Glucoject",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 6,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/10/2026"
+      "scadStr": "31/08/2026"
     },
     {
       "area": "RISERVE",
@@ -5667,10 +5667,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 3,
+      "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": "31/10/2025"
     },
     {
       "area": "RISERVE",
@@ -5682,10 +5682,10 @@
       "marca": "Cosmopor",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 31,
+      "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/05/2028"
+      "scadStr": "28/02/2026"
     },
     {
       "area": "RISERVE",
@@ -5700,7 +5700,22 @@
       "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/08/2026"
+      "scadStr": "31/07/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R3_Grigio",
+      "articolo": "Benda orlata",
+      "principio": "",
+      "misura": "7x5cm",
+      "colore": "",
+      "marca": "Dermatess",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 1,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "30/09/2025"
     },
     {
       "area": "RISERVE",
@@ -5722,30 +5737,15 @@
       "box": "R3_Grigio",
       "articolo": "Benda orlata",
       "principio": "",
-      "misura": "7x5cm",
-      "colore": "",
-      "marca": "Dermatess",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 1,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "31/07/2026"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R3_Grigio",
-      "articolo": "Benda orlata",
-      "principio": "",
       "misura": "10x5cm",
       "colore": "",
       "marca": "Dermatess",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 6,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/07/2026"
+      "scadStr": "31/05/2026"
     },
     {
       "area": "RISERVE",
@@ -5760,7 +5760,7 @@
       "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/09/2026"
+      "scadStr": "31/08/2026"
     },
     {
       "area": "RISERVE",
@@ -5772,10 +5772,10 @@
       "marca": "PIc",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 24,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/08/2026"
+      "scadStr": "31/05/2026"
     },
     {
       "area": "RISERVE",
@@ -5787,10 +5787,10 @@
       "marca": "Peha-fix",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 9,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/08/2027"
+      "scadStr": "30/04/2026"
     },
     {
       "area": "RISERVE",
@@ -5802,10 +5802,10 @@
       "marca": "Dermatess",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/05/2026"
+      "scadStr": "30/07/2026"
     },
     {
       "area": "RISERVE",
@@ -5820,7 +5820,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/05/2026"
+      "scadStr": "30/11/2026"
     },
     {
       "area": "RISERVE",
@@ -5832,7 +5832,7 @@
       "marca": "Medipresteril",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "31/08/2026"
@@ -5847,10 +5847,10 @@
       "marca": "Eurofarm",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": "31/07/2026"
     },
     {
       "area": "RISERVE",
@@ -5862,10 +5862,10 @@
       "marca": "Dr Marcus",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 3,
+      "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": "28/02/2026"
     },
     {
       "area": "RISERVE",
@@ -5880,7 +5880,7 @@
       "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/06/2026"
+      "scadStr": "31/01/2026"
     },
     {
       "area": "RISERVE",
@@ -5892,10 +5892,10 @@
       "marca": "MediPro",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 20,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/08/2028"
+      "scadStr": "30/11/2026"
     },
     {
       "area": "RISERVE",
@@ -5907,10 +5907,10 @@
       "marca": "Preonrex",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 6,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/08/2026"
+      "scadStr": "30/06/2026"
     },
     {
       "area": "RISERVE",
@@ -5922,10 +5922,10 @@
       "marca": "Pic",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 36,
+      "qtaUnit": 12,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/11/2026"
+      "scadStr": "31/08/2026"
     },
     {
       "area": "RISERVE",
@@ -5937,10 +5937,10 @@
       "marca": "Med's",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 6,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/04/2030"
+      "scadStr": "31/03/2027"
     },
     {
       "area": "RISERVE",
@@ -5952,10 +5952,10 @@
       "marca": "Bicakcilar",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 9,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/07/2029"
+      "scadStr": "31/03/2026"
     },
     {
       "area": "RISERVE",
@@ -5967,40 +5967,40 @@
       "marca": "Bicakcilar",
       "tipo": "",
       "lotto": "",
+      "qtaUnit": 1,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "30/08/2026"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R3_Grigio",
+      "articolo": "Sondino da aspirazione",
+      "principio": "",
+      "misura": "18CH",
+      "colore": "Rosso",
+      "marca": "wellead",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 2,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "30/11/2025"
+    },
+    {
+      "area": "RISERVE",
+      "box": "R3_Grigio",
+      "articolo": "Sondino da aspirazione",
+      "principio": "",
+      "misura": "18CH",
+      "colore": "Rosso",
+      "marca": "wellead",
+      "tipo": "",
+      "lotto": "",
       "qtaUnit": 5,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/01/2029"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R3_Grigio",
-      "articolo": "Sondino da aspirazione",
-      "principio": "",
-      "misura": "18CH",
-      "colore": "Rosso",
-      "marca": "wellead",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 10,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "31/03/2028"
-    },
-    {
-      "area": "RISERVE",
-      "box": "R3_Grigio",
-      "articolo": "Sondino da aspirazione",
-      "principio": "",
-      "misura": "18CH",
-      "colore": "Rosso",
-      "marca": "wellead",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 10,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "04/12/2029"
+      "scadStr": "30/06/2026"
     },
     {
       "area": "RISERVE",
@@ -6012,7 +6012,7 @@
       "marca": "wellead",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 10,
+      "qtaUnit": 15,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "04/12/2029"
@@ -6027,10 +6027,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 8,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": "31/12/2026"
     },
     {
       "area": "RISERVE",
@@ -6042,10 +6042,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 12,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "ND"
+      "scadStr": "30/07/2029"
     },
     {
       "area": "KIT MEDICAZIONE n°1",
@@ -6057,10 +6057,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 23,
+      "qtaUnit": 36,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/11/2026"
+      "scadStr": ""
     },
     {
       "area": "KIT MEDICAZIONE n°1",
@@ -6072,10 +6072,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 13,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/08/2025"
+      "scadStr": "01/02/2028"
     },
     {
       "area": "KIT MEDICAZIONE n°1",
@@ -6087,10 +6087,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/02/2028"
+      "scadStr": "01/09/2028"
     },
     {
       "area": "KIT MEDICAZIONE n°1",
@@ -6105,7 +6105,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/09/2028"
+      "scadStr": "01/03/2026"
     },
     {
       "area": "KIT MEDICAZIONE n°1",
@@ -6120,7 +6120,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/03/2026"
+      "scadStr": "01/08/2025"
     },
     {
       "area": "KIT MEDICAZIONE n°1",
@@ -6135,7 +6135,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/08/2025"
+      "scadStr": ""
     },
     {
       "area": "KIT MEDICAZIONE n°1",
@@ -6162,7 +6162,7 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
@@ -6177,7 +6177,7 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
@@ -6195,7 +6195,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "01/10/2026"
     },
     {
       "area": "KIT MEDICAZIONE n°1",
@@ -6207,10 +6207,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/10/2026"
+      "scadStr": ""
     },
     {
       "area": "KIT MEDICAZIONE n°1",
@@ -6225,7 +6225,7 @@
       "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/07/2028"
+      "scadStr": ""
     },
     {
       "area": "KIT MEDICAZIONE n°1",
@@ -6318,7 +6318,7 @@
       "scadStr": ""
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa Gialla",
       "articolo": "Deflussori",
       "principio": "",
@@ -6333,7 +6333,7 @@
       "scadStr": ""
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa Gialla",
       "articolo": "Nastro Telato/Carta",
       "principio": "",
@@ -6348,7 +6348,7 @@
       "scadStr": ""
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa Gialla",
       "articolo": "Nastro Telato/Carta",
       "principio": "",
@@ -6363,7 +6363,7 @@
       "scadStr": ""
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa Gialla",
       "articolo": "Benda coadesiva (selfix)",
       "principio": "",
@@ -6378,7 +6378,7 @@
       "scadStr": "01/06/2027"
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa Gialla",
       "articolo": "Forbice",
       "principio": "",
@@ -6393,7 +6393,7 @@
       "scadStr": ""
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa Gialla",
       "articolo": "Cerotti per Ago Cannula",
       "principio": "",
@@ -6408,7 +6408,7 @@
       "scadStr": "01/01/2026"
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa Gialla",
       "articolo": "Laccio Emostatico",
       "principio": "",
@@ -6423,7 +6423,7 @@
       "scadStr": ""
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa Gialla",
       "articolo": "Ago Cannula",
       "principio": "",
@@ -6438,7 +6438,7 @@
       "scadStr": "01/01/2028"
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa Gialla",
       "articolo": "Compresse di garza sterile piccole",
       "principio": "",
@@ -6447,13 +6447,13 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 6,
+      "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/03/2026"
+      "scadStr": "01/10/2027"
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa Gialla",
       "articolo": "Rubinetti a 3 vie",
       "principio": "",
@@ -6462,13 +6462,13 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "20/08/2025"
+      "scadStr": "01/11/2025"
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa Gialla",
       "articolo": "Ago Aspirazione",
       "principio": "",
@@ -6477,13 +6477,13 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 5,
+      "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "01/09/2025"
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa Gialla",
       "articolo": "Siringhe senza ago",
       "principio": "",
@@ -6492,13 +6492,13 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 5,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/01/2026"
+      "scadStr": "01/05/2026"
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa Gialla",
       "articolo": "Gel mani",
       "principio": "",
@@ -6507,13 +6507,13 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/05/2025"
+      "scadStr": "01/03/2026"
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa blu",
       "articolo": "Fisiologica/Sodio Cloruro 0,9%",
       "principio": "",
@@ -6528,7 +6528,7 @@
       "scadStr": "01/10/2026"
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa blu",
       "articolo": "Elettrolitica",
       "principio": "",
@@ -6540,10 +6540,10 @@
       "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/01/2027"
+      "scadStr": ""
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa blu",
       "articolo": "Elettrolitica",
       "principio": "",
@@ -6552,13 +6552,13 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/11/2026"
+      "scadStr": "31/08/2026"
     },
     {
-      "area": "KIT INFUSIONE  n°1",
+      "area": "KIT INFUSIONE n°1",
       "box": "Borsa blu",
       "articolo": "Glucosio",
       "principio": "",
@@ -6600,7 +6600,7 @@
       "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/09/2025"
+      "scadStr": "01/03/2026"
     },
     {
       "area": "KIT MEDICAZIONE n°2",
@@ -6615,7 +6615,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/01/2026"
+      "scadStr": "01/10/2026"
     },
     {
       "area": "KIT MEDICAZIONE n°2",
@@ -6630,7 +6630,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/03/2026"
+      "scadStr": "01/11/2026"
     },
     {
       "area": "KIT MEDICAZIONE n°2",
@@ -6642,10 +6642,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/06/2026"
+      "scadStr": "01/09/2025"
     },
     {
       "area": "KIT MEDICAZIONE n°2",
@@ -6675,7 +6675,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "01/03/2026"
     },
     {
       "area": "KIT MEDICAZIONE n°2",
@@ -6687,10 +6687,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "30/08/2026"
+      "scadStr": "01/06/2026"
     },
     {
       "area": "KIT MEDICAZIONE n°2",
@@ -6705,7 +6705,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": ""
+      "scadStr": "01/01/2026"
     },
     {
       "area": "KIT MEDICAZIONE n°2",
@@ -6720,7 +6720,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/06/2026"
+      "scadStr": ""
     },
     {
       "area": "KIT MEDICAZIONE n°2",
@@ -6732,30 +6732,15 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 3,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/07/2028"
+      "scadStr": "30/08/2026"
     },
     {
       "area": "KIT MEDICAZIONE n°2",
       "box": "Borsa blu",
       "articolo": "Ghiaccio istantaneo",
-      "principio": "",
-      "misura": "",
-      "colore": "",
-      "marca": "",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 3,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "01/02/2028"
-    },
-    {
-      "area": "KIT MEDICAZIONE n°2",
-      "box": "Borsa blu",
-      "articolo": "Forbici",
       "principio": "",
       "misura": "",
       "colore": "",
@@ -6770,6 +6755,21 @@
     {
       "area": "KIT MEDICAZIONE n°2",
       "box": "Borsa blu",
+      "articolo": "Forbici",
+      "principio": "",
+      "misura": "",
+      "colore": "",
+      "marca": "",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 1,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "01/06/2026"
+    },
+    {
+      "area": "KIT MEDICAZIONE n°2",
+      "box": "Borsa blu",
       "articolo": "Copertine isotermiche",
       "principio": "",
       "misura": "",
@@ -6777,10 +6777,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 4,
+      "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/03/2027"
+      "scadStr": ""
     },
     {
       "area": "KIT MEDICAZIONE n°2",
@@ -6807,10 +6807,10 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 6,
+      "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/08/2026"
+      "scadStr": "01/03/2027"
     },
     {
       "area": "KIT MEDICAZIONE n°2",
@@ -6825,7 +6825,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/01/2026"
+      "scadStr": ""
     },
     {
       "area": "KIT MEDICAZIONE n°2",
@@ -6837,13 +6837,13 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 2,
+      "qtaUnit": 6,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/02/2026"
+      "scadStr": "01/08/2026"
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa Gialla",
       "articolo": "Deflussori",
       "principio": "",
@@ -6858,7 +6858,7 @@
       "scadStr": "01/04/2025"
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa Gialla",
       "articolo": "Nastro Telato/Carta",
       "principio": "",
@@ -6873,7 +6873,7 @@
       "scadStr": ""
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa Gialla",
       "articolo": "Nastro Telato/Carta",
       "principio": "",
@@ -6888,7 +6888,7 @@
       "scadStr": "01/01/2026"
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa Gialla",
       "articolo": "Benda coadesiva (selfix)",
       "principio": "",
@@ -6903,7 +6903,7 @@
       "scadStr": ""
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa Gialla",
       "articolo": "Forbice",
       "principio": "",
@@ -6918,7 +6918,7 @@
       "scadStr": ""
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa Gialla",
       "articolo": "Cerotti per Ago Cannula",
       "principio": "",
@@ -6933,7 +6933,7 @@
       "scadStr": "01/01/2026"
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa Gialla",
       "articolo": "Laccio Emostatico",
       "principio": "",
@@ -6948,7 +6948,7 @@
       "scadStr": ""
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa Gialla",
       "articolo": "Ago Cannula",
       "principio": "",
@@ -6963,7 +6963,7 @@
       "scadStr": "01/01/2028"
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa Gialla",
       "articolo": "Compresse di garza sterile piccole",
       "principio": "",
@@ -6972,13 +6972,13 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 6,
+      "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/10/2026"
+      "scadStr": "01/10/2027"
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa Gialla",
       "articolo": "Rubinetti a 3 vie",
       "principio": "",
@@ -6990,10 +6990,10 @@
       "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "20/08/2025"
+      "scadStr": "01/12/2025"
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa Gialla",
       "articolo": "Ago Aspirazione",
       "principio": "",
@@ -7002,13 +7002,13 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 5,
+      "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/10/2025"
+      "scadStr": "01/09/2025"
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa Gialla",
       "articolo": "Siringhe",
       "principio": "",
@@ -7017,13 +7017,13 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 5,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/05/2025"
+      "scadStr": "01/05/2026"
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa Gialla",
       "articolo": "Gel mani",
       "principio": "",
@@ -7032,13 +7032,13 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 1,
+      "qtaUnit": 2,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/01/2025"
+      "scadStr": "01/06/2026"
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa blu",
       "articolo": "Fisiologica/Sodio Cloruro 0,9%",
       "principio": "",
@@ -7053,7 +7053,7 @@
       "scadStr": ""
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa blu",
       "articolo": "Elettrolitica",
       "principio": "",
@@ -7068,7 +7068,7 @@
       "scadStr": "30/11/2026"
     },
     {
-      "area": "KIT INFUSIONE  n°2",
+      "area": "KIT INFUSIONE n°2",
       "box": "Borsa blu",
       "articolo": "Glucosio",
       "principio": "",
@@ -7109,184 +7109,10 @@
       "lotto": "",
       "qtaUnit": 1,
       "qtaConf": 1,
-      "qtaOttimale": 1899,
+      "qtaOttimale": 1900,
       "scadStr": "06/2028"
-    },
-    {
-      "area": "GONDOLA",
-      "box": "1",
-      "articolo": "test",
-      "principio": "",
-      "misura": "",
-      "colore": "",
-      "marca": "",
-      "tipo": "",
-      "categoria": "",
-      "qtaConf": 551,
-      "qtaUnit": 1,
-      "qtaOttimale": 0,
-      "scadStr": "01/2027",
-      "lotto": "",
-      "note": "[aggiunto da: Eleonora]"
-    },
-    {
-      "area": "GONDOLA",
-      "box": "1",
-      "articolo": "Test sera",
-      "principio": "",
-      "misura": "",
-      "colore": "",
-      "marca": "",
-      "tipo": "",
-      "categoria": "",
-      "qtaConf": 5,
-      "qtaUnit": 0,
-      "qtaOttimale": 0,
-      "scadStr": "",
-      "lotto": "",
-      "note": "[aggiunto da: Eleonora]"
-    },
-    {
-      "area": "GONDOLA",
-      "box": "1",
-      "articolo": "Test di Log",
-      "principio": "",
-      "misura": "",
-      "colore": "",
-      "marca": "",
-      "tipo": "",
-      "categoria": "",
-      "qtaConf": 1,
-      "qtaUnit": 1,
-      "qtaOttimale": 0,
-      "scadStr": "",
-      "lotto": "",
-      "note": "[aggiunto da: Eleonora]"
-    },
-    {
-      "area": "KIT MEDICAZIONE n°2",
-      "box": "Borsa blu",
-      "articolo": "Deflussore",
-      "principio": "",
-      "misura": "",
-      "colore": "",
-      "marca": "Porky",
-      "tipo": "",
-      "categoria": "",
-      "qtaConf": 1,
-      "qtaUnit": 1,
-      "qtaOttimale": 0,
-      "scadStr": "",
-      "lotto": "",
-      "note": "[aggiunto da: Porky]"
     }
   ],
-  "log_carichi": [
-    {
-      "ts": "25/03/2026, 16:26:04",
-      "operatore": "Porky",
-      "articolo": "Deflussore",
-      "marca": "Porky",
-      "box": "Borsa blu",
-      "area": "KIT MEDICAZIONE n°2",
-      "misura": "",
-      "colore": "",
-      "tipo": "",
-      "scadenza": "",
-      "qtaConfezioni": 1,
-      "quantita": 1,
-      "lotto": "",
-      "note": "[aggiunto da: Porky]"
-    },
-    {
-      "ts": "25/03/2026, 16:24:57",
-      "operatore": "Porky",
-      "articolo": "Forbici di Robin",
-      "marca": "",
-      "box": "7",
-      "area": "GONDOLA",
-      "misura": "",
-      "colore": "",
-      "tipo": "",
-      "scadenza": "03/2027",
-      "qtaConfezioni": 1,
-      "quantita": 1,
-      "lotto": "049",
-      "note": ""
-    },
-    {
-      "ts": "24/03/2026, 10:02:47",
-      "operatore": "Eleonora",
-      "articolo": "Test di Log",
-      "marca": "",
-      "box": "1",
-      "area": "GONDOLA",
-      "misura": "",
-      "colore": "",
-      "tipo": "",
-      "scadenza": "",
-      "qtaConfezioni": 1,
-      "quantita": 1,
-      "lotto": "",
-      "note": "[aggiunto da: Eleonora]"
-    }
-  ],
-  "log_prelievi": [
-    {
-      "ts": "25/03/2026, 16:28:15",
-      "operatore": "Porky",
-      "articolo": "Benda coesiva",
-      "marca": "Nexcare",
-      "box": "6",
-      "area": "GONDOLA",
-      "misura": "",
-      "colore": "",
-      "tipo": "",
-      "quantita": 2,
-      "qtaConfezioni": 0,
-      "note": ""
-    },
-    {
-      "ts": "25/03/2026, 16:27:46",
-      "operatore": "Porky",
-      "articolo": "Flumazenil Hameln",
-      "marca": "Hameln",
-      "box": "F-MI",
-      "area": "FARMACI",
-      "misura": "0,1mg/ml",
-      "colore": "",
-      "tipo": "Uso sottocutaneo intramuscolo, endovenoso",
-      "quantita": 1,
-      "qtaConfezioni": 0,
-      "note": ""
-    },
-    {
-      "ts": "25/03/2026, 16:27:09",
-      "operatore": "Porky",
-      "articolo": "Benda elastica",
-      "marca": "Boscarol",
-      "box": "4",
-      "area": "GONDOLA",
-      "misura": "7x2,25 cm",
-      "colore": "",
-      "tipo": "",
-      "quantita": 4,
-      "qtaConfezioni": 0,
-      "note": ""
-    },
-    {
-      "ts": "24/03/2026, 10:22:26",
-      "operatore": "Eleonora",
-      "articolo": "Test sera",
-      "marca": "",
-      "box": "1",
-      "area": "GONDOLA",
-      "misura": "",
-      "colore": "",
-      "tipo": "",
-      "quantita": 1,
-      "qtaConfezioni": 0,
-      "note": ""
-    }
-  ]
+  "log_carichi": [],
+  "log_prelievi": []
 }
