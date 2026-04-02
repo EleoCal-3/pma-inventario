@@ -707,8 +707,6 @@ function parseCSV(text) {
     if (statoScad.includes('🚫 SCADUTO')) status = 'scaduto';
     else if (statoScad.includes('🟠 IN SCADENZA')) status = 'critico';
     else if (statoQta.includes('🔴 ESAURITO') || qtaUnit <= 0) status = 'scaduto';
-    else if (qtaOttimale > 0 && qtaUnit < qtaOttimale) status = 'attenzione';
-    else if (statoQta.includes('🟡 SOTTO SOGLIA')) status = 'attenzione';
 
     // Parsa la data di scadenza per la timeline
     let scadDate = null;
@@ -852,8 +850,7 @@ function exportDaOrdinare() {
     });
     lines.push('');
   });
-  const testo = lines.join('
-');
+  const testo = lines.join('\n');
   if (navigator.clipboard) {
     navigator.clipboard.writeText(testo).then(() => showToast('✓ Lista copiata negli appunti', false, true));
   } else {
@@ -873,8 +870,7 @@ function exportDaOrdinareCSV() {
     return [item.area, item.box, item.articolo, item.marca, item.misura, item.colore,
             item.scadStr||'', isScad ? 'Scaduto' : 'Esaurito'];
   });
-  const csv = [header,...rows].map(r=>r.map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`).join(',')).join('
-');
+  const csv = [header,...rows].map(r=>r.map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
   const blob = new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});
   const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
   a.download=`pma_da_ordinare_${new Date().toISOString().slice(0,10)}.csv`; a.click();
@@ -1661,10 +1657,7 @@ function parseDBItem(item) {
     status = 'scaduto';
   } else if (scadDate) {
     const days = (scadDate - new Date()) / 86400000;
-    if (days <= 60)                                  status = 'critico';
-    else if (qtaOttimale > 0 && qtaUnit < qtaOttimale) status = 'attenzione';
-  } else if (qtaOttimale > 0 && qtaUnit < qtaOttimale) {
-    status = 'attenzione';
+    if (days <= 60) status = 'critico';
   }
   return { ...item, qtaUnit, qtaConf, qtaOttimale, scadDate, status };
 }
