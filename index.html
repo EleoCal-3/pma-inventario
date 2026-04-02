@@ -403,6 +403,14 @@ textarea.modal-field { resize: none; }
       <input type="text" id="search" placeholder="Cerca articolo, marca, box…" autocomplete="off" autocorrect="off" spellcheck="false">
     </div>
   </div>
+  <div class="searchbar" id="dash-searchbar" style="display:none">
+    <div class="search-inner">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="dash-search" placeholder="Cerca articolo, marca, principio…" autocomplete="off" autocorrect="off" spellcheck="false" oninput="dashSearchGo()" onkeydown="if(event.key==='Enter')dashSearchGo(true)">
+    </div>
+  </div>
 </header>
 
 <div style="position:relative">
@@ -425,13 +433,6 @@ textarea.modal-field { resize: none; }
 
 <!-- DASHBOARD VIEW -->
 <div id="dashboard" style="display:block">
-  <div class="dash-searchbar">
-    <div class="dash-search-inner">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" id="dash-search" placeholder="Cerca articolo, marca, principio…" autocomplete="off" autocorrect="off" spellcheck="false" oninput="dashSearchGo()" onkeydown="if(event.key==='Enter')dashSearchGo(true)">
-    </div>
-  </div>
-
   <div class="kpi-row" id="kpi-row"></div>
 
   <div class="dash-section">
@@ -934,19 +935,25 @@ function switchTab(tab) {
   document.getElementById('daordinare').style.display   = tab==='daordinare' ? 'block' : 'none';
   document.getElementById('log-tab').style.display      = tab==='log'        ? 'block' : 'none';
   document.getElementById('avanzate-tab').style.display = tab==='avanzate'   ? 'block' : 'none';
-  document.querySelector('.searchbar').style.display = tab==='inventario' ? '' : 'none';
+  document.querySelector('.searchbar').style.display  = tab==='inventario' ? '' : 'none';
+  document.getElementById('dash-searchbar').style.display = tab==='dashboard'  ? '' : 'none';
   if (tab === 'dashboard')  renderDashboard();
   if (tab === 'daordinare') renderDaOrdinare();
   if (tab === 'log')        renderLog();
 }
 
 // ── INVENTARIO RENDER ──
-const KIT_AREAS = ['KIT MEDICAZIONE n°1','KIT MEDICAZIONE n°2','KIT INFUSIONE  n°1','KIT INFUSIONE  n°2'];
+// Normalizza spazi multipli: gestisce sia "KIT INFUSIONE  n°1" (JSON) che "KIT INFUSIONE n°1" (CSV)
+function normArea(a) { return (a || '').replace(/\s+/g, ' ').trim(); }
+function isKitArea(a) {
+  const n = normArea(a).toUpperCase();
+  return n.startsWith('KIT MEDICAZIONE') || n.startsWith('KIT INFUSIONE');
+}
 
 function getFiltered() {
   let items;
   if (area === 'TUTTI') items = ITEMS;
-  else if (area === 'KIT') items = ITEMS.filter(i => KIT_AREAS.includes(i.area));
+  else if (area === 'KIT') items = ITEMS.filter(i => isKitArea(i.area));
   else items = ITEMS.filter(i => i.area === area);
   if (boxFilter !== 'TUTTI') items = items.filter(i => i.box === boxFilter);
   if (filter !== 'all') items = items.filter(i => i.status === filter);
@@ -967,11 +974,10 @@ function render() {
 }
 
 function renderTabs() {
-  const KIT_AREAS = ['KIT MEDICAZIONE n°1','KIT MEDICAZIONE n°2','KIT INFUSIONE  n°1','KIT INFUSIONE  n°2'];
   const rawAreas = [...new Set(ITEMS.map(i => i.area))];
-  const nonKitAreas = rawAreas.filter(a => !KIT_AREAS.includes(a));
-  const hasKit = rawAreas.some(a => KIT_AREAS.includes(a));
-  const nKit = ITEMS.filter(i => KIT_AREAS.includes(i.area)).length;
+  const nonKitAreas = rawAreas.filter(a => !isKitArea(a));
+  const hasKit = rawAreas.some(a => isKitArea(a));
+  const nKit = ITEMS.filter(i => isKitArea(i.area)).length;
   const tabs = ['TUTTI', ...nonKitAreas];
   if (hasKit) tabs.push('KIT');
   const isKitActive = area === 'KIT';
@@ -1024,11 +1030,12 @@ function renderBoxFilters() {
 
 function renderKitView() {
   const el = document.getElementById('content');
+  // KIT_DEFS usa chiavi normalizzate (spazio singolo); il confronto usa normArea()
   const KIT_DEFS = [
-    { key: 'KIT MEDICAZIONE n°1', label: 'Medicazione 1', borse: ['Borsa blu'] },
-    { key: 'KIT MEDICAZIONE n°2', label: 'Medicazione 2', borse: ['Borsa blu'] },
-    { key: 'KIT INFUSIONE  n°1', label: 'Infusione 1',   borse: ['Borsa Gialla', 'Borsa blu'] },
-    { key: 'KIT INFUSIONE  n°2', label: 'Infusione 2',   borse: ['Borsa Gialla', 'Borsa blu'] },
+    { key: 'KIT MEDICAZIONE n°1', label: 'Kit Medicazione n°1', borse: ['Borsa blu'] },
+    { key: 'KIT MEDICAZIONE n°2', label: 'Kit Medicazione n°2', borse: ['Borsa blu'] },
+    { key: 'KIT INFUSIONE n°1',   label: 'Kit Infusione n°1',   borse: ['Borsa Gialla', 'Borsa blu'] },
+    { key: 'KIT INFUSIONE n°2',   label: 'Kit Infusione n°2',   borse: ['Borsa Gialla', 'Borsa blu'] },
   ];
   const BORSA_COLORS = { 'Borsa blu': '#1A4B8A', 'Borsa Gialla': '#C85000' };
   const statusRank = { scaduto: 3, critico: 2, attenzione: 1, ok: 0 };
@@ -1037,7 +1044,7 @@ function renderKitView() {
   if (search) {
     // In ricerca: mostra lista flat filtrata
     const q = search.toLowerCase();
-    const items = ITEMS.filter(i => KIT_AREAS.includes(i.area) && (
+    const items = ITEMS.filter(i => isKitArea(i.area) && (
       i.articolo.toLowerCase().includes(q) || i.marca.toLowerCase().includes(q) || i.principio.toLowerCase().includes(q)
     ));
     if (!items.length) { el.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--ink-3)">🔍 Nessun articolo trovato</div>'; return; }
@@ -1068,7 +1075,7 @@ function renderKitView() {
 
   // Vista normale: 4 card borsone
   el.innerHTML = '<div style="padding:12px 16px 120px">' + KIT_DEFS.map(kit => {
-    const kitItems = ITEMS.filter(i => i.area === kit.key);
+    const kitItems = ITEMS.filter(i => normArea(i.area) === normArea(kit.key));
     if (!kitItems.length) return '';
     const nScad = kitItems.filter(i=>i.status==='scaduto').length;
     const nCrit = kitItems.filter(i=>i.status==='critico').length;
@@ -1191,8 +1198,7 @@ function renderContent() {
 function toggleBox(box){ document.getElementById('bc-'+box)?.classList.toggle('open'); }
 function setArea(a){ area=a; boxFilter='TUTTI'; filter='all'; render(); }
 function goToArea(a) {
-  const KIT_LIKE = ['KIT MEDICAZIONE n°1','KIT MEDICAZIONE n°2','KIT INFUSIONE  n°1','KIT INFUSIONE  n°2'];
-  if (KIT_LIKE.includes(a)) { setArea('KIT'); } else { setArea(a); }
+  if (isKitArea(a) || a === 'KIT') { setArea('KIT'); } else { setArea(a); }
   switchTab('inventario');
 }
 function setFilter(f){ filter=f; renderFilters(); renderBoxFilters(); renderContent(); }
@@ -1220,9 +1226,8 @@ function renderDashboard() {
   // Bar chart per area
   const areas = [...new Set(ITEMS.map(i=>i.area))];
   // Tile grid Option B
-  const KIT_AREAS_DASH = ['KIT MEDICAZIONE n°1','KIT MEDICAZIONE n°2','KIT INFUSIONE  n°1','KIT INFUSIONE  n°2'];
-  const nonKitAreas = areas.filter(a => !KIT_AREAS_DASH.includes(a));
-  const kitAreas    = areas.filter(a => KIT_AREAS_DASH.includes(a));
+  const nonKitAreas = areas.filter(a => !isKitArea(a));
+  const kitAreas    = areas.filter(a => isKitArea(a));
 
   const badgesHTML = (items) => {
     const s = items.filter(i=>i.status==='scaduto').length;
@@ -1261,7 +1266,7 @@ function renderDashboard() {
 
   const tiles = nonKitAreas.map(a => makeTile(a, ITEMS.filter(i=>i.area===a), a, areaColor(a)));
   if (kitAreas.length) {
-    const kitItems = ITEMS.filter(i=>KIT_AREAS_DASH.includes(i.area));
+    const kitItems = ITEMS.filter(i=>isKitArea(i.area));
     tiles.push(makeWideTile('Borse Area', kitItems, 'KIT', '#5B3FA6'));
   }
   document.getElementById('area-chart').innerHTML = `<div class="area-tiles">${tiles.join('')}</div>`;
