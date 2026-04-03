@@ -1944,7 +1944,7 @@ function renderLog() {
         <div class="log-dot ${isCarico?'blue':''}"></div>
         <div class="log-info">
           <div class="log-name">${e.articolo}${e.marca?' · '+e.marca:''}${details?` <span style="font-family:var(--mono);font-size:10px;color:var(--ink-3);">(${details})</span>`:''}</div>
-          <div class="log-meta">${e.ts} · Box ${e.box}${(isCarico||e.scadenza)&&e.scadenza?' · Scad: '+e.scadenza:''}</div>
+          <div class="log-meta">${e.ts} · Box ${e.box}${(isCarico||e.scadenza)&&e.scadenza?' · Scad: '+e.scadenza:''}${e.operatore?' · '+e.operatore:''}</div>
         </div>
         <div class="log-qty ${isCarico?'plus':''}">${qStr}</div>
       </div>`;
