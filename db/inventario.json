@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-02T04:36:57.403Z",
+  "lastUpdated": "2026-04-03T13:28:50.803Z",
   "inventario": [
     {
       "area": "GONDOLA",
@@ -12,7 +12,7 @@
       "marca": "",
       "tipo": "",
       "lotto": "",
-      "qtaUnit": 3,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": ""
@@ -7084,5 +7084,20 @@
     }
   ],
   "log_carichi": [],
-  "log_prelievi": []
+  "log_prelievi": [
+    {
+      "ts": "03/04/2026, 15:28:50",
+      "operatore": "Eleonora",
+      "articolo": "Laccio emostatico arterioso - Tourniquet",
+      "marca": "",
+      "box": "1",
+      "area": "GONDOLA",
+      "misura": "",
+      "colore": "Nero",
+      "tipo": "",
+      "quantita": 2,
+      "qtaConfezioni": 0,
+      "note": "Test"
+    }
+  ]
 }
