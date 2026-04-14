@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-14T06:56:09.086Z",
+  "lastUpdated": "2026-04-14T08:11:02.231Z",
   "inventario": [
     {
       "area": "GONDOLA",
@@ -3397,6 +3397,21 @@
       "box": "ACCESSO VENOSO",
       "articolo": "AGO CANNULA",
       "principio": "",
+      "misura": "14G",
+      "colore": "Arancione",
+      "marca": "BRAUN B",
+      "tipo": "",
+      "lotto": "",
+      "qtaUnit": 4,
+      "qtaConf": 0,
+      "qtaOttimale": 0,
+      "scadStr": "01/01/2028"
+    },
+    {
+      "area": "MEDICAZIONI",
+      "box": "ACCESSO VENOSO",
+      "articolo": "AGO CANNULA",
+      "principio": "",
       "misura": "16G",
       "colore": "Grigio",
       "marca": "BRAUN B",
@@ -3427,21 +3442,6 @@
       "box": "ACCESSO VENOSO",
       "articolo": "AGO CANNULA",
       "principio": "",
-      "misura": "22G",
-      "colore": "Azzurro",
-      "marca": "BRAUN B",
-      "tipo": "",
-      "lotto": "",
-      "qtaUnit": 4,
-      "qtaConf": 0,
-      "qtaOttimale": 0,
-      "scadStr": "31/05/2026"
-    },
-    {
-      "area": "MEDICAZIONI",
-      "box": "ACCESSO VENOSO",
-      "articolo": "AGO CANNULA",
-      "principio": "",
       "misura": "20G",
       "colore": "Rosa",
       "marca": "BRAUN B",
@@ -3457,15 +3457,15 @@
       "box": "ACCESSO VENOSO",
       "articolo": "AGO CANNULA",
       "principio": "",
-      "misura": "14G",
-      "colore": "Arancione",
+      "misura": "22G",
+      "colore": "Azzurro",
       "marca": "BRAUN B",
       "tipo": "",
       "lotto": "",
       "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "01/01/2028"
+      "scadStr": "31/05/2026"
     },
     {
       "area": "MEDICAZIONI",
@@ -3585,7 +3585,7 @@
       "qtaUnit": 5,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "25/10/2029"
+      "scadStr": "47416"
     },
     {
       "area": "MEDICAZIONI",
