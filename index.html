@@ -744,8 +744,10 @@ function parseCSV(text) {
     let scadDate = null;
     const scadRaw = get(obj, 'SCADENZA');
     if (scadRaw && scadRaw !== 'ND' && scadRaw !== 'nd') {
-      const m = scadRaw.match(/(\d{1,2})[\/\-](\d{4})/);
-      if (m) scadDate = new Date(parseInt(m[2]), parseInt(m[1])-1, 1);
+      const mDMY = scadRaw.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); // DD/MM/YYYY
+      const mMY  = scadRaw.match(/^(\d{1,2})\/(\d{4})$/);             // MM/YYYY (vecchio formato)
+      if (mDMY) scadDate = new Date(parseInt(mDMY[3]), parseInt(mDMY[2]) - 1, parseInt(mDMY[1]));
+      else if (mMY) scadDate = new Date(parseInt(mMY[2]), parseInt(mMY[1]), 0); // ultimo giorno del mese
       else { const d = new Date(scadRaw); if (!isNaN(d)) scadDate = d; }
     }
 
@@ -1740,8 +1742,10 @@ function parseDBItem(item) {
   const scadRaw     = item.scadStr || '';
   let scadDate = null;
   if (scadRaw && scadRaw !== 'ND' && scadRaw !== 'nd') {
-    const m = scadRaw.match(/(\d{1,2})[\/-](\d{4})/);
-    if (m) scadDate = new Date(parseInt(m[2]), parseInt(m[1]) - 1, 1);
+    const mDMY = scadRaw.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); // DD/MM/YYYY
+    const mMY  = scadRaw.match(/^(\d{1,2})\/(\d{4})$/);             // MM/YYYY (vecchio formato)
+    if (mDMY) scadDate = new Date(parseInt(mDMY[3]), parseInt(mDMY[2]) - 1, parseInt(mDMY[1]));
+    else if (mMY) scadDate = new Date(parseInt(mMY[2]), parseInt(mMY[1]), 0); // ultimo giorno del mese
     else { const d = new Date(scadRaw); if (!isNaN(d)) scadDate = d; }
   }
   let status = 'ok';
