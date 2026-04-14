@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-14T08:33:56.128Z",
+  "lastUpdated": "2026-04-14T08:38:55.581Z",
   "inventario": [
     {
       "area": "GONDOLA",
@@ -427,7 +427,7 @@
       "box": "15",
       "articolo": "Ago aspirazione",
       "principio": "",
-      "misura": "0,6x30\\23G",
+      "misura": "23G",
       "colore": "Azzurro",
       "marca": "BD Microlance",
       "tipo": "",
