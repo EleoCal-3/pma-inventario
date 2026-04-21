@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-21T22:21:07.816Z",
+  "lastUpdated": "2026-04-21T22:21:41.322Z",
   "inventario": [
     {
       "area": "GONDOLA",
@@ -3075,7 +3075,7 @@
       "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
-      "scadStr": "31/07/2030"
+      "scadStr": "31/07/2020"
     },
     {
       "area": "GONDOLA",
