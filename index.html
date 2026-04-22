@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>PMA · Inventario Scorte</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root {
   --red: #C8192A; --red-d: #9E1020; --red-l: #FDECEA;
@@ -716,55 +717,101 @@ function saveLogCarichi(){}
 function parseCSV(text) {
   const lines = text.trim().split('\n');
   if (lines.length < 2) return [];
-  function norm(h) { return h.trim().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[''`]/g,'').trim(); }
+
+  // Normalizza header: maiuscolo, rimuove accenti e apostrofi, compatta spazi
+  function norm(h) {
+    return h.trim().toUpperCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[''`']/g, '').replace(/\s+/g, ' ').trim();
+  }
+
   const headers = parseCSVLine(lines[0]).map(norm);
   const items = [];
-  function get(obj, prefix) { const k = Object.keys(obj).find(k => k.startsWith(prefix)); return k ? obj[k] : ''; }
+
+  // Cerca colonna il cui header normalizzato inizia con `prefix`
+  function colIdx(prefix) {
+    return headers.findIndex(h => h.startsWith(prefix));
+  }
+
+  // Converte DD/MM/YYYY o MM/YYYY in MM/YYYY (stesso formato usato da importaXLSX)
+  function parseScad(raw) {
+    if (!raw) return 'ND';
+    const s = raw.toString().trim();
+    if (!s || ['ND','N/D',''].includes(s.toUpperCase())) return 'ND';
+    // DD/MM/YYYY → MM/YYYY
+    const mDMY = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+    if (mDMY) return mDMY[2].padStart(2,'0') + '/' + mDMY[3];
+    // MM/YYYY già corretto
+    if (/^\d{1,2}\/\d{4}$/.test(s)) return s;
+    // Prova parse generico
+    const d = new Date(s);
+    if (!isNaN(d)) return String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
+    return s;
+  }
+
+  // Indici colonne (calcolati una volta sola)
+  const iArea  = colIdx('AREA');
+  const iBox   = colIdx('BOX');
+  const iArt   = colIdx('ARTICOLO');
+  const iPrinc = colIdx('PRINCIPIO');
+  const iMis   = colIdx('MISURA');
+  const iCol   = colIdx('COLORE');
+  const iMarc  = colIdx('MARCA');
+  const iTipo  = colIdx('TIPO');
+  const iCat   = colIdx('CATEGORIA');
+  const iLotto = colIdx('LOTTO');
+  const iNote  = colIdx('NOTE');
+  const iScad  = colIdx('SCADENZA');
+  // Quantità: cerca prima la forma estesa, poi fallback con parola parziale
+  const iQConf = colIdx('QUANTITA CONFEZIONI') !== -1 ? colIdx('QUANTITA CONFEZIONI')
+                  : headers.findIndex(h => h.includes('CONF') && h.includes('QUA'));
+  const iQUnit = colIdx('QUANTITA UNITARIA') !== -1 ? colIdx('QUANTITA UNITARIA')
+                  : headers.findIndex(h => h.includes('UNITARIA') || h.includes('UNITAR'));
+  const iQOtt  = colIdx('QUANTITA OTTIMALE') !== -1 ? colIdx('QUANTITA OTTIMALE')
+                  : headers.findIndex(h => h.includes('OTTIM'));
+
+  function cellStr(vals, idx) {
+    if (idx < 0 || idx >= vals.length) return '';
+    return (vals[idx] || '').trim();
+  }
+  function cellNum(vals, idx) {
+    const v = cellStr(vals, idx);
+    const n = parseFloat(v);
+    return isNaN(n) ? 0 : n;
+  }
 
   for (let i = 1; i < lines.length; i++) {
     const vals = parseCSVLine(lines[i]);
     if (vals.length < 3) continue;
-    const obj = {};
-    headers.forEach((h, idx) => { obj[h] = (vals[idx] || '').trim(); });
-    const articolo = get(obj, 'ARTICOLO');
+
+    const articolo = cellStr(vals, iArt);
     if (!articolo || articolo.length < 2) continue;
+    // Salta righe con formule o emoji di stato
+    if (articolo.startsWith('=') || articolo.startsWith('🔴') || articolo.startsWith('🟢')) continue;
 
-    const statoScad  = get(obj, 'STATO SCADENZA');
-    const statoQta   = get(obj, 'STATO QUANTIT');
-    const qtaUnit    = parseFloat(get(obj, 'QUANTITA UNITARIA') || get(obj, 'QUANTIT') || '0') || 0;
-    const qtaConf    = parseFloat(get(obj, 'QUANTITA CONFEZIONI') || '0') || 0;
-    const qtaOttimale= parseFloat(get(obj, 'QUANTITA OTTIMALE') || '0') || 0;
+    const boxRaw = cellStr(vals, iBox);
+    const boxNum = parseFloat(boxRaw);
+    const box    = (!isNaN(boxNum) && boxNum === Math.floor(boxNum)) ? String(Math.floor(boxNum)) : boxRaw;
 
-    let status = 'ok';
-    if (statoScad.includes('🚫 SCADUTO')) status = 'scaduto';
-    else if (statoScad.includes('🟠 IN SCADENZA')) status = 'critico';
-    else if (statoQta.includes('🔴 ESAURITO') || qtaUnit <= 0) status = 'scaduto';
-
-    // Parsa la data di scadenza per la timeline
-    let scadDate = null;
-    const scadRaw = get(obj, 'SCADENZA');
-    if (scadRaw && scadRaw !== 'ND' && scadRaw !== 'nd') {
-      const mDMY = scadRaw.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); // DD/MM/YYYY
-      const mMY  = scadRaw.match(/^(\d{1,2})\/(\d{4})$/);             // MM/YYYY (vecchio formato)
-      if (mDMY) scadDate = new Date(parseInt(mDMY[3]), parseInt(mDMY[2]) - 1, parseInt(mDMY[1]));
-      else if (mMY) scadDate = new Date(parseInt(mMY[2]), parseInt(mMY[1]), 0); // ultimo giorno del mese
-      else { const d = new Date(scadRaw); if (!isNaN(d)) scadDate = d; }
-    }
+    const qtaUnit    = cellNum(vals, iQUnit);
+    const qtaConf    = cellNum(vals, iQConf);
+    const qtaOttimale= cellNum(vals, iQOtt);
+    const scadStr    = parseScad(cellStr(vals, iScad));
 
     items.push({
-      area: get(obj, 'AREA') || 'ALTRO',
-      box: get(obj, 'BOX') || '?',
+      area:        cellStr(vals, iArea) || 'ALTRO',
+      box:         box || '?',
       articolo,
-      principio: get(obj, 'PRINCIPIO ATTIVO') || get(obj, 'PRINCIPIO') || '',
-      misura: get(obj, 'MISURA') || '',
-      colore: get(obj, 'COLORE') || '',
-      marca: get(obj, 'MARCA') || '',
-      tipo: get(obj, 'TIPO') || '',
-      lotto: get(obj, 'LOTTO') || '',
+      principio:   cellStr(vals, iPrinc),
+      misura:      cellStr(vals, iMis),
+      colore:      cellStr(vals, iCol),
+      marca:       cellStr(vals, iMarc),
+      tipo:        cellStr(vals, iTipo),
+      categoria:   cellStr(vals, iCat),
+      lotto:       cellStr(vals, iLotto),
+      note:        cellStr(vals, iNote),
       qtaUnit, qtaConf, qtaOttimale,
-      scadStr: scadRaw,
-      scadDate,
-      status
+      scadStr,
     });
   }
   return items;
@@ -1796,7 +1843,7 @@ function downloadDB() {
 // Migrazione one-shot: legge CSV da Google Sheets, crea db JSON su GitHub
 async function migraCSV() {
   if (!githubPAT) { showToast('Accedi prima', true); return; }
-  if (!confirm('Leggerà il foglio Google e creerà il database iniziale su GitHub.\nProcedere?')) return;
+  if (!confirm('Leggerà il foglio Google e sovrascriverà l\'inventario su GitHub.\nI log dei prelievi e carichi esistenti verranno conservati.\nProcedere?')) return;
   showToast('Lettura foglio Google…');
   try {
     const res = await fetch(CSV_URL);
@@ -1804,13 +1851,20 @@ async function migraCSV() {
     const items = parseCSV(await res.text());
     if (!items.length) throw new Error('Nessun articolo trovato nel foglio');
 
-    // Verifica se il file esiste già (per recuperare il SHA)
+    // Verifica se il file esiste già (per recuperare SHA e log esistenti)
+    let existingLogCarichi  = [];
+    let existingLogPrelievi = [];
     const check = await fetch(GITHUB_API, {
       headers: { 'Authorization': 'token ' + githubPAT, 'Accept': 'application/vnd.github.v3+json' }
     });
     if (check.ok) {
       const existing = await check.json();
       dbSHA = existing.sha;
+      try {
+        const existingDB = JSON.parse(atob(existing.content.replace(/\n/g,'')));
+        existingLogCarichi  = existingDB.log_carichi  || [];
+        existingLogPrelievi = existingDB.log_prelievi || [];
+      } catch(_) {}
     } else {
       dbSHA = '';
     }
@@ -1818,22 +1872,178 @@ async function migraCSV() {
     const newDB = {
       version: 1,
       lastUpdated: new Date().toISOString(),
-      inventario: items.map(({ scadDate, status, ...rest }) => rest),
-      log_carichi:  [],
-      log_prelievi: []
+      inventario: items,
+      log_carichi:  existingLogCarichi,
+      log_prelievi: existingLogPrelievi
     };
-    await githubWrite(newDB, `Migrazione iniziale: ${items.length} articoli — ${operatorName}`);
+    await githubWrite(newDB, `Sync da Google Sheets: ${items.length} articoli — ${operatorName}`);
     DB          = newDB;
-    logCarichi  = [];
-    logPrelievi = [];
+    logCarichi  = existingLogCarichi;
+    logPrelievi = existingLogPrelievi;
     ITEMS = newDB.inventario.map(parseDBItem);
     populateCaricoDropdowns();
     render();
     updateOrdCounter();
-    showToast(`✓ Database creato: ${items.length} articoli`, false, true);
+    showToast(`✓ Inventario aggiornato: ${items.length} articoli`, false, true);
   } catch(err) {
     showToast('❌ ' + err.message, true);
   }
+}
+
+// Importazione da file Excel (.xlsx) — via SheetJS
+async function importaXLSX() {
+  if (!githubPAT) { showToast('Accedi prima', true); return; }
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.xlsx,.xls';
+  input.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!confirm(`Importa "${file.name}" e sovrascrive l'inventario su GitHub?\nI log dei prelievi e carichi esistenti verranno conservati.\nProcedere?`)) return;
+    showToast('Lettura file Excel…');
+    try {
+      const buf  = await file.arrayBuffer();
+      const wb   = XLSX.read(buf, { type: 'array', cellDates: true });
+
+      // Cerca il foglio "Inventario"
+      const sheetName = wb.SheetNames.find(n => n.toLowerCase().includes('inventario')) || wb.SheetNames[0];
+      const ws   = wb.Sheets[sheetName];
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: null, raw: false });
+
+      if (rows.length < 2) throw new Error('Il foglio sembra vuoto o non ha righe dati');
+
+      // Mappa headers → indici
+      const hdrs = (rows[0] || []).map(h => (h || '').toString().trim().toUpperCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[''`Àà]/g, '').trim());
+
+      function colIdx(prefix) {
+        return hdrs.findIndex(h => h.startsWith(prefix));
+      }
+
+      const iArea  = colIdx('AREA');
+      const iBox   = colIdx('BOX');
+      const iArt   = colIdx('ARTICOLO');
+      const iPrinc = colIdx('PRINCIPIO');
+      const iMis   = colIdx('MISURA');
+      const iCol   = colIdx('COLORE') !== -1 ? colIdx('COLORE') : hdrs.findIndex(h => h === 'COLORE');
+      const iMarc  = colIdx('MARCA');
+      const iTipo  = colIdx('TIPO');
+      const iCat   = colIdx('CATEGORIA');
+      const iQConf = colIdx('QUANTITA CONFEZIONI') !== -1 ? colIdx('QUANTITA CONFEZIONI') : hdrs.findIndex(h => h.includes('CONF'));
+      const iQUnit = colIdx('QUANTITA UNITARIA') !== -1 ? colIdx('QUANTITA UNITARIA') : hdrs.findIndex(h => h.includes('UNITARIA') || h.includes('UNITAR'));
+      const iQOtt  = colIdx('QUANTITA OTTIMALE') !== -1 ? colIdx('QUANTITA OTTIMALE') : hdrs.findIndex(h => h.includes('OTTIM'));
+      const iScad  = colIdx('SCADENZA');
+      const iLotto = colIdx('LOTTO');
+      const iNote  = colIdx('NOTE');
+
+      function cellStr(row, idx) {
+        if (idx < 0 || idx >= row.length) return '';
+        const v = row[idx];
+        if (v === null || v === undefined) return '';
+        return v.toString().trim();
+      }
+      function cellNum(row, idx) {
+        if (idx < 0 || idx >= row.length) return 0;
+        const v = row[idx];
+        if (v === null || v === undefined) return 0;
+        const n = parseFloat(v);
+        return isNaN(n) ? 0 : n;
+      }
+      function parseScad(raw) {
+        if (!raw) return 'ND';
+        const s = raw.toString().trim();
+        if (!s || ['ND','N/D',''].includes(s.toUpperCase())) return 'ND';
+        // Formato DD/MM/YYYY → MM/YYYY
+        const mDMY = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+        if (mDMY) return mDMY[2].padStart(2,'0') + '/' + mDMY[3];
+        // Formato MM/YYYY già ok
+        if (/^\d{1,2}\/\d{4}$/.test(s)) return s;
+        // Data leggibile da SheetJS (es. "5/31/2026" o "31/5/2026")
+        const mMDY = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+        if (mMDY) return mMDY[1].padStart(2,'0') + '/' + mMDY[3];
+        // Prova parse generico
+        const d = new Date(s);
+        if (!isNaN(d)) {
+          const mm = String(d.getMonth()+1).padStart(2,'0');
+          return mm + '/' + d.getFullYear();
+        }
+        return s;
+      }
+
+      const items = [];
+      for (let i = 1; i < rows.length; i++) {
+        const r = rows[i];
+        const articolo = cellStr(r, iArt);
+        if (!articolo || articolo.length < 2) continue;
+        // Salta righe con formule o valori di stato
+        if (articolo.startsWith('=') || articolo.startsWith('🔴') || articolo.startsWith('🟢')) continue;
+
+        const boxRaw = cellStr(r, iBox);
+        const boxNum = parseFloat(boxRaw);
+        const box    = (!isNaN(boxNum) && boxNum === Math.floor(boxNum)) ? String(Math.floor(boxNum)) : boxRaw;
+
+        items.push({
+          area:        cellStr(r, iArea),
+          box,
+          articolo,
+          principio:   cellStr(r, iPrinc),
+          misura:      cellStr(r, iMis),
+          colore:      cellStr(r, iCol),
+          marca:       cellStr(r, iMarc),
+          tipo:        cellStr(r, iTipo),
+          categoria:   cellStr(r, iCat),
+          qtaConf:     cellNum(r, iQConf),
+          qtaUnit:     cellNum(r, iQUnit),
+          qtaOttimale: cellNum(r, iQOtt),
+          scadStr:     parseScad(cellStr(r, iScad)),
+          lotto:       cellStr(r, iLotto),
+          note:        cellStr(r, iNote),
+        });
+      }
+
+      if (!items.length) throw new Error('Nessun articolo valido trovato nel file Excel');
+
+      // Recupera log esistenti da GitHub
+      let existingLogCarichi  = [];
+      let existingLogPrelievi = [];
+      const check = await fetch(GITHUB_API, {
+        headers: { 'Authorization': 'token ' + githubPAT, 'Accept': 'application/vnd.github.v3+json' }
+      });
+      if (check.ok) {
+        const existing = await check.json();
+        dbSHA = existing.sha;
+        try {
+          const existingDB = JSON.parse(atob(existing.content.replace(/\n/g,'')));
+          existingLogCarichi  = existingDB.log_carichi  || [];
+          existingLogPrelievi = existingDB.log_prelievi || [];
+        } catch(_) {}
+      } else {
+        dbSHA = '';
+      }
+
+      const newDB = {
+        version: 1,
+        lastUpdated: new Date().toISOString(),
+        inventario: items,
+        log_carichi:  existingLogCarichi,
+        log_prelievi: existingLogPrelievi
+      };
+      await githubWrite(newDB, `Sync da Excel (${file.name}): ${items.length} articoli — ${operatorName}`);
+      DB          = newDB;
+      logCarichi  = existingLogCarichi;
+      logPrelievi = existingLogPrelievi;
+      ITEMS = newDB.inventario.map(parseDBItem);
+      populateCaricoDropdowns();
+      render();
+      updateOrdCounter();
+      showToast(`✓ Importati ${items.length} articoli da Excel`, false, true);
+    } catch(err) {
+      showToast('❌ ' + err.message, true);
+      console.error(err);
+    }
+  };
+  input.click();
 }
 
 // ── OPERAZIONI SU DATABASE (sostituisce Sheets API) ──
@@ -1999,9 +2209,15 @@ document.getElementById('modal-overlay').addEventListener('click', function(e){ 
     <button class="avanzate-btn green" onclick="downloadDB()">Scarica backup JSON</button>
   </div>
 
+  <div class="avanzate-card" style="border-color: var(--blue); background: var(--blue-l);">
+    <div class="avanzate-card-title">📥 Importa da file Excel (.xlsx)</div>
+    <div class="avanzate-card-desc">Seleziona il file <strong>Inventario_PMA_Per APP.xlsx</strong> dal tuo dispositivo. Sovrascrive l'inventario su GitHub con le quantità e scadenze aggiornate. I log dei movimenti vengono conservati.</div>
+    <button class="avanzate-btn blue" onclick="importaXLSX()">Seleziona file Excel…</button>
+  </div>
+
   <div class="avanzate-card">
     <div class="avanzate-card-title">🔄 Importa da Fogli Google</div>
-    <div class="avanzate-card-desc">Legge il foglio Google Sheets e sovrascrive il database su GitHub con i dati aggiornati. Da usare solo per la migrazione iniziale o per ripristino da Sheets.</div>
+    <div class="avanzate-card-desc">Legge il foglio Google Sheets pubblicato e sovrascrive l'inventario su GitHub. Usa questa opzione solo se il foglio Google è aggiornato. I log dei movimenti vengono conservati.</div>
     <button class="avanzate-btn blue" onclick="migraCSV()">Importa da Fogli Google</button>
   </div>
 </div>
