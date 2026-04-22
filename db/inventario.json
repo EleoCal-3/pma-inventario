@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "lastUpdated": "2026-04-22T22:04:48.445Z",
+  "lastUpdated": "2026-04-22T22:11:53.812Z",
   "lastId": 567,
   "inventario": [
     {
@@ -249,7 +249,7 @@
       "tipo": "",
       "categoria": "Materiale sanitario",
       "qtaConf": 0,
-      "qtaUnit": 6,
+      "qtaUnit": 5,
       "qtaOttimale": 0,
       "scadStr": "ND",
       "lotto": "",
@@ -10212,6 +10212,20 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "23/04/2026, 00:11:50",
+      "operatore": "Vale",
+      "articolo": "Forbici per medicazioni",
+      "marca": "",
+      "box": "7",
+      "area": "GONDOLA",
+      "misura": "",
+      "colore": "",
+      "tipo": "",
+      "quantita": 1,
+      "qtaConfezioni": 0,
+      "note": "Bianca"
+    },
     {
       "ts": "23/04/2026, 00:04:47",
       "operatore": "Vale",
