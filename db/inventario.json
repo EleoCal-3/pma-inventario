@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "lastUpdated": "2026-04-22T22:04:04.146Z",
+  "lastUpdated": "2026-04-22T22:04:48.445Z",
   "lastId": 567,
   "inventario": [
     {
@@ -1455,7 +1455,7 @@
       "tipo": "",
       "categoria": "Materiale sanitario",
       "qtaConf": 0,
-      "qtaUnit": 116,
+      "qtaUnit": 104,
       "qtaOttimale": 0,
       "scadStr": "11/2026",
       "lotto": "",
@@ -10212,6 +10212,20 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "23/04/2026, 00:04:47",
+      "operatore": "Vale",
+      "articolo": "Garza sterile",
+      "marca": "PIC Dare",
+      "box": "25",
+      "area": "GONDOLA",
+      "misura": "18x40 cm",
+      "colore": "",
+      "tipo": "",
+      "quantita": 12,
+      "qtaConfezioni": 0,
+      "note": "Bianca"
+    },
     {
       "ts": "23/04/2026, 00:04:03",
       "operatore": "Vale",
