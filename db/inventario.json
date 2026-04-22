@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "lastUpdated": "2026-04-22T10:37:23.118695",
+  "lastUpdated": "2026-04-22T21:36:17.088Z",
   "lastId": 567,
   "inventario": [
     {
@@ -2913,7 +2913,7 @@
       "tipo": "",
       "categoria": "Materiale sanitario",
       "qtaConf": 0,
-      "qtaUnit": 4,
+      "qtaUnit": 3,
       "qtaOttimale": 0,
       "scadStr": "06/2030",
       "lotto": "",
@@ -10211,5 +10211,20 @@
     }
   ],
   "log_carichi": [],
-  "log_prelievi": []
+  "log_prelievi": [
+    {
+      "ts": "22/04/2026, 23:36:16",
+      "operatore": "Vale",
+      "articolo": "Filtro AMBU - adulto",
+      "marca": "",
+      "box": "53",
+      "area": "GONDOLA",
+      "misura": "",
+      "colore": "",
+      "tipo": "",
+      "quantita": 1,
+      "qtaConfezioni": 0,
+      "note": "Carrello Medicazioni"
+    }
+  ]
 }
