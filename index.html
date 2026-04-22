@@ -1804,16 +1804,16 @@ function parseDBItem(item) {
     const days = (scadDate - new Date()) / 86400000;
     if (days <= 60) status = 'critico';
   }
-  return { ...item, qtaUnit, qtaConf, qtaOttimale, scadDate, status };
+  return { ...item, id: item.id ?? null, qtaUnit, qtaConf, qtaOttimale, scadDate, status };
 }
 
 // Download del database completo come JSON (backup locale)
 function exportInventarioCSV() {
   if (!DB || !DB.inventario || !DB.inventario.length) { showToast('Nessun dato da esportare', true); return; }
-  const headers = ['AREA','BOX','ARTICOLO','PRINCIPIO ATTIVO','MISURA','COLORE','MARCA','TIPO','CATEGORIA',
+  const headers = ['ID','AREA','BOX','ARTICOLO','PRINCIPIO ATTIVO','MISURA','COLORE','MARCA','TIPO','CATEGORIA',
                    'QUANTITÀ CONFEZIONI','QUANTITÀ UNITARIA','QUANTITÀ OTTIMALE','SCADENZA','LOTTO','NOTE'];
   const rows = DB.inventario.map(i => [
-    i.area||'', i.box||'', i.articolo||'', i.principio||'', i.misura||'',
+    i.id||'', i.area||'', i.box||'', i.articolo||'', i.principio||'', i.misura||'',
     i.colore||'', i.marca||'', i.tipo||'', i.categoria||'',
     i.qtaConf||0, i.qtaUnit||0, i.qtaOttimale||0,
     i.scadStr||'', i.lotto||'', i.note||''
@@ -2118,7 +2118,9 @@ async function sendToScript(params) {
     const qtaConf = parseInt(qtaConfezioni) || 0;
     const qtaUnit = parseInt(qtaUnitaria)   || 0;
     const noteOp  = (note ? note + ' ' : '') + `[aggiunto da: ${operatore}]`;
+    db.lastId = (parseInt(db.lastId) || 0) + 1;
     db.inventario.push({
+      id: db.lastId,
       area, box, articolo, principio: principioAttivo, misura, colore, marca, tipo, categoria,
       qtaConf, qtaUnit, qtaOttimale: parseInt(qtaOttimale) || 0,
       scadStr: scadenza, lotto, note: noteOp
