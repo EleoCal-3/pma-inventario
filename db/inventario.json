@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "lastUpdated": "2026-04-22T21:42:12.196Z",
+  "lastUpdated": "2026-04-22T21:59:22.971Z",
   "lastId": 567,
   "inventario": [
     {
@@ -5559,7 +5559,7 @@
       "tipo": "",
       "categoria": "Farmaco",
       "qtaConf": 0,
-      "qtaUnit": 4,
+      "qtaUnit": 3,
       "qtaOttimale": 0,
       "scadStr": "02/2029",
       "lotto": "",
@@ -10212,6 +10212,20 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "22/04/2026, 23:59:22",
+      "operatore": "Vale",
+      "articolo": "Benda orlata",
+      "marca": "",
+      "box": "MIX",
+      "area": "FARMACI",
+      "misura": "10m x 4cm",
+      "colore": "",
+      "tipo": "",
+      "quantita": 1,
+      "qtaConfezioni": 0,
+      "note": "Bianca"
+    },
     {
       "ts": "22/04/2026, 23:42:11",
       "operatore": "Vale",
