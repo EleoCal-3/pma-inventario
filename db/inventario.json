@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "lastUpdated": "2026-04-22T21:41:26.228Z",
+  "lastUpdated": "2026-04-22T21:42:12.196Z",
   "lastId": 567,
   "inventario": [
     {
@@ -3885,7 +3885,7 @@
       "tipo": "",
       "categoria": "Materiale sanitario",
       "qtaConf": 0,
-      "qtaUnit": 1,
+      "qtaUnit": 0,
       "qtaOttimale": 0,
       "scadStr": "11/2027",
       "lotto": "",
@@ -10212,6 +10212,20 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "22/04/2026, 23:42:11",
+      "operatore": "Vale",
+      "articolo": "Lubrificante sterile",
+      "marca": "",
+      "box": "67",
+      "area": "GONDOLA",
+      "misura": "",
+      "colore": "",
+      "tipo": "",
+      "quantita": 1,
+      "qtaConfezioni": 0,
+      "note": "Carrello medicazioni"
+    },
     {
       "ts": "22/04/2026, 23:41:25",
       "operatore": "Vale",
