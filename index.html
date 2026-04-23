@@ -261,7 +261,7 @@ textarea.modal-field { resize: none; }
 .carico-submit:disabled { opacity: 0.5; }
 
 /* FABs */
-.carico-fab { position: fixed; bottom: 24px; right: 76px; width: 50px; height: 50px; border-radius: 50%; background: var(--blue); color: white; border: none; font-size: 24px; cursor: pointer; box-shadow: 0 3px 14px rgba(0,0,0,0.22); z-index: 150; display: flex; align-items: center; justify-content: center; transition: transform 0.15s; }
+.carico-fab { display: none !important; }
 .carico-fab:active { transform: scale(0.92); }
 
 /* LOG PANEL */
@@ -420,6 +420,7 @@ textarea.modal-field { resize: none; }
     <div class="nav-item" id="ttab-inv" onclick="switchTab('inventario');closeNav()"><span class="nav-item-icon">📦</span>Inventario</div>
     <div class="nav-item" id="ttab-ord" onclick="switchTab('daordinare');closeNav()"><span class="nav-item-icon">🛒</span>Da ordinare</div>
     <div class="nav-item" id="ttab-log" onclick="switchTab('log');closeNav()"><span class="nav-item-icon">📋</span>Log movimenti</div>
+    <div class="nav-item" id="ttab-carico" onclick="closeNav();openCarico()"><span class="nav-item-icon">📥</span>Carico Articoli</div>
     <div class="nav-item" id="ttab-avanzate" onclick="switchTab('avanzate');closeNav()"><span class="nav-item-icon">⚙️</span>Avanzate</div>
   </div>
 </div>
@@ -488,6 +489,16 @@ textarea.modal-field { resize: none; }
       <button class="qty-btn" onclick="changeQty(+1)">+</button>
     </div>
     <textarea class="modal-field" id="m-note" rows="2" placeholder="Note opzionali…"></textarea>
+    <div id="m-dest-row" style="display:none;margin-bottom:12px">
+      <div style="font-family:var(--mono);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:6px">Sposta a destinazione</div>
+      <select class="modal-field" id="m-dest-area" style="margin-bottom:6px" onchange="updateModalBoxDest(this.value)">
+        <option value="">— Seleziona area —</option>
+      </select>
+      <select class="modal-field" id="m-dest-box" style="display:none">
+        <option value="">— Box (opzionale) —</option>
+      </select>
+    </div>
+    <button id="m-dest-toggle" onclick="toggleDestinazione()" style="width:100%;padding:9px;border-radius:8px;border:1.5px dashed var(--rule);background:none;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-3);cursor:pointer;margin-bottom:10px">+ Sposta in altra area</button>
     <button class="modal-confirm" id="m-confirm" onclick="confirmPrelievo()">Registra prelievo</button>
     <button class="modal-cancel" onclick="closeModal()">Annulla</button>
   </div>
@@ -733,19 +744,22 @@ function parseCSV(text) {
     return headers.findIndex(h => h.startsWith(prefix));
   }
 
-  // Converte DD/MM/YYYY o MM/YYYY in MM/YYYY (stesso formato usato da importaXLSX)
+  // Converte qualsiasi formato data in GG/MM/AAAA (01 se manca il giorno)
   function parseScad(raw) {
     if (!raw) return 'ND';
     const s = raw.toString().trim();
     if (!s || ['ND','N/D',''].includes(s.toUpperCase())) return 'ND';
-    // DD/MM/YYYY → MM/YYYY
+    // Già GG/MM/AAAA
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(s)) return s;
+    // DD/MM/YYYY con giorno a 1 cifra
     const mDMY = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-    if (mDMY) return mDMY[2].padStart(2,'0') + '/' + mDMY[3];
-    // MM/YYYY già corretto
-    if (/^\d{1,2}\/\d{4}$/.test(s)) return s;
+    if (mDMY) return mDMY[1].padStart(2,'0') + '/' + mDMY[2].padStart(2,'0') + '/' + mDMY[3];
+    // MM/YYYY → 01/MM/AAAA
+    const mMY = s.match(/^(\d{1,2})\/(\d{4})$/);
+    if (mMY) return '01/' + mMY[1].padStart(2,'0') + '/' + mMY[2];
     // Prova parse generico
     const d = new Date(s);
-    if (!isNaN(d)) return String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
+    if (!isNaN(d)) return '01/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
     return s;
   }
 
@@ -989,6 +1003,7 @@ function switchTab(tab) {
   if (tab === 'dashboard')  renderDashboard();
   if (tab === 'daordinare') renderDaOrdinare();
   if (tab === 'log')        renderLog();
+  if (tab === 'avanzate')   updateLastIdDisplay();
 }
 
 // ── INVENTARIO RENDER ──
@@ -1256,7 +1271,7 @@ document.getElementById('search').addEventListener('input', function(){ search=t
 
 // ── DASHBOARD ──
 const AREA_COLORS = {
-  'GONDOLA':'#1A4B8A','FARMACI':'#C8192A','MEDICAZIONI':'#1A6B30','RISERVE':'#C85000'
+  'GONDOLA':'#1A4B8A','FARMACI':'#C8192A','CARRELLO':'#1A6B30','RISERVE':'#C85000'
 };
 function areaColor(a){ return AREA_COLORS[a] || '#888884'; }
 
@@ -1412,15 +1427,22 @@ function openModal(articolo, marca, box, areaVal, qty, colore='', misura='', tip
   document.getElementById('m-name').textContent = articolo;
   document.getElementById('m-sub').textContent = [marca,'Box '+box,areaVal].filter(Boolean).join(' · ')+(qty>0?` · Disp: ${qty}`:' · ESAURITO');
   document.getElementById('m-qty').value = '1';
-  // operatore impostato dall'auth — campo m-op non presente nel DOM
   document.getElementById('m-note').value = '';
   // Mostra toggle solo se ha sia confezioni che unità
   const hasConf = qtaConf > 0 && qty > 0;
   document.getElementById('m-tipo-toggle').style.display = hasConf ? '' : 'none';
   document.getElementById('m-tipo-info').style.display = hasConf ? '' : 'none';
-  if (hasConf) {
-    setTipoPrelievo('unit');
-  }
+  if (hasConf) { setTipoPrelievo('unit'); }
+  // Reset sezione destinazione
+  document.getElementById('m-dest-row').style.display = 'none';
+  document.getElementById('m-dest-toggle').textContent = '+ Sposta in altra area';
+  const escVal = s => (s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');
+  const aree = [...new Set(ITEMS.map(i => i.area).filter(a => a !== areaVal))].sort();
+  document.getElementById('m-dest-area').innerHTML =
+    '<option value="">— Seleziona area —</option>' +
+    aree.map(a => `<option value="${escVal(a)}">${a}</option>`).join('');
+  document.getElementById('m-dest-box').innerHTML = '<option value="">— Box (opzionale) —</option>';
+  document.getElementById('m-dest-box').style.display = 'none';
   document.getElementById('modal-overlay').classList.add('open');
 }
 function setTipoPrelievo(tipo) {
@@ -1446,6 +1468,29 @@ function setTipoPrelievo(tipo) {
 function changeQty(d){ const inp=document.getElementById('m-qty'); prelievoQty=Math.max(1,(parseInt(inp.value)||1)+d); inp.value=prelievoQty; }
 function closeModal(){ document.getElementById('modal-overlay').classList.remove('open'); }
 
+function toggleDestinazione() {
+  const row = document.getElementById('m-dest-row');
+  const btn = document.getElementById('m-dest-toggle');
+  const visible = row.style.display !== 'none';
+  row.style.display = visible ? 'none' : '';
+  btn.textContent = visible ? '+ Sposta in altra area' : '✕ Annulla spostamento';
+  if (visible) {
+    document.getElementById('m-dest-area').value = '';
+    document.getElementById('m-dest-box').style.display = 'none';
+    document.getElementById('m-dest-box').innerHTML = '<option value="">— Box (opzionale) —</option>';
+  }
+}
+
+function updateModalBoxDest(areaVal) {
+  const sel = document.getElementById('m-dest-box');
+  const escVal = s => (s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');
+  if (!areaVal) { sel.innerHTML = '<option value="">— Box (opzionale) —</option>'; sel.style.display = 'none'; return; }
+  const boxes = [...new Set(ITEMS.filter(i => i.area === areaVal).map(i => i.box))]
+    .sort((a,b) => { const na=parseFloat(a),nb=parseFloat(b); return (!isNaN(na)&&!isNaN(nb)) ? na-nb : String(a).localeCompare(String(b)); });
+  sel.innerHTML = '<option value="">— Box (opzionale) —</option>' + boxes.map(b => `<option value="${escVal(b)}">Box ${b}</option>`).join('');
+  sel.style.display = '';
+}
+
 async function confirmPrelievo() {
   if (!prelievo) return;
   const btn = document.getElementById('m-confirm');
@@ -1454,28 +1499,22 @@ async function confirmPrelievo() {
   const upcInput = parseInt(document.getElementById('m-upc').value) || 1;
   const quantitaUnit = tipoPrelievo === 'conf' ? qtyInput * upcInput : qtyInput;
   const quantitaConf = tipoPrelievo === 'conf' ? qtyInput : 0;
-  const entry = {
-    ts: new Date().toLocaleString('it-IT'), tipo:'prelievo',
-    articolo: prelievo.articolo, marca: prelievo.marca,
-    box: prelievo.box, area: prelievo.area,
-    colore: prelievo.colore, misura: prelievo.misura,
-    tipo: prelievo.tipo, principio: prelievo.principio,
-    scadenza: prelievo.scadenza,
-    quantita: quantitaUnit,
-    quantitaConf: quantitaConf,
-    tipoPrelievo,
-    operatore: userEmail,
-    note: document.getElementById('m-note').value.trim()
-  };
+  const noteText = document.getElementById('m-note').value.trim();
+  // Destinazione (spostamento)
+  const destRow  = document.getElementById('m-dest-row');
+  const destArea = (destRow && destRow.style.display !== 'none') ? (document.getElementById('m-dest-area').value || '') : '';
+  const destBox  = destArea ? (document.getElementById('m-dest-box').value || '') : '';
   try {
     await sendToScript({
       action: 'prelievo',
-      articolo: entry.articolo,
+      articolo: prelievo.articolo,
       qtaPrelevata: quantitaUnit,
       quantitaConf,
-      box: entry.box,
-      area: entry.area,
-      note: entry.note
+      box: prelievo.box,
+      area: prelievo.area,
+      note: noteText,
+      destArea,
+      destBox
     });
     logPrelievi = DB ? (DB.log_prelievi || []) : logPrelievi;
     const item = ITEMS.find(i => i.articolo === prelievo.articolo && i.box === prelievo.box);
@@ -1483,10 +1522,12 @@ async function confirmPrelievo() {
       item.qtaUnit = Math.max(0, item.qtaUnit - quantitaUnit);
       if (quantitaConf > 0) item.qtaConf = Math.max(0, item.qtaConf - quantitaConf);
       if (item.qtaUnit <= 0) item.status = 'scaduto';
+      if (destArea) { item.area = destArea; if (destBox) item.box = destBox; }
       render(); updateOrdCounter();
     }
-    const tipoStr = tipoPrelievo === 'conf' ? `${qtyInput} conf (${quantitaUnit} unità)` : `${quantitaUnit} unità`;
-    closeModal(); showToast(`✓ Prelevato: ${tipoStr} di ${prelievo.articolo}`, false, true);
+    const tipoStr  = tipoPrelievo === 'conf' ? `${qtyInput} conf (${quantitaUnit} unità)` : `${quantitaUnit} unità`;
+    const destStr  = destArea ? ` → ${destArea}${destBox ? ' Box ' + destBox : ''}` : '';
+    closeModal(); showToast(`✓ Prelevato: ${tipoStr} di ${prelievo.articolo}${destStr}`, false, true);
   } catch(err) {
     showToast('❌ ' + err.message, true);
   } finally {
@@ -1954,20 +1995,17 @@ async function importaXLSX() {
         if (!raw) return 'ND';
         const s = raw.toString().trim();
         if (!s || ['ND','N/D',''].includes(s.toUpperCase())) return 'ND';
-        // Formato DD/MM/YYYY → MM/YYYY
+        // Già GG/MM/AAAA
+        if (/^\d{2}\/\d{2}\/\d{4}$/.test(s)) return s;
+        // DD/MM/YYYY con cifre variabili
         const mDMY = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-        if (mDMY) return mDMY[2].padStart(2,'0') + '/' + mDMY[3];
-        // Formato MM/YYYY già ok
-        if (/^\d{1,2}\/\d{4}$/.test(s)) return s;
-        // Data leggibile da SheetJS (es. "5/31/2026" o "31/5/2026")
-        const mMDY = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-        if (mMDY) return mMDY[1].padStart(2,'0') + '/' + mMDY[3];
-        // Prova parse generico
+        if (mDMY) return mDMY[1].padStart(2,'0') + '/' + mDMY[2].padStart(2,'0') + '/' + mDMY[3];
+        // MM/YYYY → 01/MM/AAAA
+        const mMY = s.match(/^(\d{1,2})\/(\d{4})$/);
+        if (mMY) return '01/' + mMY[1].padStart(2,'0') + '/' + mMY[2];
+        // Prova parse generico (SheetJS restituisce date JS)
         const d = new Date(s);
-        if (!isNaN(d)) {
-          const mm = String(d.getMonth()+1).padStart(2,'0');
-          return mm + '/' + d.getFullYear();
-        }
+        if (!isNaN(d)) return '01/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
         return s;
       }
 
@@ -2057,12 +2095,30 @@ async function sendToScript(params) {
   const db   = await githubRead();
   const norm = s => (s || '').toString().trim().toLowerCase();
 
+  // Helper: trova l'articolo nel DB con match su nome + box + area (fallback solo nome)
+  function findIdx(articolo, box, area) {
+    // Match preciso: nome + box + area
+    let idx = db.inventario.findIndex(i =>
+      norm(i.articolo) === norm(articolo) &&
+      norm(i.box)      === norm(box)      &&
+      norm(i.area)     === norm(area)
+    );
+    // Fallback: nome + area (box potrebbe differire leggermente)
+    if (idx === -1) idx = db.inventario.findIndex(i =>
+      norm(i.articolo) === norm(articolo) &&
+      norm(i.area)     === norm(area)
+    );
+    // Fallback finale: solo nome (comportamento precedente)
+    if (idx === -1) idx = db.inventario.findIndex(i => norm(i.articolo) === norm(articolo));
+    return idx;
+  }
+
   // ── CARICO ──
   if (action === 'carico') {
     const { articolo, scadenza = '', lotto = '', note = '' } = params;
     const qtaConf = parseInt(params.qtaConfezioni) || 0;
     const qtaUnit = parseInt(params.qtaUnitaria)   || 0;
-    const idx = db.inventario.findIndex(i => norm(i.articolo) === norm(articolo));
+    const idx = findIdx(articolo, params.box || '', params.area || '');
     if (idx === -1) throw new Error('Articolo non trovato: ' + articolo);
     db.inventario[idx].qtaConf = (parseFloat(db.inventario[idx].qtaConf) || 0) + qtaConf;
     db.inventario[idx].qtaUnit = (parseFloat(db.inventario[idx].qtaUnit) || 0) + qtaUnit;
@@ -2085,25 +2141,37 @@ async function sendToScript(params) {
 
   // ── PRELIEVO ──
   } else if (action === 'prelievo') {
-    const { articolo, note = '' } = params;
+    const { articolo, note = '', destArea = '', destBox = '' } = params;
     const qtaUnit = parseInt(params.qtaPrelevata) || 0;
     const qtaConf = parseInt(params.quantitaConf) || 0;
-    const idx = db.inventario.findIndex(i => norm(i.articolo) === norm(articolo));
+    const idx = findIdx(articolo, params.box || '', params.area || '');
     if (idx === -1) throw new Error('Articolo non trovato: ' + articolo);
+    const boxOrigine  = db.inventario[idx].box  || params.box  || '';
+    const areaOrigine = db.inventario[idx].area || params.area || '';
     db.inventario[idx].qtaConf = Math.max(0, (parseFloat(db.inventario[idx].qtaConf) || 0) - qtaConf);
     db.inventario[idx].qtaUnit = Math.max(0, (parseFloat(db.inventario[idx].qtaUnit) || 0) - qtaUnit);
+    // Spostamento a destinazione diversa
+    if (destArea) {
+      db.inventario[idx].area = destArea;
+      if (destBox) db.inventario[idx].box = destBox;
+    }
     db.log_prelievi = db.log_prelievi || [];
     db.log_prelievi.unshift({
       ts: now, operatore, articolo,
-      marca:  db.inventario[idx].marca  || '',
-      box:    db.inventario[idx].box    || params.box  || '',
-      area:   db.inventario[idx].area   || params.area || '',
-      misura: db.inventario[idx].misura || '',
-      colore: db.inventario[idx].colore || '',
-      tipo:   db.inventario[idx].tipo   || '',
-      quantita: qtaUnit, qtaConfezioni: qtaConf, note
+      id:       db.inventario[idx].id    || '',
+      marca:    db.inventario[idx].marca  || '',
+      box:      boxOrigine,
+      area:     areaOrigine,
+      misura:   db.inventario[idx].misura || '',
+      colore:   db.inventario[idx].colore || '',
+      tipo:     db.inventario[idx].tipo   || '',
+      scadenza: db.inventario[idx].scadStr || '',
+      quantita: qtaUnit, qtaConfezioni: qtaConf, note,
+      destArea: destArea || '',
+      destBox:  destBox  || ''
     });
-    await githubWrite(db, `Prelievo: ${articolo} -${qtaUnit} unità — ${operatorName}`);
+    const destNote = destArea ? ` → ${destArea}${destBox ? ' Box ' + destBox : ''}` : '';
+    await githubWrite(db, `Prelievo: ${articolo} -${qtaUnit} unità${destNote} — ${operatorName}`);
     DB = db; logPrelievi = db.log_prelievi;
     return { ok: true };
 
@@ -2156,11 +2224,23 @@ function renderLog() {
       const isCarico = e.tipo==='carico';
       const qStr = isCarico ? `+${e.qtaConfezioni||0} conf / +${e.quantita||0} unit` : `−${e.quantita}`;
       const details = [e.misura, e.colore, e.tipo].filter(Boolean).join(' · ');
+      // Riga 1: nome + dettagli tecnici
+      // Riga 2: timestamp, box, area
+      // Riga 3 (solo prelievi): scadenza, ID, note, eventuale destinazione
+      const scadStr   = !isCarico && e.scadenza && e.scadenza !== 'ND' ? `📅 ${e.scadenza}` : '';
+      const idStr     = !isCarico && e.id ? `ID ${e.id}` : '';
+      const destStr   = !isCarico && e.destArea ? `→ ${e.destArea}${e.destBox ? ' Box ' + e.destBox : ''}` : '';
+      const noteStr   = e.note ? `"${e.note}"` : '';
+      const scadCarico = isCarico && e.scadenza ? `· Scad: ${e.scadenza}` : '';
+      const extraLine = !isCarico && (scadStr || idStr || noteStr || destStr)
+        ? `<div class="log-meta" style="color:var(--ink-3)">${[scadStr, idStr, destStr, noteStr].filter(Boolean).join(' · ')}</div>`
+        : '';
       return `<div class="log-entry">
         <div class="log-dot ${isCarico?'blue':''}"></div>
         <div class="log-info">
           <div class="log-name">${e.articolo}${e.marca?' · '+e.marca:''}${details?` <span style="font-family:var(--mono);font-size:10px;color:var(--ink-3);">(${details})</span>`:''}</div>
-          <div class="log-meta">${e.ts} · Box ${e.box}${(isCarico||e.scadenza)&&e.scadenza?' · Scad: '+e.scadenza:''}${e.operatore?' · '+e.operatore:''}</div>
+          <div class="log-meta">${e.ts} · ${e.area} Box ${e.box}${scadCarico}${e.operatore?' · '+e.operatore:''}</div>
+          ${extraLine}
         </div>
         <div class="log-qty ${isCarico?'plus':''}">${qStr}</div>
       </div>`;
@@ -2173,8 +2253,8 @@ function exportCSV(tipo) {
   if (!data.length) { showToast('Nessun dato da esportare', true); return; }
   let header, rows;
   if (tipo==='prelievi') {
-    header=['Data','Articolo','Marca','Box','Area','Qtà','Operatore','Note'];
-    rows=data.map(e=>[e.ts,e.articolo,e.marca,e.box,e.area,e.quantita,e.operatore,e.note]);
+    header=['Data','ID','Articolo','Marca','Box','Area','Scadenza','Qtà','Operatore','Note','Destinazione Area','Destinazione Box'];
+    rows=data.map(e=>[e.ts,e.id||'',e.articolo,e.marca,e.box,e.area,e.scadenza||'',e.quantita,e.operatore,e.note||'',e.destArea||'',e.destBox||'']);
   } else {
     header=['Data','Articolo','Marca','Box','Area','Scadenza','Qtà Conf','Qtà Unit','Operatore','Note'];
     rows=data.map(e=>[e.ts,e.articolo,e.marca,e.box,e.area,e.scadenza,e.qtaConfezioni||0,e.quantita||0,e.operatore,e.note]);
@@ -2192,6 +2272,61 @@ function showToast(msg, isErr=false, isOk=false) {
 }
 
 document.getElementById('modal-overlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+
+// ── AVANZATE: aggiorna il display lastId ──
+function updateLastIdDisplay() {
+  const lastId = DB && DB.lastId != null ? parseInt(DB.lastId) : null;
+  const elCurr = document.getElementById('avanzate-lastid');
+  const elNext = document.getElementById('avanzate-nextid');
+  if (!elCurr || !elNext) return;
+  if (lastId != null && !isNaN(lastId)) {
+    elCurr.textContent = lastId;
+    elNext.textContent = lastId + 1;
+  } else {
+    // Calcola il max ID dagli articoli se lastId non è presente
+    const maxId = DB && DB.inventario ? Math.max(0, ...DB.inventario.map(i => parseInt(i.id) || 0)) : 0;
+    elCurr.textContent = maxId > 0 ? maxId : '(non impostato)';
+    elNext.textContent = maxId > 0 ? maxId + 1 : '—';
+  }
+}
+
+// ── HARD RESET ──
+async function hardResetDB() {
+  if (!githubPAT) { showToast('Accedi prima', true); return; }
+  if (!confirm('⚠️ HARD RESET\n\nQuesto cancellerà TUTTO il database su GitHub:\n- Inventario\n- Log prelievi\n- Log carichi\n\nI dati verranno riletti dal foglio Google Sheets.\n\nContinuare?')) return;
+  if (!confirm('Sei sicura? Questa operazione è IRREVERSIBILE.\n\nPremi OK per procedere.')) return;
+  showToast('Hard Reset in corso…');
+  try {
+    const res = await fetch(CSV_URL);
+    if (!res.ok) throw new Error('Impossibile leggere il foglio Google (' + res.status + ')');
+    const items = parseCSV(await res.text());
+    if (!items.length) throw new Error('Nessun articolo trovato nel foglio');
+    // Recupera SHA attuale (serve per sovrascrivere)
+    const check = await fetch(GITHUB_API, {
+      headers: { 'Authorization': 'token ' + githubPAT, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (check.ok) { const ex = await check.json(); dbSHA = ex.sha; } else { dbSHA = ''; }
+    // Calcola lastId dal max ID degli articoli importati
+    const maxId = Math.max(0, ...items.map(i => parseInt(i.id) || 0));
+    const newDB = {
+      version: 1,
+      lastUpdated: new Date().toISOString(),
+      lastId: maxId,
+      inventario: items,
+      log_carichi: [],
+      log_prelievi: []
+    };
+    await githubWrite(newDB, `Hard Reset: ${items.length} articoli — ${operatorName}`);
+    DB = newDB; logCarichi = []; logPrelievi = [];
+    ITEMS = newDB.inventario.map(parseDBItem);
+    populateCaricoDropdowns();
+    render(); updateOrdCounter(); updateLastIdDisplay();
+    showToast(`✓ Hard Reset completato: ${items.length} articoli, log azzerati`, false, true);
+  } catch(err) {
+    showToast('❌ ' + err.message, true);
+    console.error(err);
+  }
+}
 
 </script>
 
@@ -2221,6 +2356,19 @@ document.getElementById('modal-overlay').addEventListener('click', function(e){ 
     <div class="avanzate-card-title">🔄 Importa da Fogli Google</div>
     <div class="avanzate-card-desc">Legge il foglio Google Sheets pubblicato e sovrascrive l'inventario su GitHub. Usa questa opzione solo se il foglio Google è aggiornato. I log dei movimenti vengono conservati.</div>
     <button class="avanzate-btn blue" onclick="migraCSV()">Importa da Fogli Google</button>
+  </div>
+
+  <div class="avanzate-card" style="border-color:var(--ink-3);background:var(--bg)">
+    <div class="avanzate-card-title">🔢 ID ultimo articolo</div>
+    <div class="avanzate-card-desc">Mostra il valore attuale di <strong>lastId</strong> nel database — utile per sapere quale numero progressivo inserire in un nuovo articolo sul foglio Google.</div>
+    <div id="avanzate-lastid" style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--ink);margin:10px 0 4px">—</div>
+    <div style="font-size:12px;color:var(--ink-3)">Il prossimo nuovo articolo dovrebbe avere ID <span id="avanzate-nextid" style="font-weight:700">—</span></div>
+  </div>
+
+  <div class="avanzate-card" style="border-color:var(--red);background:var(--red-l)">
+    <div class="avanzate-card-title">⚠️ Hard Reset database</div>
+    <div class="avanzate-card-desc">Importa dal foglio Google e <strong>azzera completamente</strong> il database su GitHub — inclusi tutti i log di prelievi e carichi. Usa solo dopo un ripristino completo dell'inventario. L'operazione è irreversibile.</div>
+    <button class="avanzate-btn" style="background:var(--red);color:white" onclick="hardResetDB()">Hard Reset da Fogli Google</button>
   </div>
 </div>
 
