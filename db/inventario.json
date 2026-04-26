@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-26T10:39:26.520Z",
+  "lastUpdated": "2026-04-26T10:39:46.231Z",
   "lastId": 0,
   "inventario": [
     {
@@ -4095,7 +4095,7 @@
       "categoria": "Materiale sanitario",
       "lotto": "",
       "note": "",
-      "qtaUnit": 11,
+      "qtaUnit": 9,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "30/04/2027"
@@ -9594,6 +9594,24 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "26/04/2026, 12:39:45",
+      "operatore": "Marta Regazzo",
+      "articolo": "Sodio cloruro (NaCl)",
+      "id": "",
+      "marca": "Braun",
+      "box": "78",
+      "area": "GONDOLA",
+      "misura": "500 ml",
+      "colore": "",
+      "tipo": "Flacone",
+      "scadenza": "30/04/2027",
+      "quantita": 2,
+      "qtaConfezioni": 0,
+      "note": "",
+      "destArea": "",
+      "destBox": ""
+    },
     {
       "ts": "26/04/2026, 12:39:25",
       "operatore": "Marta Regazzo",
