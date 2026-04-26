@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-26T11:11:14.751Z",
+  "lastUpdated": "2026-04-26T11:11:45.271Z",
   "lastId": 0,
   "inventario": [
     {
@@ -1715,7 +1715,7 @@
       "categoria": "Materiale sanitario",
       "lotto": "",
       "note": "",
-      "qtaUnit": 11,
+      "qtaUnit": 7,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "31/07/2029"
@@ -9594,6 +9594,24 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "26/04/2026, 13:11:44",
+      "operatore": "Marta Regazzo",
+      "articolo": "Ghiaccio istantaneo",
+      "id": "",
+      "marca": "",
+      "box": "30",
+      "area": "GONDOLA",
+      "misura": "",
+      "colore": "",
+      "tipo": "",
+      "scadenza": "31/07/2029",
+      "quantita": 4,
+      "qtaConfezioni": 0,
+      "note": "",
+      "destArea": "",
+      "destBox": ""
+    },
     {
       "ts": "26/04/2026, 13:11:13",
       "operatore": "Marta Regazzo",
