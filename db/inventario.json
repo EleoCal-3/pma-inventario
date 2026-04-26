@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-26T07:47:07.498Z",
+  "lastUpdated": "2026-04-26T07:53:29.054Z",
   "lastId": 0,
   "inventario": [
     {
@@ -236,7 +236,7 @@
       "categoria": "Materiale sanitario",
       "lotto": "",
       "note": "",
-      "qtaUnit": 4,
+      "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "ND"
@@ -9594,6 +9594,24 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "26/04/2026, 09:53:28",
+      "operatore": "Marta Regazzo",
+      "articolo": "Forbici per medicazioni",
+      "id": "",
+      "marca": "",
+      "box": "7",
+      "area": "GONDOLA",
+      "misura": "",
+      "colore": "",
+      "tipo": "",
+      "scadenza": "ND",
+      "quantita": 1,
+      "qtaConfezioni": 0,
+      "note": "",
+      "destArea": "",
+      "destBox": ""
+    },
     {
       "ts": "26/04/2026, 09:47:06",
       "operatore": "Marta Regazzo",
