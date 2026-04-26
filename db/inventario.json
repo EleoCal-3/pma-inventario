@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-26T08:00:38.680Z",
+  "lastUpdated": "2026-04-26T08:45:21.482Z",
   "lastId": 0,
   "inventario": [
     {
@@ -1834,7 +1834,7 @@
       "categoria": "Materiale sanitario",
       "lotto": "",
       "note": "",
-      "qtaUnit": 60,
+      "qtaUnit": 58,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "ND"
@@ -9594,6 +9594,24 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "26/04/2026, 10:45:20",
+      "operatore": "Marta Regazzo",
+      "articolo": "Coperta isotermica",
+      "id": "",
+      "marca": "",
+      "box": "32",
+      "area": "GONDOLA",
+      "misura": "160x210 cm",
+      "colore": "Doppio colore",
+      "tipo": "",
+      "scadenza": "ND",
+      "quantita": 2,
+      "qtaConfezioni": 0,
+      "note": "",
+      "destArea": "",
+      "destBox": ""
+    },
     {
       "ts": "26/04/2026, 10:00:37",
       "operatore": "Marta Regazzo",
