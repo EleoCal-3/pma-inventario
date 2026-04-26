@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-26T11:03:54.615Z",
+  "lastUpdated": "2026-04-26T11:08:34.262Z",
   "lastId": 0,
   "inventario": [
     {
@@ -9594,6 +9594,24 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "26/04/2026, 13:08:33",
+      "operatore": "Marta Regazzo",
+      "articolo": "Soluzione elettrolitica",
+      "id": "",
+      "marca": "Fresenius Kabi",
+      "box": "76",
+      "area": "GONDOLA",
+      "misura": "500 ml",
+      "colore": "",
+      "tipo": "Plastica",
+      "scadenza": "31/12/2026",
+      "quantita": 2,
+      "qtaConfezioni": 0,
+      "note": "",
+      "destArea": "",
+      "destBox": ""
+    },
     {
       "ts": "26/04/2026, 13:03:54",
       "operatore": "Marta Regazzo",
