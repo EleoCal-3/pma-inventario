@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-26T07:44:46.242Z",
+  "lastUpdated": "2026-04-26T07:47:07.498Z",
   "lastId": 0,
   "inventario": [
     {
@@ -83,7 +83,7 @@
       "categoria": "Materiale sanitario",
       "lotto": "",
       "note": "",
-      "qtaUnit": 5,
+      "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "ND"
@@ -9594,6 +9594,24 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "26/04/2026, 09:47:06",
+      "operatore": "Marta Regazzo",
+      "articolo": "Laccio emostatico venoso in gomma",
+      "id": "",
+      "marca": "",
+      "box": "1",
+      "area": "GONDOLA",
+      "misura": "",
+      "colore": "",
+      "tipo": "",
+      "scadenza": "ND",
+      "quantita": 2,
+      "qtaConfezioni": 0,
+      "note": "",
+      "destArea": "",
+      "destBox": ""
+    },
     {
       "ts": "26/04/2026, 09:44:45",
       "operatore": "Marta Regazzo",
