@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-26T11:14:24.665Z",
+  "lastUpdated": "2026-04-26T11:14:52.135Z",
   "lastId": 0,
   "inventario": [
     {
@@ -9594,6 +9594,24 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "26/04/2026, 13:14:51",
+      "operatore": "Marta Regazzo",
+      "articolo": "Garza sterile",
+      "id": "",
+      "marca": "",
+      "box": "26",
+      "area": "GONDOLA",
+      "misura": "10x20 cm",
+      "colore": "",
+      "tipo": "",
+      "scadenza": "01/03/2027",
+      "quantita": 1,
+      "qtaConfezioni": 0,
+      "note": "",
+      "destArea": "",
+      "destBox": ""
+    },
     {
       "ts": "26/04/2026, 13:14:24",
       "operatore": "Marta Regazzo",
