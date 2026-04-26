@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-26T09:16:34.428Z",
+  "lastUpdated": "2026-04-26T09:32:28.137Z",
   "lastId": 0,
   "inventario": [
     {
@@ -916,7 +916,7 @@
       "categoria": "Materiale sanitario",
       "lotto": "",
       "note": "",
-      "qtaUnit": 10,
+      "qtaUnit": 8,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "ND"
@@ -9594,6 +9594,24 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "26/04/2026, 11:32:27",
+      "operatore": "Marta Regazzo",
+      "articolo": "Batterie",
+      "id": "",
+      "marca": "",
+      "box": "14",
+      "area": "GONDOLA",
+      "misura": "Varie",
+      "colore": "",
+      "tipo": "",
+      "scadenza": "ND",
+      "quantita": 2,
+      "qtaConfezioni": 0,
+      "note": "",
+      "destArea": "",
+      "destBox": ""
+    },
     {
       "ts": "26/04/2026, 11:16:33",
       "operatore": "Marta Regazzo",
