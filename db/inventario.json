@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-26T11:12:57.567Z",
+  "lastUpdated": "2026-04-26T11:13:56.328Z",
   "lastId": 0,
   "inventario": [
     {
@@ -933,7 +933,7 @@
       "categoria": "Materiale sanitario",
       "lotto": "",
       "note": "",
-      "qtaUnit": 4,
+      "qtaUnit": 3,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "31/08/2026"
@@ -9594,6 +9594,24 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "26/04/2026, 13:13:55",
+      "operatore": "Marta Regazzo",
+      "articolo": "Ago aspirazione",
+      "id": "",
+      "marca": "BD Microlance",
+      "box": "15",
+      "area": "GONDOLA",
+      "misura": "18G",
+      "colore": "Rosa",
+      "tipo": "",
+      "scadenza": "31/08/2026",
+      "quantita": 1,
+      "qtaConfezioni": 0,
+      "note": "",
+      "destArea": "",
+      "destBox": ""
+    },
     {
       "ts": "26/04/2026, 13:12:56",
       "operatore": "Marta Regazzo",
