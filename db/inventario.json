@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-26T09:32:28.137Z",
+  "lastUpdated": "2026-04-26T09:38:42.324Z",
   "lastId": 0,
   "inventario": [
     {
@@ -3840,7 +3840,7 @@
       "categoria": "Materiale sanitario",
       "lotto": "",
       "note": "",
-      "qtaUnit": 17,
+      "qtaUnit": 7,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "30/04/2026"
@@ -9594,6 +9594,24 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "26/04/2026, 11:38:41",
+      "operatore": "Marta Regazzo",
+      "articolo": "Deflussore",
+      "id": "",
+      "marca": "Biodrip",
+      "box": "70",
+      "area": "GONDOLA",
+      "misura": "",
+      "colore": "",
+      "tipo": "",
+      "scadenza": "30/04/2026",
+      "quantita": 10,
+      "qtaConfezioni": 0,
+      "note": "",
+      "destArea": "",
+      "destBox": ""
+    },
     {
       "ts": "26/04/2026, 11:32:27",
       "operatore": "Marta Regazzo",
