@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-26T11:02:34.423Z",
+  "lastUpdated": "2026-04-26T11:02:57.424Z",
   "lastId": 0,
   "inventario": [
     {
@@ -1188,7 +1188,7 @@
       "categoria": "Materiale sanitario",
       "lotto": "",
       "note": "",
-      "qtaUnit": 9,
+      "qtaUnit": 4,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "31/05/2026"
@@ -9594,6 +9594,24 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "26/04/2026, 13:02:56",
+      "operatore": "Marta Regazzo",
+      "articolo": "Ago cannula",
+      "id": "",
+      "marca": "BD Ventlon Pro Safety",
+      "box": "18",
+      "area": "GONDOLA",
+      "misura": "18G",
+      "colore": "Verde",
+      "tipo": "",
+      "scadenza": "31/05/2026",
+      "quantita": 5,
+      "qtaConfezioni": 0,
+      "note": "",
+      "destArea": "",
+      "destBox": ""
+    },
     {
       "ts": "26/04/2026, 13:02:33",
       "operatore": "Marta Regazzo",
