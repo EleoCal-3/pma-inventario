@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-26T11:12:22.143Z",
+  "lastUpdated": "2026-04-26T11:12:57.567Z",
   "lastId": 0,
   "inventario": [
     {
@@ -1953,7 +1953,7 @@
       "categoria": "Materiale sanitario",
       "lotto": "",
       "note": "",
-      "qtaUnit": 2,
+      "qtaUnit": 1,
       "qtaConf": 0,
       "qtaOttimale": 0,
       "scadStr": "ND"
@@ -9594,6 +9594,24 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "26/04/2026, 13:12:56",
+      "operatore": "Marta Regazzo",
+      "articolo": "Guanti in nitrile",
+      "id": "",
+      "marca": "",
+      "box": "35",
+      "area": "GONDOLA",
+      "misura": "tg. L",
+      "colore": "",
+      "tipo": "",
+      "scadenza": "ND",
+      "quantita": 1,
+      "qtaConfezioni": 0,
+      "note": "",
+      "destArea": "",
+      "destBox": ""
+    },
     {
       "ts": "26/04/2026, 13:12:21",
       "operatore": "Marta Regazzo",
