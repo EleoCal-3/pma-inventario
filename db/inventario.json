@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-26T11:15:53.304Z",
+  "lastUpdated": "2026-04-26T12:07:19.739Z",
   "lastId": 0,
   "inventario": [
     {
@@ -9594,6 +9594,24 @@
   ],
   "log_carichi": [],
   "log_prelievi": [
+    {
+      "ts": "26/04/2026, 14:07:19",
+      "operatore": "Marta Regazzo",
+      "articolo": "Deflussore",
+      "id": "",
+      "marca": "Biodrip",
+      "box": "70",
+      "area": "GONDOLA",
+      "misura": "",
+      "colore": "",
+      "tipo": "",
+      "scadenza": "30/04/2026",
+      "quantita": 3,
+      "qtaConfezioni": 0,
+      "note": "",
+      "destArea": "",
+      "destBox": ""
+    },
     {
       "ts": "26/04/2026, 13:15:52",
       "operatore": "Marta Regazzo",
