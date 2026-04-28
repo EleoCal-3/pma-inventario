@@ -15,6 +15,18 @@
       "orario_dimissione": "",
       "note": "",
       "operatore_ingresso": "Eleonora"
+    },
+    {
+      "id": 1777390927439,
+      "braccialetto": "25680",
+      "pettorale": "19607",
+      "nome": "PL",
+      "area": "BIANCA",
+      "stato": "In PMA",
+      "orario_ingresso": "17:42",
+      "orario_dimissione": "",
+      "note": "",
+      "operatore_ingresso": "Laura"
     }
   ]
 }
