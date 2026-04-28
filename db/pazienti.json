@@ -27,6 +27,18 @@
       "orario_dimissione": "",
       "note": "",
       "operatore_ingresso": "Laura"
+    },
+    {
+      "id": 1777410808103,
+      "braccialetto": "1",
+      "pettorale": "1824",
+      "nome": "Ms",
+      "area": "GIALLA",
+      "stato": "In PMA",
+      "orario_ingresso": "23:13",
+      "orario_dimissione": "",
+      "note": "",
+      "operatore_ingresso": "Eleonora"
     }
   ]
 }
