@@ -103,6 +103,7 @@ header { background: white; position: sticky; top: 0; z-index: 100; border-botto
 .sfil { flex-shrink: 0; padding: 5px 10px; border-radius: 20px; border: 1.5px solid transparent; font-size: 13px; font-weight: 500; font-family: var(--mono); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
 .sfil.active-all { background: var(--ink); color: white; border-color: var(--ink); }
 .sfil.active-scaduto { background: var(--red-l); color: var(--red); border-color: #F5C0C4; }
+.sfil.active-esaurito { background: #F0F0EC; color: var(--ink-2); border-color: #C8C8C0; }
 .sfil.active-critico { background: var(--orange-l); color: var(--orange); border-color: #F5CEB0; }
 .sfil.active-attenzione { background: var(--yellow-l); color: var(--yellow); border-color: #F0D890; }
 .sfil.active-ok { background: var(--green-l); color: var(--green); border-color: #B0DFC0; }
@@ -121,7 +122,7 @@ header { background: white; position: sticky; top: 0; z-index: 100; border-botto
 .box-label { flex: 1; font-size: 15px; font-weight: 500; color: var(--ink); min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .box-badges { display: flex; gap: 4px; align-items: center; flex-shrink: 0; }
 .badge { width: 7px; height: 7px; border-radius: 50%; }
-.badge-r { background: var(--red); } .badge-o { background: var(--orange); } .badge-y { background: var(--yellow); }
+.badge-r { background: var(--red); } .badge-o { background: var(--orange); } .badge-y { background: var(--yellow); } .badge-g { background: var(--ink-3); }
 .chevron { font-size: 16px; color: var(--ink-3); transition: transform 0.2s; flex-shrink: 0; }
 .box-card.open .chevron { transform: rotate(90deg); }
 .box-items { display: none; border-top: 1px solid var(--rule); }
@@ -131,7 +132,8 @@ header { background: white; position: sticky; top: 0; z-index: 100; border-botto
 .item { display: flex; align-items: stretch; border-bottom: 1px solid var(--rule); min-height: 52px; }
 .item:last-child { border-bottom: none; }
 .item-stripe { width: 3px; flex-shrink: 0; }
-.stripe-scaduto { background: var(--red); } .stripe-critico { background: var(--orange); }
+.stripe-scaduto { background: var(--red); } .stripe-esaurito { background: var(--ink-3); }
+.stripe-critico { background: var(--orange); }
 .stripe-attenzione { background: #D4A000; } .stripe-ok { background: var(--rule); }
 .item-body { flex: 1; padding: 10px 12px; min-width: 0; }
 .item-name { font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.3; margin-bottom: 3px; }
@@ -139,12 +141,13 @@ header { background: white; position: sticky; top: 0; z-index: 100; border-botto
 .meta-tag { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
 .exp-badge { font-family: var(--mono); font-size: 12px; font-weight: 600; padding: 1px 5px; border-radius: 3px; }
 .exp-scaduto { background: var(--red-l); color: var(--red); }
+.exp-esaurito { background: #F0F0EC; color: var(--ink-2); }
 .exp-critico { background: var(--orange-l); color: var(--orange); }
 .exp-attenzione { background: var(--yellow-l); color: var(--yellow); }
 .item-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; padding: 10px 12px; gap: 3px; flex-shrink: 0; }
 .qty-conf { font-family: var(--mono); font-size: 13px; color: var(--ink-3); }
 .qty { font-family: var(--mono); font-size: 16px; font-weight: 600; color: var(--ink); }
-.qty.zero { color: var(--red); }
+.qty.zero { color: var(--ink-3); }
 .preleva-btn { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 4px 8px; border-radius: 6px; border: 1.5px solid var(--rule); background: var(--bg); color: var(--ink-2); cursor: pointer; transition: all 0.1s; white-space: nowrap; }
 .preleva-btn:active { background: var(--red); color: white; border-color: var(--red); }
 
@@ -880,7 +883,7 @@ function hideLoading() {
 // ── TAB SWITCH ──
 // ── DA ORDINARE ──
 function renderDaOrdinare() {
-  const items = ITEMS.filter(i => i.status === 'scaduto');
+  const items = ITEMS.filter(i => i.status === 'scaduto' || i.status === 'esaurito');
   const container = document.getElementById('ord-content');
   if (!items.length) {
     container.innerHTML = '<div class="ord-empty">✅ Nessun articolo da ordinare</div>';
@@ -890,9 +893,8 @@ function renderDaOrdinare() {
   container.innerHTML = areas.map(area => {
     const aItems = items.filter(i => i.area === area);
     const rows = aItems.map(item => {
-      const isScaduto = item.scadStr && item.scadStr !== 'ND' && item.scadStr !== 'nd' && item.qtaUnit > 0;
-      const motivo = isScaduto ? 'scaduto' : 'esaurito';
-      const motivoLabel = isScaduto ? '🚫 Scaduto' : '🔴 Esaurito';
+      const motivo = item.status === 'scaduto' ? 'scaduto' : 'esaurito';
+      const motivoLabel = item.status === 'scaduto' ? '🚫 Scaduto' : '🔴 Esaurito';
       const tagFields = [
         ['Marca',     item.marca],
         ['Misura',    item.misura],
@@ -924,21 +926,20 @@ function renderDaOrdinare() {
 }
 
 function updateOrdCounter() {
-  const n = ITEMS.filter(i => i.status === 'scaduto').length;
+  const n = ITEMS.filter(i => i.status === 'scaduto' || i.status === 'esaurito').length;
   const el = document.getElementById('ttab-ord');
   if (el) el.innerHTML = `<span class="nav-item-icon">🛒</span>Da ordinare${n > 0 ? ` <span style="margin-left:auto;background:var(--red);color:white;font-family:var(--mono);font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px">${n}</span>` : ''}`;
 }
 
 function exportDaOrdinare() {
-  const items = ITEMS.filter(i => i.status === 'scaduto');
+  const items = ITEMS.filter(i => i.status === 'scaduto' || i.status === 'esaurito');
   if (!items.length) { showToast('Nessun articolo da ordinare', true); return; }
   const areas = [...new Set(items.map(i => i.area))].sort();
   const lines = ['📋 DA ORDINARE — ' + new Date().toLocaleDateString('it-IT'), ''];
   areas.forEach(a => {
     lines.push('▸ ' + a.toUpperCase());
     items.filter(i => i.area === a).forEach(item => {
-      const isScad = item.scadStr && item.scadStr !== 'ND' && item.qtaUnit > 0;
-      const motivo = isScad ? 'SCADUTO' : 'ESAURITO';
+      const motivo = item.status === 'scaduto' ? 'SCADUTO' : 'ESAURITO';
       const dettagli = [item.marca, item.misura, item.colore].filter(Boolean).join(', ');
       lines.push(`  • ${item.articolo}${dettagli ? ' ('+dettagli+')' : ''} — ${motivo}`);
     });
@@ -956,13 +957,12 @@ function exportDaOrdinare() {
 }
 
 function exportDaOrdinareCSV() {
-  const items = ITEMS.filter(i => i.status === 'scaduto');
+  const items = ITEMS.filter(i => i.status === 'scaduto' || i.status === 'esaurito');
   if (!items.length) { showToast('Nessun articolo da ordinare', true); return; }
   const header = ['Area','Box','Articolo','Marca','Misura','Colore','Scadenza','Motivo'];
   const rows = items.map(item => {
-    const isScad = item.scadStr && item.scadStr !== 'ND' && item.qtaUnit > 0;
     return [item.area, item.box, item.articolo, item.marca, item.misura, item.colore,
-            item.scadStr||'', isScad ? 'Scaduto' : 'Esaurito'];
+            item.scadStr||'', item.status === 'scaduto' ? 'Scaduto' : 'Esaurito'];
   });
   const csv = [header,...rows].map(r=>r.map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
   const blob = new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});
@@ -1058,11 +1058,12 @@ function renderFilters() {
   const counts = {
     all: base.length,
     scaduto: base.filter(i=>i.status==='scaduto').length,
+    esaurito: base.filter(i=>i.status==='esaurito').length,
     critico: base.filter(i=>i.status==='critico').length,
     ok: base.filter(i=>i.status==='ok').length,
   };
-  const labels = {all:'Tutti',scaduto:'Scaduti',critico:'Imminenti',ok:'OK'};
-  const colorMap = {all:'all',scaduto:'scaduto',critico:'critico',ok:'ok'};
+  const labels = {all:'Tutti',scaduto:'Scaduti',esaurito:'Esauriti',critico:'Imminenti',ok:'OK'};
+  const colorMap = {all:'all',scaduto:'scaduto',esaurito:'esaurito',critico:'critico',ok:'ok'};
   document.getElementById('status-filters').innerHTML =
     '<span class="filter-label">Stato:</span>' +
     Object.entries(counts).map(([k,v]) =>
@@ -1102,7 +1103,7 @@ function renderKitView() {
     { key: 'KIT INFUSIONE n°2',   label: 'Kit Infusione n°2',   borse: ['Borsa Gialla', 'Borsa blu'] },
   ];
   const BORSA_COLORS = { 'Borsa blu': '#1A4B8A', 'Borsa Gialla': '#C85000' };
-  const statusRank = { scaduto: 3, critico: 2, attenzione: 1, ok: 0 };
+  const statusRank = { scaduto: 4, esaurito: 3, critico: 2, attenzione: 1, ok: 0 };
   const esc = s => (s||'').replace(/'/g,"\'").replace(/"/g,'&quot;');
 
   if (search) {
@@ -1142,17 +1143,19 @@ function renderKitView() {
     const kitItems = ITEMS.filter(i => normArea(i.area) === normArea(kit.key));
     if (!kitItems.length) return '';
     const nScad = kitItems.filter(i=>i.status==='scaduto').length;
+    const nEsau = kitItems.filter(i=>i.status==='esaurito').length;
     const nCrit = kitItems.filter(i=>i.status==='critico').length;
-    const worstStatus = nScad>0?'scaduto':nCrit>0?'critico':'ok';
-    const headerColor = worstStatus==='scaduto'?'var(--red-l)':worstStatus==='critico'?'var(--orange-l)':'var(--green-l)';
-    const headerBorder = worstStatus==='scaduto'?'#F5C0C4':worstStatus==='critico'?'#F5CEB0':'#B0DFC0';
+    const worstStatus = nScad>0?'scaduto':nEsau>0?'esaurito':nCrit>0?'critico':'ok';
+    const headerColor = worstStatus==='scaduto'?'var(--red-l)':worstStatus==='esaurito'?'#F0F0EC':worstStatus==='critico'?'var(--orange-l)':'var(--green-l)';
+    const headerBorder = worstStatus==='scaduto'?'#F5C0C4':worstStatus==='esaurito'?'#C8C8C0':worstStatus==='critico'?'#F5CEB0':'#B0DFC0';
     const isInfusione = kit.key.includes('INFUSIONE');
 
     // Badge stato
     const badgesHTML = [
       nScad > 0 ? `<span style="font-family:var(--mono);font-size:10px;font-weight:600;background:var(--red-l);color:var(--red);padding:1px 7px;border-radius:10px">${nScad} scaduti</span>` : '',
+      nEsau > 0 ? `<span style="font-family:var(--mono);font-size:10px;font-weight:600;background:#F0F0EC;color:var(--ink-2);padding:1px 7px;border-radius:10px">${nEsau} esauriti</span>` : '',
       nCrit > 0 ? `<span style="font-family:var(--mono);font-size:10px;font-weight:600;background:var(--orange-l);color:var(--orange);padding:1px 7px;border-radius:10px">${nCrit} imminenti</span>` : '',
-      (nScad===0&&nCrit===0) ? `<span style="font-family:var(--mono);font-size:10px;font-weight:600;background:var(--green-l);color:var(--green);padding:1px 7px;border-radius:10px">✓ tutto ok</span>` : '',
+      (nScad===0&&nEsau===0&&nCrit===0) ? `<span style="font-family:var(--mono);font-size:10px;font-weight:600;background:var(--green-l);color:var(--green);padding:1px 7px;border-radius:10px">✓ tutto ok</span>` : '',
     ].filter(Boolean).join(' ');
 
     // Sezioni per borsa
@@ -1167,12 +1170,13 @@ function renderKitView() {
       const col = BORSA_COLORS[borsa] || '#888';
       const itemRows = bItems.map(item => {
         const itemIdx = ITEMS.indexOf(item);
-        const dotColor = item.status==='scaduto'?'var(--red)':item.status==='critico'?'var(--orange)':'var(--rule)';
+        const dotColor = item.status==='scaduto'?'var(--red)':item.status==='esaurito'?'var(--ink-3)':item.status==='critico'?'var(--orange)':'var(--rule)';
         return `<div class="item" onclick="openDetail(${itemIdx})" style="cursor:pointer;min-height:44px">
           <div class="item-stripe stripe-${item.status}"></div>
           <div class="item-body" style="padding:8px 10px">
             <div class="item-name">${item.articolo}</div>
             ${item.scadStr && item.scadStr!=='ND' && item.scadStr!=='nd' ? `<div style="font-family:var(--mono);font-size:11px;color:${item.status==='scaduto'?'var(--red)':item.status==='critico'?'var(--orange)':'var(--ink-3)'}">${item.scadStr}</div>` : ''}
+            ${item.status==='esaurito' ? `<div style="font-family:var(--mono);font-size:10px;color:var(--ink-3)">ESAURITO</div>` : ''}
           </div>
           <div class="item-right" style="padding:8px 10px">
             <div class="qty ${item.qtaUnit===0?'zero':''}">×${item.qtaUnit}</div>
@@ -1215,8 +1219,8 @@ function renderContent() {
 
   el.innerHTML = sortedBoxes.map(box => {
     const bItems = byBox[box];
-    const worst = bItems.reduce((acc,i) => { const r={scaduto:3,critico:2,attenzione:1,ok:0}; return r[i.status]>r[acc]?i.status:acc; }, 'ok');
-    const badges = worst==='scaduto'?'<div class="badge badge-r"></div>':worst==='critico'?'<div class="badge badge-o"></div>':worst==='attenzione'?'<div class="badge badge-y"></div>':'';
+    const worst = bItems.reduce((acc,i) => { const r={scaduto:4,esaurito:3,critico:2,attenzione:1,ok:0}; return r[i.status]>r[acc]?i.status:acc; }, 'ok');
+    const badges = worst==='scaduto'?'<div class="badge badge-r"></div>':worst==='esaurito'?'<div class="badge badge-g"></div>':worst==='critico'?'<div class="badge badge-o"></div>':worst==='attenzione'?'<div class="badge badge-y"></div>':'';
     const label = bItems.length===1 ? bItems[0].articolo : [...new Set(bItems.map(i=>i.articolo.split(' ')[0]))].slice(0,2).join(', ')+(bItems.length>2?` +${bItems.length-2}`:'');
 
     const itemsHTML = bItems.map(item => {
@@ -1295,11 +1299,14 @@ function renderDashboard() {
 
   const badgesHTML = (items) => {
     const s = items.filter(i=>i.status==='scaduto').length;
+    const e = items.filter(i=>i.status==='esaurito').length;
     const c = items.filter(i=>i.status==='critico').length;
-    if (s > 0 && c > 0) return `<span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--red);background:var(--red-l);padding:1px 6px;border-radius:8px">${s} scad.</span><span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--orange);background:var(--orange-l);padding:1px 6px;border-radius:8px">${c} imm.</span>`;
-    if (s > 0) return `<span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--red);background:var(--red-l);padding:1px 6px;border-radius:8px">${s} scad.</span>`;
-    if (c > 0) return `<span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--orange);background:var(--orange-l);padding:1px 6px;border-radius:8px">${c} imm.</span>`;
-    return `<span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--green);background:var(--green-l);padding:1px 6px;border-radius:8px">✓ ok</span>`;
+    const parts = [];
+    if (s > 0) parts.push(`<span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--red);background:var(--red-l);padding:1px 6px;border-radius:8px">${s} scad.</span>`);
+    if (e > 0) parts.push(`<span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--ink-2);background:#F0F0EC;padding:1px 6px;border-radius:8px">${e} esaur.</span>`);
+    if (c > 0) parts.push(`<span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--orange);background:var(--orange-l);padding:1px 6px;border-radius:8px">${c} imm.</span>`);
+    if (parts.length === 0) return `<span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--green);background:var(--green-l);padding:1px 6px;border-radius:8px">✓ ok</span>`;
+    return parts.join(' ');
   };
 
   const makeTile = (label, items, areaKey, col) => {
@@ -1521,7 +1528,10 @@ async function confirmPrelievo() {
     if (item) {
       item.qtaUnit = Math.max(0, item.qtaUnit - quantitaUnit);
       if (quantitaConf > 0) item.qtaConf = Math.max(0, item.qtaConf - quantitaConf);
-      if (item.qtaUnit <= 0) item.status = 'scaduto';
+      if (item.qtaUnit <= 0) {
+        // mantiene 'scaduto' se già scaduto, altrimenti diventa 'esaurito'
+        if (item.status !== 'scaduto') item.status = 'esaurito';
+      }
       if (destArea) { item.area = destArea; if (destBox) item.box = destBox; }
       render(); updateOrdCounter();
     }
@@ -1735,8 +1745,8 @@ function openDetail(idx) {
   _detailItem = item;
   document.getElementById('d-name').textContent = item.articolo;
 
-  const statusLabels = { scaduto: 'SCADUTO / ESAURITO', critico: 'IN SCADENZA', attenzione: 'SOTTO SOGLIA', ok: 'OK' };
-  const statusColors = { scaduto: 'background:var(--red-l);color:var(--red)', critico: 'background:var(--orange-l);color:var(--orange)', attenzione: 'background:var(--yellow-l);color:var(--yellow)', ok: 'background:var(--green-l);color:var(--green)' };
+  const statusLabels = { scaduto: 'SCADUTO', esaurito: 'ESAURITO', critico: 'IN SCADENZA', attenzione: 'SOTTO SOGLIA', ok: 'OK' };
+  const statusColors = { scaduto: 'background:var(--red-l);color:var(--red)', esaurito: 'background:#F0F0EC;color:var(--ink-2)', critico: 'background:var(--orange-l);color:var(--orange)', attenzione: 'background:var(--yellow-l);color:var(--yellow)', ok: 'background:var(--green-l);color:var(--green)' };
   const badge = document.getElementById('d-status-badge');
   badge.textContent = statusLabels[item.status] || item.status;
   badge.setAttribute('style', statusColors[item.status] || '');
@@ -1837,10 +1847,10 @@ function parseDBItem(item) {
     else { const d = new Date(scadRaw); if (!isNaN(d)) scadDate = d; }
   }
   let status = 'ok';
-  if (qtaUnit <= 0) {
+  if (scadDate && scadDate < new Date()) {
     status = 'scaduto';
-  } else if (scadDate && scadDate < new Date()) {
-    status = 'scaduto';
+  } else if (qtaUnit <= 0) {
+    status = 'esaurito';
   } else if (scadDate) {
     const days = (scadDate - new Date()) / 86400000;
     if (days <= 60) status = 'critico';
