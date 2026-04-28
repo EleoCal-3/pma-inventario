@@ -3,5 +3,18 @@
     "nome": "Test",
     "data": "2026-04-28"
   },
-  "pazienti": []
+  "pazienti": [
+    {
+      "id": 1777366020208,
+      "braccialetto": "1",
+      "pettorale": "555",
+      "nome": "Mario",
+      "area": "BIANCA",
+      "stato": "In PMA",
+      "orario_ingresso": "10:47",
+      "orario_dimissione": "",
+      "note": "",
+      "operatore_ingresso": "Eleonora"
+    }
+  ]
 }
