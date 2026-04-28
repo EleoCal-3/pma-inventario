@@ -419,7 +419,6 @@ textarea.modal-field { resize: none; }
     <div class="nav-item active" id="ttab-dash" onclick="switchTab('dashboard');closeNav()"><span class="nav-item-icon">📊</span>Dashboard</div>
     <div class="nav-item" id="ttab-inv" onclick="switchTab('inventario');closeNav()"><span class="nav-item-icon">📦</span>Inventario</div>
     <div class="nav-item" id="ttab-ord" onclick="switchTab('daordinare');closeNav()"><span class="nav-item-icon">🛒</span>Da ordinare</div>
-    <div class="nav-item" id="ttab-log" onclick="switchTab('log');closeNav()"><span class="nav-item-icon">📋</span>Log movimenti</div>
     <div class="nav-item" id="ttab-carico" onclick="closeNav();openCarico()"><span class="nav-item-icon">📥</span>Carico Articoli</div>
     <div class="nav-item" id="ttab-avanzate" onclick="switchTab('avanzate');closeNav()"><span class="nav-item-icon">⚙️</span>Avanzate</div>
   </div>
@@ -974,7 +973,9 @@ function exportDaOrdinareCSV() {
 
 function toggleNav() {
   const dd = document.getElementById('nav-dropdown');
+  const isOpening = !dd.classList.contains('open');
   dd.classList.toggle('open');
+  if (isOpening) window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function closeNav() {
   document.getElementById('nav-dropdown').classList.remove('open');
@@ -988,22 +989,21 @@ document.addEventListener('click', function(e) {
 
 function switchTab(tab) {
   currentTab = tab;
-  ['ttab-dash','ttab-inv','ttab-ord','ttab-log','ttab-avanzate'].forEach(id => {
+  ['ttab-dash','ttab-inv','ttab-ord','ttab-avanzate'].forEach(id => {
     const el = document.getElementById(id); if (el) el.classList.remove('active');
   });
-  const tabMap = {dashboard:'ttab-dash', inventario:'ttab-inv', daordinare:'ttab-ord', log:'ttab-log', avanzate:'ttab-avanzate'};
+  const tabMap = {dashboard:'ttab-dash', inventario:'ttab-inv', daordinare:'ttab-ord', avanzate:'ttab-avanzate'};
   if (tabMap[tab]) document.getElementById(tabMap[tab]).classList.add('active');
   document.getElementById('inv-view').style.display     = tab==='inventario' ? '' : 'none';
   document.getElementById('dashboard').style.display    = tab==='dashboard'  ? 'block' : 'none';
   document.getElementById('daordinare').style.display   = tab==='daordinare' ? 'block' : 'none';
-  document.getElementById('log-tab').style.display      = tab==='log'        ? 'block' : 'none';
+  document.getElementById('log-tab').style.display      = 'none'; // log ora è in Avanzate
   document.getElementById('avanzate-tab').style.display = tab==='avanzate'   ? 'block' : 'none';
-  document.querySelector('.searchbar').style.display  = tab==='inventario' ? '' : 'none';
-  document.getElementById('dash-searchbar').style.display = tab==='dashboard'  ? '' : 'none';
+  document.querySelector('.searchbar').style.display    = tab==='inventario' ? '' : 'none';
+  document.getElementById('dash-searchbar').style.display = tab==='dashboard' ? '' : 'none';
   if (tab === 'dashboard')  renderDashboard();
   if (tab === 'daordinare') renderDaOrdinare();
-  if (tab === 'log')        renderLog();
-  if (tab === 'avanzate')   updateLastIdDisplay();
+  if (tab === 'avanzate')   { updateLastIdDisplay(); }
 }
 
 // ── INVENTARIO RENDER ──
@@ -1910,9 +1910,12 @@ async function migraCSV() {
       dbSHA = '';
     }
 
+    // Assegna ID sequenziali (il CSV Google non ha colonna ID)
+    items.forEach((item, idx) => { item.id = idx + 1; });
     const newDB = {
       version: 1,
       lastUpdated: new Date().toISOString(),
+      lastId: items.length,
       inventario: items,
       log_carichi:  existingLogCarichi,
       log_prelievi: existingLogPrelievi
@@ -2127,13 +2130,19 @@ async function sendToScript(params) {
     db.log_carichi = db.log_carichi || [];
     db.log_carichi.unshift({
       ts: now, operatore, articolo,
-      marca:  db.inventario[idx].marca  || '',
-      box:    db.inventario[idx].box    || '',
-      area:   db.inventario[idx].area   || '',
-      misura: db.inventario[idx].misura || '',
-      colore: db.inventario[idx].colore || '',
-      tipo:   db.inventario[idx].tipo   || '',
-      scadenza, qtaConfezioni: qtaConf, quantita: qtaUnit, lotto, note
+      id:          db.inventario[idx].id         || '',
+      marca:       db.inventario[idx].marca       || '',
+      box:         db.inventario[idx].box         || '',
+      area:        db.inventario[idx].area        || '',
+      misura:      db.inventario[idx].misura      || '',
+      colore:      db.inventario[idx].colore      || '',
+      tipo:        db.inventario[idx].tipo        || '',
+      principio:   db.inventario[idx].principio   || '',
+      categoria:   db.inventario[idx].categoria   || '',
+      qtaOttimale: db.inventario[idx].qtaOttimale || 0,
+      lotto:       lotto || db.inventario[idx].lotto || '',
+      scadenza:    scadenza || db.inventario[idx].scadStr || '',
+      qtaConfezioni: qtaConf, quantita: qtaUnit, note
     });
     await githubWrite(db, `Carico: ${articolo} +${qtaUnit}u +${qtaConf}conf — ${operatorName}`);
     DB = db; logCarichi = db.log_carichi;
@@ -2158,17 +2167,21 @@ async function sendToScript(params) {
     db.log_prelievi = db.log_prelievi || [];
     db.log_prelievi.unshift({
       ts: now, operatore, articolo,
-      id:       db.inventario[idx].id    || '',
-      marca:    db.inventario[idx].marca  || '',
-      box:      boxOrigine,
-      area:     areaOrigine,
-      misura:   db.inventario[idx].misura || '',
-      colore:   db.inventario[idx].colore || '',
-      tipo:     db.inventario[idx].tipo   || '',
-      scadenza: db.inventario[idx].scadStr || '',
-      quantita: qtaUnit, qtaConfezioni: qtaConf, note,
-      destArea: destArea || '',
-      destBox:  destBox  || ''
+      id:          db.inventario[idx].id          || '',
+      marca:       db.inventario[idx].marca        || '',
+      box:         boxOrigine,
+      area:        areaOrigine,
+      misura:      db.inventario[idx].misura       || '',
+      colore:      db.inventario[idx].colore       || '',
+      tipo:        db.inventario[idx].tipo         || '',
+      principio:   db.inventario[idx].principio    || '',
+      categoria:   db.inventario[idx].categoria    || '',
+      qtaOttimale: db.inventario[idx].qtaOttimale  || 0,
+      lotto:       db.inventario[idx].lotto        || '',
+      scadenza:    db.inventario[idx].scadStr      || '',
+      quantita:    qtaUnit, qtaConfezioni: qtaConf, note,
+      destArea:    destArea || '',
+      destBox:     destBox  || ''
     });
     const destNote = destArea ? ` → ${destArea}${destBox ? ' Box ' + destBox : ''}` : '';
     await githubWrite(db, `Prelievo: ${articolo} -${qtaUnit} unità${destNote} — ${operatorName}`);
@@ -2197,9 +2210,14 @@ async function sendToScript(params) {
     db.log_carichi = db.log_carichi || [];
     db.log_carichi.unshift({
       ts: now, operatore, articolo,
+      id:          db.lastId,
       marca, box, area,
       misura, colore, tipo,
-      scadenza, qtaConfezioni: qtaConf, quantita: qtaUnit, lotto, note: noteOp
+      principio:   principioAttivo || '',
+      categoria:   categoria || '',
+      qtaOttimale: parseInt(qtaOttimale) || 0,
+      lotto, scadenza,
+      qtaConfezioni: qtaConf, quantita: qtaUnit, note: noteOp
     });
     await githubWrite(db, `Nuovo articolo: ${articolo} +${qtaUnit}u — ${operatorName}`);
     DB = db;
@@ -2253,11 +2271,11 @@ function exportCSV(tipo) {
   if (!data.length) { showToast('Nessun dato da esportare', true); return; }
   let header, rows;
   if (tipo==='prelievi') {
-    header=['Data','ID','Articolo','Marca','Box','Area','Scadenza','Qtà','Operatore','Note','Destinazione Area','Destinazione Box'];
-    rows=data.map(e=>[e.ts,e.id||'',e.articolo,e.marca,e.box,e.area,e.scadenza||'',e.quantita,e.operatore,e.note||'',e.destArea||'',e.destBox||'']);
+    header=['Data','ID','Articolo','Principio Attivo','Marca','Misura','Colore','Tipo','Categoria','Box','Area','Scadenza','Lotto','Qtà Unitaria','Qtà Confezioni','Qtà Ottimale','Operatore','Note','Destinazione Area','Destinazione Box'];
+    rows=data.map(e=>[e.ts,e.id||'',e.articolo,e.principio||'',e.marca||'',e.misura||'',e.colore||'',e.tipo||'',e.categoria||'',e.box||'',e.area||'',e.scadenza||'',e.lotto||'',e.quantita||0,e.qtaConfezioni||0,e.qtaOttimale||0,e.operatore||'',e.note||'',e.destArea||'',e.destBox||'']);
   } else {
-    header=['Data','Articolo','Marca','Box','Area','Scadenza','Qtà Conf','Qtà Unit','Operatore','Note'];
-    rows=data.map(e=>[e.ts,e.articolo,e.marca,e.box,e.area,e.scadenza,e.qtaConfezioni||0,e.quantita||0,e.operatore,e.note]);
+    header=['Data','ID','Articolo','Principio Attivo','Marca','Misura','Colore','Tipo','Categoria','Box','Area','Scadenza','Lotto','Qtà Conf','Qtà Unit','Qtà Ottimale','Operatore','Note'];
+    rows=data.map(e=>[e.ts,e.id||'',e.articolo,e.principio||'',e.marca||'',e.misura||'',e.colore||'',e.tipo||'',e.categoria||'',e.box||'',e.area||'',e.scadenza||'',e.lotto||'',e.qtaConfezioni||0,e.quantita||0,e.qtaOttimale||0,e.operatore||'',e.note||'']);
   }
   const csv = [header,...rows].map(r=>r.map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
   const blob = new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
@@ -2275,19 +2293,72 @@ document.getElementById('modal-overlay').addEventListener('click', function(e){ 
 
 // ── AVANZATE: aggiorna il display lastId ──
 function updateLastIdDisplay() {
-  const lastId = DB && DB.lastId != null ? parseInt(DB.lastId) : null;
   const elCurr = document.getElementById('avanzate-lastid');
   const elNext = document.getElementById('avanzate-nextid');
   if (!elCurr || !elNext) return;
-  if (lastId != null && !isNaN(lastId)) {
-    elCurr.textContent = lastId;
-    elNext.textContent = lastId + 1;
-  } else {
-    // Calcola il max ID dagli articoli se lastId non è presente
-    const maxId = DB && DB.inventario ? Math.max(0, ...DB.inventario.map(i => parseInt(i.id) || 0)) : 0;
-    elCurr.textContent = maxId > 0 ? maxId : '(non impostato)';
-    elNext.textContent = maxId > 0 ? maxId + 1 : '—';
+  // Priorità: DB.lastId → max id negli articoli → numero articoli
+  let lastId = DB && DB.lastId != null ? parseInt(DB.lastId) : null;
+  if (lastId == null || isNaN(lastId)) {
+    lastId = DB && DB.inventario && DB.inventario.length
+      ? Math.max(...DB.inventario.map(i => parseInt(i.id) || 0))
+      : 0;
+    if (lastId === 0 && DB && DB.inventario) lastId = DB.inventario.length;
   }
+  elCurr.textContent = lastId > 0 ? lastId : '—';
+  elNext.textContent = lastId > 0 ? lastId + 1 : '—';
+}
+
+// ── AVANZATE: pannello log inline ──
+function toggleLogPanel() {
+  const panel  = document.getElementById('avanzate-log-panel');
+  const toggle = document.getElementById('log-panel-toggle');
+  const isOpen = panel.style.display !== 'none';
+  if (isOpen) {
+    panel.style.display = 'none';
+    toggle.textContent = '▼ mostra';
+  } else {
+    panel.style.display = 'block';
+    toggle.textContent = '▲ nascondi';
+    renderAvanzateLog();
+  }
+}
+
+function renderAvanzateLog() {
+  const body = document.getElementById('avanzate-log-body');
+  if (!body) return;
+  const all = [
+    ...logPrelievi.map(e => ({...e, tipo:'prelievo'})),
+    ...logCarichi.map(e  => ({...e, tipo:'carico'}))
+  ].sort((a,b) => new Date(b.ts) - new Date(a.ts));
+  if (!all.length) { body.innerHTML = '<div style="color:var(--ink-3);padding:8px 0">Nessun movimento registrato.</div>'; return; }
+  body.innerHTML = all.map(e => {
+    const isCarico = e.tipo === 'carico';
+    const qStr   = isCarico ? `+${e.qtaConfezioni||0} conf / +${e.quantita||0} unit` : `−${e.quantita||0}`;
+    const color  = isCarico ? 'var(--blue)' : 'var(--red)';
+    const fields = [
+      e.principio  ? `Principio: ${e.principio}`   : '',
+      e.misura     ? `Misura: ${e.misura}`          : '',
+      e.colore     ? `Colore: ${e.colore}`          : '',
+      e.tipo       ? `Tipo: ${e.tipo}`              : '',
+      e.categoria  ? `Categoria: ${e.categoria}`    : '',
+      e.lotto      ? `Lotto: ${e.lotto}`            : '',
+      e.scadenza   ? `Scad: ${e.scadenza}`          : '',
+      e.qtaOttimale? `Ottimale: ${e.qtaOttimale}`   : '',
+    ].filter(Boolean).join(' · ');
+    const dest = !isCarico && e.destArea ? ` → ${e.destArea}${e.destBox?' Box '+e.destBox:''}` : '';
+    return `<div style="border-bottom:1px solid var(--rule);padding:8px 0">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div>
+          <div style="font-weight:600;color:var(--ink)">${e.articolo}${e.marca?' · '+e.marca:''}</div>
+          <div style="font-size:11px;color:var(--ink-3);margin-top:2px">${e.ts} · ${e.area||''} Box ${e.box||''} · ${e.operatore||''}</div>
+          ${fields ? `<div style="font-size:11px;color:var(--ink-3);margin-top:1px">${fields}</div>` : ''}
+          ${e.note  ? `<div style="font-size:11px;color:var(--ink-2);margin-top:1px">"${e.note}"</div>` : ''}
+          ${dest    ? `<div style="font-size:11px;color:var(--ink-2);margin-top:1px">${dest}</div>` : ''}
+        </div>
+        <div style="font-family:var(--mono);font-size:13px;font-weight:700;color:${color};white-space:nowrap">${qStr}</div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 // ── HARD RESET ──
@@ -2306,12 +2377,14 @@ async function hardResetDB() {
       headers: { 'Authorization': 'token ' + githubPAT, 'Accept': 'application/vnd.github.v3+json' }
     });
     if (check.ok) { const ex = await check.json(); dbSHA = ex.sha; } else { dbSHA = ''; }
-    // Calcola lastId dal max ID degli articoli importati
-    const maxId = Math.max(0, ...items.map(i => parseInt(i.id) || 0));
+    // Assegna ID sequenziale a tutti gli articoli (il CSV non ha colonna ID)
+    // e calcola lastId come numero totale di articoli importati
+    items.forEach((item, idx) => { item.id = idx + 1; });
+    const lastId = items.length;
     const newDB = {
       version: 1,
       lastUpdated: new Date().toISOString(),
-      lastId: maxId,
+      lastId: lastId,
       inventario: items,
       log_carichi: [],
       log_prelievi: []
@@ -2334,40 +2407,37 @@ async function hardResetDB() {
 <div id="avanzate-tab">
   <div class="avanzate-section-title">Strumenti avanzati</div>
 
-  <div class="avanzate-card">
-    <div class="avanzate-card-title">📊 Esporta inventario per Google Sheets</div>
-    <div class="avanzate-card-desc">Scarica l'inventario corrente in formato CSV, pronto per essere importato in Google Sheets (File → Importa → Carica).</div>
-    <button class="avanzate-btn green" onclick="exportInventarioCSV()">Esporta CSV Inventario</button>
-  </div>
-
+  <!-- BACKUP JSON -->
   <div class="avanzate-card">
     <div class="avanzate-card-title">💾 Backup completo (JSON)</div>
     <div class="avanzate-card-desc">Scarica una copia completa del database in formato JSON, inclusi i log dei movimenti. Da conservare come duplicato di sicurezza.</div>
     <button class="avanzate-btn green" onclick="downloadDB()">Scarica backup JSON</button>
   </div>
 
-  <div class="avanzate-card" style="border-color: var(--blue); background: var(--blue-l);">
-    <div class="avanzate-card-title">📥 Importa da file Excel (.xlsx)</div>
-    <div class="avanzate-card-desc">Seleziona il file <strong>Inventario_PMA_Per APP.xlsx</strong> dal tuo dispositivo. Sovrascrive l'inventario su GitHub con le quantità e scadenze aggiornate. I log dei movimenti vengono conservati.</div>
-    <button class="avanzate-btn blue" onclick="importaXLSX()">Seleziona file Excel…</button>
-  </div>
-
+  <!-- LOG MOVIMENTI -->
   <div class="avanzate-card">
-    <div class="avanzate-card-title">🔄 Importa da Fogli Google</div>
-    <div class="avanzate-card-desc">Legge il foglio Google Sheets pubblicato e sovrascrive l'inventario su GitHub. Usa questa opzione solo se il foglio Google è aggiornato. I log dei movimenti vengono conservati.</div>
-    <button class="avanzate-btn blue" onclick="migraCSV()">Importa da Fogli Google</button>
+    <div class="avanzate-card-title" style="cursor:pointer;user-select:none" onclick="toggleLogPanel()">
+      📋 Log movimenti
+      <span id="log-panel-toggle" style="font-size:13px;font-weight:400;color:var(--ink-3);margin-left:8px">▼ mostra</span>
+    </div>
+    <div class="avanzate-card-desc">Storico completo di tutti i prelievi e i carichi registrati — con snapshot di tutti i dati dell'articolo al momento del movimento.</div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="avanzate-btn" style="background:var(--ink);color:white;flex:1" onclick="exportCSV('prelievi')">⬇ Prelievi CSV</button>
+      <button class="avanzate-btn" style="background:var(--blue);color:white;flex:1" onclick="exportCSV('carichi')">⬇ Carichi CSV</button>
+    </div>
+    <div id="avanzate-log-panel" style="display:none;margin-top:14px;border-top:1px solid var(--rule);padding-top:12px">
+      <div id="avanzate-log-body" style="font-size:13px;max-height:60vh;overflow-y:auto"></div>
+    </div>
   </div>
 
-  <div class="avanzate-card" style="border-color:var(--ink-3);background:var(--bg)">
-    <div class="avanzate-card-title">🔢 ID ultimo articolo</div>
-    <div class="avanzate-card-desc">Mostra il valore attuale di <strong>lastId</strong> nel database — utile per sapere quale numero progressivo inserire in un nuovo articolo sul foglio Google.</div>
-    <div id="avanzate-lastid" style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--ink);margin:10px 0 4px">—</div>
-    <div style="font-size:12px;color:var(--ink-3)">Il prossimo nuovo articolo dovrebbe avere ID <span id="avanzate-nextid" style="font-weight:700">—</span></div>
-  </div>
-
+  <!-- HARD RESET -->
   <div class="avanzate-card" style="border-color:var(--red);background:var(--red-l)">
     <div class="avanzate-card-title">⚠️ Hard Reset database</div>
     <div class="avanzate-card-desc">Importa dal foglio Google e <strong>azzera completamente</strong> il database su GitHub — inclusi tutti i log di prelievi e carichi. Usa solo dopo un ripristino completo dell'inventario. L'operazione è irreversibile.</div>
+    <div style="background:rgba(200,25,42,0.08);border-radius:8px;padding:10px 12px;margin:10px 0;font-size:13px;color:var(--ink-2)">
+      ID attuale: <strong id="avanzate-lastid" style="font-family:var(--mono)">—</strong>
+      &nbsp;·&nbsp; prossimo nuovo articolo: <strong id="avanzate-nextid" style="font-family:var(--mono)">—</strong>
+    </div>
     <button class="avanzate-btn" style="background:var(--red);color:white" onclick="hardResetDB()">Hard Reset da Fogli Google</button>
   </div>
 </div>
