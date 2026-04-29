@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Segreteria PMA · Croce Rossa Padova</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #C8192A; --red-d: #9E1020; --red-l: #FDECEA;
+  --orange: #C85000; --orange-l: #FFF0E5;
+  --yellow: #8A6000; --yellow-l: #FFF8E5;
+  --green: #1A6B30; --green-l: #EDFAF2;
+  --blue: #1A4B8A; --blue-l: #E8F0FB;
+  --white-area: #F8F8F8; --green-area: #D4F0DC; --yellow-area: #FFF3CC; --red-area: #FDDCDC;
+  --ink: #1A1A18; --ink-2: #444440; --ink-3: #888884;
+  --rule: #E8E8E4; --bg: #F5F5F2; --surface: #FEFEFE;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; overscroll-behavior: none; }
+
+/* ── LOGIN ── */
+#login-screen { position: fixed; inset: 0; background: var(--red); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; gap: 24px; padding: 32px; }
+.login-cross { width: 64px; height: 64px; position: relative; margin-bottom: 8px; }
+.login-cross::before, .login-cross::after { content: ''; position: absolute; background: white; border-radius: 3px; }
+.login-cross::before { width: 20px; height: 64px; left: 22px; top: 0; }
+.login-cross::after { width: 64px; height: 20px; top: 22px; left: 0; }
+.login-title { font-family: var(--mono); font-size: 22px; font-weight: 600; color: white; letter-spacing: 0.04em; text-align: center; }
+.login-sub { font-family: var(--sans); font-size: 15px; color: rgba(255,255,255,0.75); text-align: center; max-width: 280px; line-height: 1.5; }
+.login-form { width: 100%; max-width: 320px; display: flex; flex-direction: column; gap: 10px; }
+.login-form input { width: 100%; padding: 13px 16px; border-radius: 10px; border: none; font-family: var(--sans); font-size: 17px; color: var(--ink); background: rgba(255,255,255,0.95); outline: none; }
+.login-form input::placeholder { color: #aaa; }
+.login-submit { width: 100%; padding: 14px; border-radius: 10px; border: none; background: rgba(0,0,0,0.35); color: white; font-family: var(--mono); font-size: 15px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: background 0.15s; }
+.login-submit:active { background: rgba(0,0,0,0.55); }
+#login-err { color: rgba(255,255,255,0.9); font-size: 14px; text-align: center; min-height: 16px; font-family: var(--sans); }
+.login-hint { font-size: 13px; color: rgba(255,255,255,0.55); text-align: center; max-width: 280px; line-height: 1.5; }
+
+/* ── HEADER ── */
+header { background: white; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--rule); box-shadow: 0 1px 8px rgba(0,0,0,0.08); }
+.header-main { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; gap: 10px; }
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+.brand-logo { height: 56px; width: auto; max-width: 360px; object-fit: contain; flex-shrink: 1; }
+@media (max-width: 720px) { .brand-logo { height: 44px; max-width: 260px; } }
+@media (max-width: 380px) { .brand-logo { height: 36px; max-width: 200px; } }
+.user-badge { display: flex; align-items: center; gap: 6px; background: var(--bg); border-radius: 20px; padding: 4px 10px 4px 4px; border: 1px solid var(--rule); cursor: pointer; }
+.user-avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 13px; font-weight: 700; color: white; flex-shrink: 0; }
+.user-name-badge { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--ink-2); max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── EVENTO BANNER ── */
+#evento-banner { background: var(--red); color: white; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+@media (max-width: 480px) {
+  #evento-banner { padding: 9px 14px; }
+  .evento-info { flex: 1 1 100%; min-width: 0; }
+  .btn-evento { flex: 0 0 auto; align-self: flex-start; }
+}
+#evento-banner.no-event { background: var(--yellow-l); border-bottom: 1px solid #F0D890; }
+.evento-info { display: flex; flex-direction: column; gap: 1px; }
+.evento-nome { font-family: var(--mono); font-size: 14px; font-weight: 600; color: white; letter-spacing: 0.03em; }
+#evento-banner.no-event .evento-nome { color: var(--yellow); }
+.evento-data { font-family: var(--sans); font-size: 12px; color: rgba(255,255,255,0.8); }
+#evento-banner.no-event .evento-data { color: var(--yellow); opacity: 0.8; }
+.btn-evento { border: 1.5px solid rgba(255,255,255,0.5); background: rgba(255,255,255,0.15); color: white; font-family: var(--mono); font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 8px; cursor: pointer; letter-spacing: 0.04em; white-space: nowrap; }
+.btn-evento:active { background: rgba(255,255,255,0.25); }
+#evento-banner.no-event .btn-evento { border-color: var(--yellow); background: var(--yellow-l); color: var(--yellow); }
+
+/* ── MODAL EVENTO ── */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500; align-items: flex-end; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal-box { background: white; border-radius: 16px 16px 0 0; padding: 24px 20px 40px; width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 16px; }
+.modal-title { font-family: var(--mono); font-size: 16px; font-weight: 600; color: var(--ink); }
+.modal-field { display: flex; flex-direction: column; gap: 6px; }
+.modal-label { font-family: var(--mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); }
+.modal-input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--rule); border-radius: 10px; font-family: var(--sans); font-size: 16px; color: var(--ink); outline: none; background: var(--surface); }
+.modal-input:focus { border-color: var(--red); }
+.modal-btns { display: flex; gap: 10px; margin-top: 4px; }
+.btn-primary { flex: 1; padding: 13px; border-radius: 10px; border: none; background: var(--red); color: white; font-family: var(--mono); font-size: 14px; font-weight: 700; letter-spacing: 0.04em; cursor: pointer; }
+.btn-primary:active { background: var(--red-d); }
+.btn-secondary { flex: 1; padding: 13px; border-radius: 10px; border: 1.5px solid var(--rule); background: white; color: var(--ink-2); font-family: var(--mono); font-size: 14px; font-weight: 600; cursor: pointer; }
+.btn-danger { flex: 1; padding: 13px; border-radius: 10px; border: 1.5px solid #F5C0C4; background: var(--red-l); color: var(--red); font-family: var(--mono); font-size: 14px; font-weight: 700; cursor: pointer; }
+
+/* ── TABS ── */
+.main-tabs { display: flex; background: white; border-bottom: 1px solid var(--rule); }
+.mtab { flex: 1; padding: 12px 8px; font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); border: none; background: none; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; }
+.mtab.active { color: var(--red); border-bottom-color: var(--red); }
+
+/* ── FORM INGRESSO ── */
+#tab-ingresso { padding: 16px 16px 120px; }
+.form-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.form-title { font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--ink); letter-spacing: 0.03em; padding-bottom: 4px; border-bottom: 1px solid var(--rule); }
+.form-row { display: flex; gap: 10px; }
+.form-field { display: flex; flex-direction: column; gap: 5px; flex: 1; }
+.form-field.narrow { flex: 0 0 100px; }
+.field-label { font-family: var(--mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); }
+.field-input { width: 100%; padding: 10px 12px; border: 1.5px solid var(--rule); border-radius: 9px; font-family: var(--sans); font-size: 16px; color: var(--ink); outline: none; background: var(--surface); -webkit-appearance: none; }
+.field-input:focus { border-color: var(--red); }
+textarea.field-input { resize: vertical; min-height: 70px; font-family: var(--sans); line-height: 1.4; }
+textarea.edit-input { resize: vertical; min-height: 80px; font-family: var(--sans); line-height: 1.4; }
+.area-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.area-pill { padding: 7px 12px; border-radius: 20px; border: 1.5px solid var(--rule); font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer; transition: all 0.15s; background: white; color: var(--ink-2); }
+.area-pill.sel-bianca  { background: #F0F0F0; border-color: #BBB; color: #444; }
+.area-pill.sel-verde   { background: var(--green-l); border-color: var(--green); color: var(--green); }
+.area-pill.sel-gialla  { background: var(--yellow-l); border-color: var(--yellow); color: var(--yellow); }
+.area-pill.sel-rossa   { background: var(--red-l); border-color: var(--red); color: var(--red); }
+.btn-invio { width: 100%; padding: 15px; border-radius: 12px; border: none; background: var(--red); color: white; font-family: var(--mono); font-size: 16px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: background 0.15s; margin-top: 2px; }
+.btn-invio:active { background: var(--red-d); }
+.btn-invio:disabled { background: var(--ink-3); cursor: not-allowed; }
+
+/* ── LISTA PAZIENTI ── */
+#tab-lista { padding: 12px 16px 120px; display: flex; flex-direction: column; gap: 12px; }
+.filter-bar { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+@media (max-width: 600px) {
+  .filter-bar .search-wrap { flex: 1 1 100%; min-width: 0; }
+  .filter-bar .fsel { flex: 1 1 calc(50% - 3px); min-width: 0; }
+}
+.search-wrap { flex: 1; min-width: 180px; display: flex; align-items: center; background: white; border: 1.5px solid var(--rule); border-radius: 10px; padding: 0 10px; gap: 6px; }
+.search-wrap svg { color: var(--ink-3); flex-shrink: 0; }
+.search-wrap input { flex: 1; border: none; font-family: var(--sans); font-size: 15px; color: var(--ink); padding: 9px 0; outline: none; background: transparent; }
+.fsel { padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--rule); font-family: var(--mono); font-size: 12px; font-weight: 600; background: white; color: var(--ink-2); cursor: pointer; -webkit-appearance: none; }
+.fsel:focus { border-color: var(--red); outline: none; }
+.table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--rule); background: white; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { font-family: var(--mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); padding: 10px 10px; border-bottom: 1.5px solid var(--rule); text-align: left; white-space: nowrap; cursor: pointer; user-select: none; position: sticky; top: 0; background: white; }
+th:hover { color: var(--ink); }
+th .sort-icon { display: inline-block; margin-left: 3px; opacity: 0.4; font-size: 10px; }
+th.sorted .sort-icon { opacity: 1; color: var(--red); }
+td { padding: 9px 10px; border-bottom: 1px solid var(--rule); vertical-align: middle; font-family: var(--sans); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg); }
+.badge-area { display: inline-block; padding: 3px 8px; border-radius: 12px; font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; white-space: nowrap; }
+.area-bianca  { background: #F0F0F0; color: #555; }
+.area-verde   { background: var(--green-l); color: var(--green); }
+.area-gialla  { background: var(--yellow-l); color: var(--yellow); }
+.area-rossa   { background: var(--red-l); color: var(--red); }
+.badge-stato { display: inline-block; padding: 3px 8px; border-radius: 12px; font-family: var(--mono); font-size: 11px; font-weight: 600; white-space: nowrap; }
+.stato-inpma         { background: var(--blue-l); color: var(--blue); }
+.stato-dimesso       { background: var(--green-l); color: var(--green); }
+.stato-ospedalizzato { background: var(--orange-l); color: var(--orange); }
+.btn-dimetti { padding: 5px 10px; border-radius: 8px; border: 1.5px solid var(--green); background: var(--green-l); color: var(--green); font-family: var(--mono); font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.btn-dimetti:active { background: var(--green); color: white; }
+.btn-edit-row { padding: 5px 8px; border-radius: 8px; border: 1.5px solid var(--rule); background: white; color: var(--ink-3); font-size: 14px; cursor: pointer; }
+.btn-edit-row:active { background: var(--bg); }
+.empty-state { text-align: center; padding: 48px 16px; color: var(--ink-3); font-family: var(--sans); }
+.empty-state .es-icon { font-size: 40px; margin-bottom: 8px; }
+.empty-state .es-text { font-size: 15px; }
+.stats-row { display: flex; gap: 8px; }
+.stat-pill { flex: 1; background: white; border: 1px solid var(--rule); border-radius: 10px; padding: 10px; text-align: center; }
+.stat-n { font-family: var(--mono); font-size: 20px; font-weight: 600; color: var(--ink); line-height: 1; }
+.stat-l { font-family: var(--sans); font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+.stat-pill.st-blue   .stat-n { color: var(--blue); }
+.stat-pill.st-green  .stat-n { color: var(--green); }
+.stat-pill.st-orange .stat-n { color: var(--orange); }
+td.editable-cell { cursor: pointer; }
+td.editable-cell:hover { background: var(--blue-l); }
+
+/* ── DETTAGLIO ESPANDIBILE (mobile) ── */
+tr.row-detail td { background: var(--bg); padding: 0; border-bottom: 1px solid var(--rule); }
+.row-detail-inner { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.row-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+.row-detail-grid .full { grid-column: 1 / -1; }
+.row-detail-label { font-family: var(--mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); margin-bottom: 2px; }
+.row-detail-val { font-family: var(--sans); font-size: 14px; color: var(--ink); word-break: break-word; }
+.row-detail-val.muted { color: var(--ink-3); }
+.row-detail-val.note { white-space: pre-wrap; line-height: 1.45; background: white; border: 1px solid var(--rule); border-radius: 8px; padding: 8px 10px; font-size: 13.5px; }
+.row-detail-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.row-chevron { display: inline-block; transition: transform 0.18s; color: var(--ink-3); margin-right: 4px; font-family: var(--mono); }
+tr.expanded .row-chevron { transform: rotate(90deg); color: var(--red); }
+tr.tappable { cursor: pointer; }
+.col-nome b.full-name { font-weight: 500; color: var(--ink); }
+.col-nome .nome-meta { display: block; font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); margin-top: 1px; }
+.has-note-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--red); margin-left: 4px; vertical-align: middle; }
+
+/* mobile: nascondi colonne meno critiche */
+@media (max-width: 720px) {
+  th.col-hide-mobile, td.col-hide-mobile { display: none; }
+  table { font-size: 13px; }
+  th, td { padding: 9px 8px; }
+  .col-nome { min-width: 0; }
+  .col-actions { gap: 2px; }
+  .btn-dimetti { padding: 5px 8px; font-size: 10.5px; }
+  .row-detail-grid { grid-template-columns: 1fr; }
+}
+.inline-edit-input { width: 100%; border: 1.5px solid var(--red); border-radius: 6px; padding: 4px 6px; font-family: var(--sans); font-size: 13px; color: var(--ink); outline: none; background: white; }
+.inline-select { width: 100%; border: 1.5px solid var(--red); border-radius: 6px; padding: 4px 6px; font-family: var(--mono); font-size: 12px; color: var(--ink); outline: none; background: white; -webkit-appearance: none; }
+.col-orario { white-space: nowrap; font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+.col-nome { min-width: 120px; }
+.col-actions { white-space: nowrap; display: flex; gap: 4px; }
+
+/* ── MODAL EDIT PAZIENTE ── */
+#modal-edit .modal-box { gap: 14px; }
+.edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.edit-grid .full { grid-column: 1 / -1; }
+.edit-label { font-family: var(--mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); margin-bottom: 4px; display: block; }
+.edit-input { width: 100%; padding: 9px 12px; border: 1.5px solid var(--rule); border-radius: 8px; font-family: var(--sans); font-size: 15px; color: var(--ink); outline: none; background: var(--surface); -webkit-appearance: none; }
+.edit-input:focus { border-color: var(--red); }
+.stato-btns { display: flex; gap: 6px; }
+.sbtn { flex: 1; padding: 9px 4px; border-radius: 8px; border: 1.5px solid var(--rule); font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.03em; cursor: pointer; background: white; color: var(--ink-3); text-align: center; }
+.sbtn.active-inpma         { background: var(--blue-l); border-color: var(--blue); color: var(--blue); }
+.sbtn.active-dimesso       { background: var(--green-l); border-color: var(--green); color: var(--green); }
+.sbtn.active-ospedalizzato { background: var(--orange-l); border-color: var(--orange); color: var(--orange); }
+
+/* ── TOAST ── */
+#toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--ink); color: white; font-family: var(--mono); font-size: 14px; padding: 12px 20px; border-radius: 10px; z-index: 9999; transition: transform 0.3s, opacity 0.3s; opacity: 0; pointer-events: none; white-space: nowrap; max-width: 90vw; text-align: center; }
+#toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+#toast.err { background: var(--red); }
+
+/* ── SAVING OVERLAY ── */
+#saving-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 800; align-items: center; justify-content: center; }
+#saving-overlay.open { display: flex; }
+.saving-box { background: white; border-radius: 14px; padding: 24px 32px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.saving-spinner { width: 32px; height: 32px; border: 3px solid var(--rule); border-top-color: var(--red); border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.saving-text { font-family: var(--mono); font-size: 14px; color: var(--ink-2); letter-spacing: 0.04em; }
+
+/* ── EXPORT BTN ── */
+.export-bar { display: flex; gap: 8px; }
+.btn-export { padding: 8px 14px; border-radius: 9px; border: 1.5px solid var(--rule); background: white; color: var(--ink-2); font-family: var(--mono); font-size: 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; line-height: 1.2; align-self: flex-start; }
+.btn-export:active { background: var(--bg); }
+
+/* ── BTN OSPEDALIZZA ── */
+.btn-osped { padding: 5px 10px; border-radius: 8px; border: 1.5px solid var(--orange); background: var(--orange-l); color: var(--orange); font-family: var(--mono); font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.btn-osped:active { background: var(--orange); color: white; }
+
+/* ── LAST SAVED FLASH ── */
+#last-saved-card { display: none; background: var(--green-l); border: 1px solid var(--green); border-radius: 10px; padding: 9px 12px; font-family: var(--mono); font-size: 12px; color: var(--green); align-items: center; justify-content: space-between; gap: 8px; animation: flashIn 0.3s; }
+#last-saved-card.show { display: flex; }
+#last-saved-card b { font-size: 14px; }
+@keyframes flashIn { from { transform: translateY(-4px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* mobile col-nome priority */
+@media (max-width: 900px) {
+  .col-nome { min-width: 0 !important; max-width: none; }
+  td.col-nome { padding-right: 6px; word-break: break-word; }
+  td.col-nome .full-name, td.col-nome b { display: inline-block; max-width: 100%; word-break: break-word; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-cross"></div>
+  <div class="login-title">PMA · Segreteria</div>
+  <div class="login-sub">Gestione pazienti durante l'evento</div>
+  <div class="login-form">
+    <input id="login-name" type="text"     placeholder="Il tuo nome" autocomplete="name">
+    <input id="login-pat"  type="password" placeholder="Token GitHub (PAT)" autocomplete="off">
+    <button class="login-submit" onclick="handleLogin()">ACCEDI</button>
+  </div>
+  <div id="login-err"></div>
+  <div class="login-hint">Usa lo stesso token del magazzino PMA</div>
+</div>
+
+<!-- HEADER (identico al magazzino) -->
+<header>
+  <div class="header-main">
+    <div class="brand">
+      <img class="brand-logo" src="assets/logo-cri-padova.png" alt="Croce Rossa Italiana · Comitato di Padova">
+    </div>
+    <div class="user-badge" onclick="handleSignOut()" id="user-badge" style="display:none">
+      <div class="user-avatar" id="user-avatar">?</div>
+      <span class="user-name-badge" id="user-name-badge">—</span>
+    </div>
+  </div>
+</header>
+
+<!-- EVENTO BANNER -->
+<div id="evento-banner" class="no-event">
+  <div class="evento-info">
+    <div class="evento-nome" id="ev-nome">Nessun evento attivo</div>
+    <div class="evento-data" id="ev-data">Configura un evento per iniziare</div>
+  </div>
+  <button class="btn-evento" onclick="openModalEvento()">⚙ EVENTO</button>
+</div>
+
+<!-- MAIN TABS -->
+<div class="main-tabs">
+  <button class="mtab active" id="tab-btn-ingresso" onclick="switchTab('ingresso')">✚ Ingresso</button>
+  <button class="mtab" id="tab-btn-lista" onclick="switchTab('lista')">☰ Pazienti</button>
+</div>
+
+<!-- TAB INGRESSO -->
+<div id="tab-ingresso">
+  <div class="form-card">
+    <div class="form-title">Nuovo ingresso</div>
+
+    <div class="form-row">
+      <div class="form-field narrow">
+        <div class="field-label">Braccialetto</div>
+        <input class="field-input" id="f-braccialetto" type="text" inputmode="numeric" placeholder="N°">
+      </div>
+      <div class="form-field narrow">
+        <div class="field-label">Pettorale</div>
+        <input class="field-input" id="f-pettorale" type="text" inputmode="numeric" placeholder="N°">
+      </div>
+      <div class="form-field">
+        <div class="field-label">Nome e Cognome</div>
+        <input class="field-input" id="f-nome" type="text" placeholder="(facoltativo)">
+      </div>
+    </div>
+
+    <div class="form-field">
+      <div class="field-label">Area triage</div>
+      <div class="area-pills">
+        <button class="area-pill" data-area="" onclick="selectArea(this)">—</button>
+        <button class="area-pill" data-area="BIANCA" onclick="selectArea(this)">⬜ BIANCA</button>
+        <button class="area-pill" data-area="VERDE"  onclick="selectArea(this)">🟢 VERDE</button>
+        <button class="area-pill" data-area="GIALLA" onclick="selectArea(this)">🟡 GIALLA</button>
+        <button class="area-pill" data-area="ROSSA"  onclick="selectArea(this)">🔴 ROSSA</button>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <div class="field-label">Note · indirizzo · telefono · altro</div>
+      <textarea class="field-input" id="f-note" rows="3" placeholder="Note libere (facoltativo)"></textarea>
+    </div>
+
+    <button class="btn-invio" onclick="submitIngresso()">REGISTRA INGRESSO →</button>
+    <div id="last-saved-card"></div>
+  </div>
+</div>
+
+<!-- TAB LISTA -->
+<div id="tab-lista" style="display:none">
+
+  <div class="stats-row">
+    <div class="stat-pill st-blue">
+      <div class="stat-n" id="stat-inpma">0</div>
+      <div class="stat-l">In PMA</div>
+    </div>
+    <div class="stat-pill st-green">
+      <div class="stat-n" id="stat-dimessi">0</div>
+      <div class="stat-l">Dimessi</div>
+    </div>
+    <div class="stat-pill st-orange">
+      <div class="stat-n" id="stat-osped">0</div>
+      <div class="stat-l">Osped.</div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-n" id="stat-tot">0</div>
+      <div class="stat-l">Totale</div>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="search-input" type="search" placeholder="Cerca nome, braccialetto…" oninput="onSearchInput()">
+    </div>
+    <select class="fsel" id="filter-area" onchange="renderTable()">
+      <option value="">Tutte le aree</option>
+      <option value="BIANCA">Bianca</option>
+      <option value="VERDE">Verde</option>
+      <option value="GIALLA">Gialla</option>
+      <option value="ROSSA">Rossa</option>
+    </select>
+    <select class="fsel" id="filter-stato" onchange="renderTable()">
+      <option value="">Tutti gli stati</option>
+      <option value="In PMA">In PMA</option>
+      <option value="Dimesso">Dimesso</option>
+      <option value="Ospedalizzato">Ospedalizzato</option>
+    </select>
+  </div>
+
+  <div class="export-bar">
+    <button class="btn-export" onclick="exportCSV()">⬇ Esporta CSV</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="pazienti-table">
+      <thead>
+        <tr>
+          <th onclick="sortBy('braccialetto')">Brac. <span class="sort-icon">⇅</span></th>
+          <th onclick="sortBy('pettorale')" class="col-hide-mobile">Pett. <span class="sort-icon">⇅</span></th>
+          <th onclick="sortBy('nome')" class="col-nome">Nome <span class="sort-icon">⇅</span></th>
+          <th onclick="sortBy('area')">Area <span class="sort-icon">⇅</span></th>
+          <th onclick="sortBy('stato')">Stato <span class="sort-icon">⇅</span></th>
+          <th onclick="sortBy('orario_ingresso')" class="col-hide-mobile">Ingresso <span class="sort-icon">⇅</span></th>
+          <th onclick="sortBy('orario_dimissione')" class="col-hide-mobile">Dimissione <span class="sort-icon">⇅</span></th>
+          <th>Azioni</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- MODAL EVENTO -->
+<div class="modal-overlay" id="modal-evento">
+  <div class="modal-box">
+    <div class="modal-title">⚙ Configura Evento</div>
+    <div class="modal-field">
+      <div class="modal-label">Nome evento</div>
+      <input class="modal-input" id="ev-input-nome" type="text" placeholder="Es. Maratona Padova 2026">
+    </div>
+    <div class="modal-field">
+      <div class="modal-label">Data</div>
+      <input class="modal-input" id="ev-input-data" type="date">
+    </div>
+    <div class="modal-btns">
+      <button class="btn-secondary" onclick="closeModalEvento()">Annulla</button>
+      <button class="btn-primary"   onclick="salvaEvento()">Salva</button>
+    </div>
+    <div class="modal-btns" id="ev-chiudi-wrap" style="display:none">
+      <button class="btn-danger" onclick="chiudiEvento()">⚠ Chiudi evento e azzera lista</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL EDIT PAZIENTE -->
+<div class="modal-overlay" id="modal-edit">
+  <div class="modal-box">
+    <div class="modal-title">✏ Modifica paziente</div>
+    <div class="edit-grid">
+      <div>
+        <label class="edit-label">Braccialetto</label>
+        <input class="edit-input" id="ep-braccialetto" type="text" inputmode="numeric">
+      </div>
+      <div>
+        <label class="edit-label">Pettorale</label>
+        <input class="edit-input" id="ep-pettorale" type="text" inputmode="numeric">
+      </div>
+      <div class="full">
+        <label class="edit-label">Nome e Cognome</label>
+        <input class="edit-input" id="ep-nome" type="text">
+      </div>
+      <div class="full">
+        <label class="edit-label">Area triage</label>
+        <select class="edit-input" id="ep-area">
+          <option value="">— non specificata —</option>
+          <option value="BIANCA">BIANCA</option>
+          <option value="VERDE">VERDE</option>
+          <option value="GIALLA">GIALLA</option>
+          <option value="ROSSA">ROSSA</option>
+        </select>
+      </div>
+      <div class="full">
+        <label class="edit-label">Stato</label>
+        <div class="stato-btns">
+          <button class="sbtn" data-stato="In PMA"        onclick="selectStatoEdit(this)">In PMA</button>
+          <button class="sbtn" data-stato="Dimesso"       onclick="selectStatoEdit(this)">Dimesso</button>
+          <button class="sbtn" data-stato="Ospedalizzato" onclick="selectStatoEdit(this)">Ospedalizzato</button>
+        </div>
+      </div>
+      <div class="full">
+        <label class="edit-label">Orario dimissione</label>
+        <input class="edit-input" id="ep-orario-dim" type="time">
+      </div>
+      <div class="full">
+        <label class="edit-label">Note · indirizzo · telefono · altro</label>
+        <textarea class="edit-input" id="ep-note" rows="4" placeholder="Note libere"></textarea>
+      </div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-secondary" onclick="closeModalEdit()">Annulla</button>
+      <button class="btn-primary"   onclick="salvaEdit()">Salva</button>
+    </div>
+  </div>
+</div>
+
+<!-- SAVING OVERLAY -->
+<div id="saving-overlay">
+  <div class="saving-box">
+    <div class="saving-spinner"></div>
+    <div class="saving-text">Salvataggio…</div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ─────────────────────────────────────────────
+//  COSTANTI GITHUB
+// ─────────────────────────────────────────────
+const GITHUB_OWNER = 'eleocal-3';
+const GITHUB_REPO  = 'pma-inventario';
+const GITHUB_FILE  = 'db/pazienti.json';
+const GITHUB_API   = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+
+// ─────────────────────────────────────────────
+//  STATO APPLICAZIONE
+// ─────────────────────────────────────────────
+let githubPAT    = '';
+let operatorName = '';
+let dbSHA        = '';
+let DB           = { evento: null, pazienti: [] };
+let sortCol      = 'orario_ingresso';
+let sortAsc      = false;
+let editingIdx   = -1;
+let selectedArea = '';
+let expandedId   = null;
+
+// ─────────────────────────────────────────────
+//  AUTH
+// ─────────────────────────────────────────────
+function initAuth() {
+  const savedPAT  = localStorage.getItem('seg_pat');
+  const savedName = localStorage.getItem('seg_opname');
+  if (savedPAT && savedName) {
+    githubPAT    = savedPAT;
+    operatorName = savedName;
+    showUserBadge();
+    document.getElementById('login-screen').style.display = 'none';
+    loadData();
+  }
+}
+
+async function handleLogin() {
+  const pat   = document.getElementById('login-pat').value.trim();
+  const name  = document.getElementById('login-name').value.trim();
+  const errEl = document.getElementById('login-err');
+  errEl.textContent = '';
+  if (!name) { errEl.textContent = '⚠️ Inserisci il tuo nome.'; return; }
+  if (!pat)  { errEl.textContent = '⚠️ Inserisci il token di accesso.'; return; }
+  errEl.textContent = 'Verifica token…';
+  try {
+    const testApi = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/db/inventario.json`;
+    const res = await fetch(testApi, {
+      headers: { 'Authorization': 'token ' + pat, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (res.status === 401) throw new Error('Token non valido o scaduto.');
+    if (res.status === 403) throw new Error('Permessi insufficienti.');
+    if (!res.ok && res.status !== 404) throw new Error('Errore GitHub ' + res.status);
+    localStorage.setItem('seg_pat',    pat);
+    localStorage.setItem('seg_opname', name);
+    githubPAT    = pat;
+    operatorName = name;
+    showUserBadge();
+    document.getElementById('login-screen').style.display = 'none';
+    errEl.textContent = '';
+    loadData();
+  } catch(err) {
+    errEl.textContent = '❌ ' + err.message;
+  }
+}
+
+function showUserBadge() {
+  const initials = operatorName.split(' ').map(function(w){ return w[0]; }).join('').toUpperCase().slice(0,2);
+  document.getElementById('user-avatar').textContent     = initials;
+  document.getElementById('user-name-badge').textContent = operatorName.split(' ')[0];
+  document.getElementById('user-badge').style.display   = 'flex';
+}
+
+function handleSignOut() {
+  if (!confirm('Vuoi disconnetterti?')) return;
+  localStorage.removeItem('seg_pat');
+  localStorage.removeItem('seg_opname');
+  githubPAT = ''; operatorName = ''; DB = { evento: null, pazienti: [] }; dbSHA = '';
+  document.getElementById('user-badge').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+}
+
+// ─────────────────────────────────────────────
+//  GITHUB READ / WRITE
+// ─────────────────────────────────────────────
+async function loadData() {
+  try {
+    const res = await fetch(GITHUB_API, {
+      headers: { 'Authorization': 'token ' + githubPAT, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (res.status === 404) {
+      DB = { evento: null, pazienti: [] };
+      dbSHA = '';
+      updateEventoBanner();
+      renderTable();
+      return;
+    }
+    if (!res.ok) throw new Error('GitHub ' + res.status);
+    const json = await res.json();
+    dbSHA = json.sha;
+    DB = JSON.parse(atob(json.content.replace(/\n/g, '')));
+    if (!DB.pazienti) DB.pazienti = [];
+    if (!DB.evento)   DB.evento   = null;
+    updateEventoBanner();
+    renderTable();
+  } catch(err) {
+    showToast('Errore caricamento: ' + err.message, true);
+  }
+}
+
+async function saveData() {
+  document.getElementById('saving-overlay').classList.add('open');
+  try {
+    const content    = btoa(unescape(encodeURIComponent(JSON.stringify(DB, null, 2))));
+    const eventoNome = DB.evento ? DB.evento.nome : 'nessun evento';
+    const body = {
+      message:   `[segreteria] salvataggio — ${eventoNome} — op: ${operatorName}`,
+      content:   content,
+      committer: { name: operatorName, email: operatorName + '@pma.local' }
+    };
+    if (dbSHA) body.sha = dbSHA;
+    const res = await fetch(GITHUB_API, {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'token ' + githubPAT,
+        'Accept':        'application/vnd.github.v3+json',
+        'Content-Type':  'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) {
+      const errBody = await res.json().catch(function(){ return {}; });
+      throw new Error(errBody.message || 'GitHub ' + res.status);
+    }
+    const result = await res.json();
+    dbSHA = result.content.sha;
+    showToast('Salvato ✓');
+  } catch(err) {
+    showToast('Errore salvataggio: ' + err.message, true);
+  } finally {
+    document.getElementById('saving-overlay').classList.remove('open');
+  }
+}
+
+// ─────────────────────────────────────────────
+//  EVENTO
+// ─────────────────────────────────────────────
+function openModalEvento() {
+  if (!githubPAT) return;
+  const ev = DB.evento;
+  document.getElementById('ev-input-nome').value = ev ? ev.nome : '';
+  document.getElementById('ev-input-data').value = ev ? ev.data : '';
+  document.getElementById('ev-chiudi-wrap').style.display = ev ? 'flex' : 'none';
+  document.getElementById('modal-evento').classList.add('open');
+}
+function closeModalEvento() {
+  document.getElementById('modal-evento').classList.remove('open');
+}
+
+async function salvaEvento() {
+  const nome = document.getElementById('ev-input-nome').value.trim();
+  const data = document.getElementById('ev-input-data').value;
+  if (!nome) { showToast('Inserisci il nome evento', true); return; }
+  DB.evento = { nome: nome, data: data || '' };
+  closeModalEvento();
+  updateEventoBanner();
+  await saveData();
+}
+
+async function chiudiEvento() {
+  if (!confirm('Chiudere l\'evento e azzerare la lista pazienti? I dati verranno sovrascritti.')) return;
+  DB.evento   = null;
+  DB.pazienti = [];
+  dbSHA       = '';
+  closeModalEvento();
+  updateEventoBanner();
+  renderTable();
+  await saveData();
+}
+
+function updateEventoBanner() {
+  const banner = document.getElementById('evento-banner');
+  const ev     = DB.evento;
+  if (ev && ev.nome) {
+    banner.classList.remove('no-event');
+    document.getElementById('ev-nome').textContent = ev.nome;
+    document.getElementById('ev-data').textContent = ev.data ? formatDataEvento(ev.data) : 'Data non specificata';
+  } else {
+    banner.classList.add('no-event');
+    document.getElementById('ev-nome').textContent = 'Nessun evento attivo';
+    document.getElementById('ev-data').textContent = 'Configura un evento per iniziare';
+  }
+}
+
+function formatDataEvento(isoDate) {
+  if (!isoDate) return '';
+  try {
+    var parts = isoDate.split('-');
+    return parts[2] + '/' + parts[1] + '/' + parts[0];
+  } catch(e) { return isoDate; }
+}
+
+// ─────────────────────────────────────────────
+//  FORM INGRESSO
+// ─────────────────────────────────────────────
+function selectArea(btn) {
+  document.querySelectorAll('.area-pill').forEach(function(p){ p.className = 'area-pill'; });
+  var area = btn.dataset.area;
+  selectedArea = area;
+  if (area) btn.classList.add('sel-' + area.toLowerCase());
+}
+
+async function submitIngresso() {
+  if (!githubPAT) { showToast('Accedi prima', true); return; }
+  if (!DB.evento || !DB.evento.nome) {
+    showToast('⚠️ Configura un evento prima di registrare ingressi', true);
+    return;
+  }
+  var braccialetto = document.getElementById('f-braccialetto').value.trim();
+  var pettorale    = document.getElementById('f-pettorale').value.trim();
+  var nome         = document.getElementById('f-nome').value.trim();
+  var note         = document.getElementById('f-note').value.trim();
+  var ora          = new Date();
+  var orarioIngresso = pad(ora.getHours()) + ':' + pad(ora.getMinutes());
+
+  DB.pazienti.push({
+    id:                 Date.now(),
+    braccialetto:       braccialetto,
+    pettorale:          pettorale,
+    nome:               nome,
+    area:               selectedArea,
+    stato:              'In PMA',
+    orario_ingresso:    orarioIngresso,
+    orario_dimissione:  '',
+    note:               note,
+    operatore_ingresso: operatorName
+  });
+
+  showLastSaved(braccialetto || nome || '—', orarioIngresso);
+  resetForm();
+  var bf = document.getElementById('f-braccialetto'); if (bf) bf.focus();
+  renderTable();
+  updateStats();
+  await saveData();
+}
+
+function showLastSaved(label, time) {
+  var el = document.getElementById('last-saved-card');
+  if (!el) return;
+  el.innerHTML = '<span>✓ Ultimo: <b>' + esc(label) + '</b> · ' + esc(time) + '</span><span style="opacity:0.6;font-size:10px">Pronto per il prossimo</span>';
+  el.classList.add('show');
+  clearTimeout(window._lsTimer);
+  window._lsTimer = setTimeout(function(){ el.classList.remove('show'); }, 6000);
+}
+
+function resetForm() {
+  document.getElementById('f-braccialetto').value = '';
+  document.getElementById('f-pettorale').value    = '';
+  document.getElementById('f-nome').value         = '';
+  document.getElementById('f-note').value         = '';
+  selectedArea = '';
+  document.querySelectorAll('.area-pill').forEach(function(p){ p.className = 'area-pill'; });
+}
+
+// ─────────────────────────────────────────────
+//  TABELLA
+// ─────────────────────────────────────────────
+function renderTable() {
+  var q      = (document.getElementById('search-input').value || '').toLowerCase();
+  var fArea  = document.getElementById('filter-area').value;
+  var fStato = document.getElementById('filter-stato').value;
+
+  var rows = (DB.pazienti || []).filter(function(p) {
+    var matchQ = !q || (p.braccialetto + ' ' + p.pettorale + ' ' + p.nome + ' ' + p.note).toLowerCase().includes(q);
+    var matchA = !fArea  || p.area  === fArea;
+    var matchS = !fStato || p.stato === fStato;
+    return matchQ && matchA && matchS;
+  });
+
+  rows.sort(function(a, b) {
+    var va = a[sortCol] || '';
+    var vb = b[sortCol] || '';
+    if (va < vb) return sortAsc ? -1 :  1;
+    if (va > vb) return sortAsc ?  1 : -1;
+    return 0;
+  });
+
+  // aggiorna icone colonne
+  document.querySelectorAll('th').forEach(function(th){ th.classList.remove('sorted'); });
+  var cols = ['braccialetto','pettorale','nome','area','stato','orario_ingresso','orario_dimissione'];
+  var idx  = cols.indexOf(sortCol);
+  var ths  = document.querySelectorAll('#pazienti-table thead th');
+  if (idx >= 0 && ths[idx]) {
+    ths[idx].classList.add('sorted');
+    ths[idx].querySelector('.sort-icon').textContent = sortAsc ? '↑' : '↓';
+  }
+
+  var tbody = document.getElementById('table-body');
+  if (rows.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><div class="es-icon">📋</div><div class="es-text">Nessun paziente trovato</div></div></td></tr>';
+    updateStats();
+    return;
+  }
+
+  var html = '';
+  rows.forEach(function(p) {
+    var areaCls  = p.area ? 'area-' + p.area.toLowerCase() : '';
+    var areaLbl  = p.area || '—';
+    var statoCls = 'stato-' + (p.stato || 'inpma').toLowerCase().replace(/\s+/g,'').replace('ò','o');
+    var dimBtn = '';
+    var hasNote  = !!(p.note && p.note.trim());
+    var noteDot  = hasNote ? '<span class="has-note-dot" title="Ha note"></span>' : '';
+    var nameCell = p.nome
+      ? '<b class="full-name">' + esc(p.nome) + '</b>' + noteDot
+      : '<span style="color:var(--ink-3)">— senza nome —</span>' + noteDot;
+    var nomeMeta = '<span class="nome-meta">pett. ' + esc(p.pettorale || '—') + ' · ' + esc(p.orario_ingresso || '—') + (p.orario_dimissione ? ' → ' + esc(p.orario_dimissione) : '') + '</span>';
+    var isExp    = (expandedId === p.id);
+    var chev     = '<span class="row-chevron">›</span>';
+
+    html += '<tr class="tappable' + (isExp ? ' expanded' : '') + '" onclick="toggleExpand(' + p.id + ')">';
+    html += '<td>' + chev + '<b>' + esc(p.braccialetto || '—') + '</b></td>';
+    html += '<td class="col-hide-mobile">' + esc(p.pettorale || '—') + '</td>';
+    html += '<td class="col-nome">' + nameCell + nomeMeta + '</td>';
+    html += '<td>' + (p.area ? '<span class="badge-area ' + areaCls + '">' + areaLbl + '</span>' : '<span style="color:var(--ink-3)">—</span>') + '</td>';
+    html += '<td><span class="badge-stato ' + statoCls + '">' + esc(p.stato || '—') + '</span></td>';
+    html += '<td class="col-orario col-hide-mobile">' + esc(p.orario_ingresso || '—') + '</td>';
+    html += '<td class="col-orario col-hide-mobile">' + (p.orario_dimissione ? esc(p.orario_dimissione) : '<span style="color:var(--ink-3)">—</span>') + '</td>';
+    html += '<td onclick="event.stopPropagation()"><div class="col-actions">' + dimBtn + '<button class="btn-edit-row" onclick="openModalEdit(' + p.id + ')" title="Modifica">✏</button></div></td>';
+    html += '</tr>';
+
+    if (isExp) {
+      html += '<tr class="row-detail"><td colspan="8"><div class="row-detail-inner">';
+      html += '<div class="row-detail-grid">';
+      html += '<div><div class="row-detail-label">Braccialetto</div><div class="row-detail-val' + (p.braccialetto ? '' : ' muted') + '">' + esc(p.braccialetto || '—') + '</div></div>';
+      html += '<div><div class="row-detail-label">Pettorale</div><div class="row-detail-val' + (p.pettorale ? '' : ' muted') + '">' + esc(p.pettorale || '—') + '</div></div>';
+      html += '<div class="full"><div class="row-detail-label">Nome e cognome</div><div class="row-detail-val' + (p.nome ? '' : ' muted') + '">' + esc(p.nome || '— non specificato —') + '</div></div>';
+      html += '<div><div class="row-detail-label">Area triage</div><div class="row-detail-val">' + (p.area ? '<span class="badge-area ' + areaCls + '">' + areaLbl + '</span>' : '<span class="row-detail-val muted">—</span>') + '</div></div>';
+      html += '<div><div class="row-detail-label">Stato</div><div class="row-detail-val"><span class="badge-stato ' + statoCls + '">' + esc(p.stato || '—') + '</span></div></div>';
+      html += '<div><div class="row-detail-label">Orario ingresso</div><div class="row-detail-val" style="font-family:var(--mono)">' + esc(p.orario_ingresso || '—') + '</div></div>';
+      html += '<div><div class="row-detail-label">Orario dimissione</div><div class="row-detail-val' + (p.orario_dimissione ? '' : ' muted') + '" style="font-family:var(--mono)">' + esc(p.orario_dimissione || '—') + '</div></div>';
+      html += '<div class="full"><div class="row-detail-label">Note · indirizzo · telefono · altro</div>';
+      html += hasNote
+        ? '<div class="row-detail-val note">' + esc(p.note) + '</div>'
+        : '<div class="row-detail-val muted">— nessuna nota —</div>';
+      html += '</div>';
+      if (p.operatore_ingresso) {
+        html += '<div class="full"><div class="row-detail-label">Registrato da</div><div class="row-detail-val" style="font-family:var(--mono);font-size:12px;color:var(--ink-3)">' + esc(p.operatore_ingresso) + '</div></div>';
+      }
+      html += '</div>';
+      html += '<div class="row-detail-actions">';
+      html += '<button class="btn-secondary" style="flex:0 0 auto;padding:9px 14px" onclick="event.stopPropagation();openModalEdit(' + p.id + ')">✏ Modifica</button>';
+      if (p.stato === 'In PMA') {
+        html += '<button class="btn-dimetti" style="padding:9px 14px;font-size:12px" onclick="event.stopPropagation();dimetti(' + p.id + ')">✓ Dimetti ora</button>';
+        html += '<button class="btn-osped" style="padding:9px 14px;font-size:12px" onclick="event.stopPropagation();ospedalizza(' + p.id + ')">⚠ Ospedalizza</button>';
+      }
+      html += '</div>';
+      html += '</div></td></tr>';
+    }
+  });
+  tbody.innerHTML = html;
+  updateStats();
+}
+
+function esc(str) {
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+function updateStats() {
+  var p = DB.pazienti || [];
+  document.getElementById('stat-tot').textContent     = p.length;
+  document.getElementById('stat-inpma').textContent   = p.filter(function(x){ return x.stato === 'In PMA'; }).length;
+  document.getElementById('stat-dimessi').textContent = p.filter(function(x){ return x.stato === 'Dimesso'; }).length;
+  document.getElementById('stat-osped').textContent   = p.filter(function(x){ return x.stato === 'Ospedalizzato'; }).length;
+}
+
+function sortBy(col) {
+  sortAsc = (sortCol === col) ? !sortAsc : true;
+  sortCol = col;
+  renderTable();
+}
+
+function toggleExpand(id) {
+  expandedId = (expandedId === id) ? null : id;
+  renderTable();
+}
+
+// ─────────────────────────────────────────────
+//  DIMISSIONE RAPIDA
+// ─────────────────────────────────────────────
+async function dimetti(id) {
+  var idx = DB.pazienti.findIndex(function(p){ return p.id === id; });
+  if (idx < 0) return;
+  var p = DB.pazienti[idx];
+  if (p.orario_ingresso && minutesSince(p.orario_ingresso) < 2) {
+    if (!confirm('Il paziente è entrato meno di 2 minuti fa.\n\nDimettere comunque?')) return;
+  }
+  var ora = new Date();
+  p.stato             = 'Dimesso';
+  p.orario_dimissione = pad(ora.getHours()) + ':' + pad(ora.getMinutes());
+  renderTable();
+  await saveData();
+}
+
+function minutesSince(hhmm) {
+  try {
+    var parts = hhmm.split(':');
+    var now = new Date();
+    var then = new Date(now);
+    then.setHours(parseInt(parts[0],10), parseInt(parts[1],10), 0, 0);
+    return Math.floor((now - then) / 60000);
+  } catch(e) { return 999; }
+}
+
+async function ospedalizza(id) {
+  var idx = DB.pazienti.findIndex(function(p){ return p.id === id; });
+  if (idx < 0) return;
+  var ora = new Date();
+  DB.pazienti[idx].stato             = 'Ospedalizzato';
+  DB.pazienti[idx].orario_dimissione = pad(ora.getHours()) + ':' + pad(ora.getMinutes());
+  renderTable();
+  await saveData();
+}
+
+// ─────────────────────────────────────────────
+//  MODAL MODIFICA
+// ─────────────────────────────────────────────
+function openModalEdit(id) {
+  var idx = DB.pazienti.findIndex(function(p){ return p.id === id; });
+  if (idx < 0) return;
+  editingIdx = idx;
+  var p = DB.pazienti[idx];
+  document.getElementById('ep-braccialetto').value = p.braccialetto        || '';
+  document.getElementById('ep-pettorale').value    = p.pettorale           || '';
+  document.getElementById('ep-nome').value         = p.nome                || '';
+  document.getElementById('ep-area').value         = p.area                || '';
+  document.getElementById('ep-note').value         = p.note                || '';
+  document.getElementById('ep-orario-dim').value   = p.orario_dimissione   || '';
+  document.querySelectorAll('.sbtn').forEach(function(btn) {
+    btn.className = 'sbtn';
+    if (btn.dataset.stato === p.stato) {
+      btn.classList.add('active-' + p.stato.toLowerCase().replace(/\s+/g,'').replace('ò','o'));
+    }
+  });
+  document.getElementById('modal-edit').classList.add('open');
+}
+
+function closeModalEdit() {
+  document.getElementById('modal-edit').classList.remove('open');
+  editingIdx = -1;
+}
+
+function selectStatoEdit(btn) {
+  document.querySelectorAll('.sbtn').forEach(function(b){ b.className = 'sbtn'; });
+  btn.classList.add('active-' + btn.dataset.stato.toLowerCase().replace(/\s+/g,'').replace('ò','o'));
+}
+
+async function salvaEdit() {
+  if (editingIdx < 0) return;
+  var statoBtn = document.querySelector('.sbtn.active-inpma, .sbtn.active-dimesso, .sbtn.active-ospedalizzato');
+  var stato    = statoBtn ? statoBtn.dataset.stato : DB.pazienti[editingIdx].stato;
+  DB.pazienti[editingIdx].braccialetto      = document.getElementById('ep-braccialetto').value.trim();
+  DB.pazienti[editingIdx].pettorale         = document.getElementById('ep-pettorale').value.trim();
+  DB.pazienti[editingIdx].nome              = document.getElementById('ep-nome').value.trim();
+  DB.pazienti[editingIdx].area              = document.getElementById('ep-area').value;
+  DB.pazienti[editingIdx].note              = document.getElementById('ep-note').value.trim();
+  DB.pazienti[editingIdx].orario_dimissione = document.getElementById('ep-orario-dim').value;
+  DB.pazienti[editingIdx].stato             = stato;
+  closeModalEdit();
+  renderTable();
+  await saveData();
+}
+
+// ─────────────────────────────────────────────
+//  EXPORT CSV
+// ─────────────────────────────────────────────
+function exportCSV() {
+  var p = DB.pazienti || [];
+  if (p.length === 0) { showToast('Nessun paziente da esportare', true); return; }
+  var headers = ['Braccialetto','Pettorale','Nome','Area','Stato','Orario Ingresso','Orario Dimissione','Note','Operatore'];
+  var rows = p.map(function(x) {
+    return [x.braccialetto, x.pettorale, x.nome, x.area, x.stato, x.orario_ingresso, x.orario_dimissione, x.note, x.operatore_ingresso]
+      .map(function(v){ return '"' + String(v||'').replace(/"/g,'""') + '"'; });
+  });
+  var csv      = [headers.join(',')].concat(rows.map(function(r){ return r.join(','); })).join('\n');
+  var nomEv    = DB.evento ? DB.evento.nome.replace(/\s+/g,'_') : 'evento';
+  var filename = 'pazienti_' + nomEv + '_' + new Date().toISOString().slice(0,10) + '.csv';
+  var blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+  var url  = URL.createObjectURL(blob);
+  var a    = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+  showToast('CSV esportato ✓');
+}
+
+// ─────────────────────────────────────────────
+//  NAVIGAZIONE TAB
+// ─────────────────────────────────────────────
+function switchTab(tab) {
+  ['ingresso','lista'].forEach(function(t) {
+    document.getElementById('tab-' + t).style.display    = (t === tab) ? '' : 'none';
+    document.getElementById('tab-btn-' + t).classList.toggle('active', t === tab);
+  });
+  if (tab === 'lista') renderTable();
+  if (tab === 'ingresso') {
+    setTimeout(function(){
+      var bf = document.getElementById('f-braccialetto');
+      if (bf) bf.focus();
+    }, 80);
+  }
+}
+
+// ─────────────────────────────────────────────
+//  TOAST
+// ─────────────────────────────────────────────
+var toastTimer = null;
+function showToast(msg, isErr) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className   = 'show' + (isErr ? ' err' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ el.className = ''; }, 2800);
+}
+
+// ─────────────────────────────────────────────
+//  UTILITY
+// ─────────────────────────────────────────────
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+// debounce ricerca
+var _searchTimer = null;
+function onSearchInput() {
+  clearTimeout(_searchTimer);
+  _searchTimer = setTimeout(renderTable, 180);
+}
+
+// chiudi modali toccando l'overlay
+document.getElementById('modal-evento').addEventListener('click', function(e){ if (e.target === this) closeModalEvento(); });
+document.getElementById('modal-edit').addEventListener('click',   function(e){ if (e.target === this) closeModalEdit(); });
+
+// Enter nel form ingresso = submit
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    var a = document.activeElement;
+    if (a && ['f-braccialetto','f-pettorale','f-nome'].includes(a.id)) submitIngresso();
+  }
+});
+
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
+initAuth();
+</script>
+</body>
+</html>
