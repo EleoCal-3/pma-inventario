@@ -38,22 +38,24 @@ body { font-family: var(--sans); background: var(--bg); color: var(--ink); -webk
 #login-err { color: rgba(255,255,255,0.9); font-size: 14px; text-align: center; min-height: 16px; font-family: var(--sans); }
 .login-hint { font-size: 13px; color: rgba(255,255,255,0.55); text-align: center; max-width: 280px; line-height: 1.5; }
 
-/* ── HEADER (identico al magazzino) ── */
+/* ── HEADER ── */
 header { background: white; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--rule); box-shadow: 0 1px 8px rgba(0,0,0,0.08); }
-.header-main { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px 10px; }
-.brand { display: flex; align-items: center; gap: 10px; }
-.brand-cross { width: 30px; height: 30px; background: white; border-radius: 50%; position: relative; flex-shrink: 0; }
-.brand-cross::before, .brand-cross::after { content: ''; position: absolute; background: var(--red); border-radius: 1px; }
-.brand-cross::before { width: 6px; height: 18px; left: 12px; top: 6px; }
-.brand-cross::after { width: 18px; height: 6px; top: 12px; left: 6px; }
-.brand-name { font-family: var(--mono); font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: 0.04em; line-height: 1.1; }
-.brand-sub { font-family: var(--sans); font-size: 12px; font-weight: 300; color: var(--ink-3); }
+.header-main { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; gap: 10px; }
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+.brand-logo { height: 56px; width: auto; max-width: 360px; object-fit: contain; flex-shrink: 1; }
+@media (max-width: 720px) { .brand-logo { height: 44px; max-width: 260px; } }
+@media (max-width: 380px) { .brand-logo { height: 36px; max-width: 200px; } }
 .user-badge { display: flex; align-items: center; gap: 6px; background: var(--bg); border-radius: 20px; padding: 4px 10px 4px 4px; border: 1px solid var(--rule); cursor: pointer; }
 .user-avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 13px; font-weight: 700; color: white; flex-shrink: 0; }
 .user-name-badge { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--ink-2); max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* ── EVENTO BANNER ── */
-#evento-banner { background: var(--red); color: white; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+#evento-banner { background: var(--red); color: white; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+@media (max-width: 480px) {
+  #evento-banner { padding: 9px 14px; }
+  .evento-info { flex: 1 1 100%; min-width: 0; }
+  .btn-evento { flex: 0 0 auto; align-self: flex-start; }
+}
 #evento-banner.no-event { background: var(--yellow-l); border-bottom: 1px solid #F0D890; }
 .evento-info { display: flex; flex-direction: column; gap: 1px; }
 .evento-nome { font-family: var(--mono); font-size: 14px; font-weight: 600; color: white; letter-spacing: 0.03em; }
@@ -109,6 +111,10 @@ textarea.edit-input { resize: vertical; min-height: 80px; font-family: var(--san
 /* ── LISTA PAZIENTI ── */
 #tab-lista { padding: 12px 16px 120px; display: flex; flex-direction: column; gap: 12px; }
 .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+@media (max-width: 600px) {
+  .filter-bar .search-wrap { flex: 1 1 100%; min-width: 0; }
+  .filter-bar .fsel { flex: 1 1 calc(50% - 3px); min-width: 0; }
+}
 .search-wrap { flex: 1; min-width: 180px; display: flex; align-items: center; background: white; border: 1.5px solid var(--rule); border-radius: 10px; padding: 0 10px; gap: 6px; }
 .search-wrap svg { color: var(--ink-3); flex-shrink: 0; }
 .search-wrap input { flex: 1; border: none; font-family: var(--sans); font-size: 15px; color: var(--ink); padding: 9px 0; outline: none; background: transparent; }
@@ -210,8 +216,25 @@ tr.tappable { cursor: pointer; }
 
 /* ── EXPORT BTN ── */
 .export-bar { display: flex; gap: 8px; }
-.btn-export { padding: 9px 14px; border-radius: 9px; border: 1.5px solid var(--rule); background: white; color: var(--ink-2); font-family: var(--mono); font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.btn-export { padding: 8px 14px; border-radius: 9px; border: 1.5px solid var(--rule); background: white; color: var(--ink-2); font-family: var(--mono); font-size: 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; line-height: 1.2; align-self: flex-start; }
 .btn-export:active { background: var(--bg); }
+
+/* ── BTN OSPEDALIZZA ── */
+.btn-osped { padding: 5px 10px; border-radius: 8px; border: 1.5px solid var(--orange); background: var(--orange-l); color: var(--orange); font-family: var(--mono); font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.btn-osped:active { background: var(--orange); color: white; }
+
+/* ── LAST SAVED FLASH ── */
+#last-saved-card { display: none; background: var(--green-l); border: 1px solid var(--green); border-radius: 10px; padding: 9px 12px; font-family: var(--mono); font-size: 12px; color: var(--green); align-items: center; justify-content: space-between; gap: 8px; animation: flashIn 0.3s; }
+#last-saved-card.show { display: flex; }
+#last-saved-card b { font-size: 14px; }
+@keyframes flashIn { from { transform: translateY(-4px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* mobile col-nome priority */
+@media (max-width: 900px) {
+  .col-nome { min-width: 0 !important; max-width: none; }
+  td.col-nome { padding-right: 6px; word-break: break-word; }
+  td.col-nome .full-name, td.col-nome b { display: inline-block; max-width: 100%; word-break: break-word; }
+}
 </style>
 </head>
 <body>
@@ -234,11 +257,7 @@ tr.tappable { cursor: pointer; }
 <header>
   <div class="header-main">
     <div class="brand">
-      <div class="brand-cross"></div>
-      <div>
-        <div class="brand-name">SEGRETERIA</div>
-        <div class="brand-sub">Croce Rossa Italiana · PMA Padova</div>
-      </div>
+      <img class="brand-logo" src="assets/logo-cri-padova.png" alt="Croce Rossa Italiana · Comitato di Padova">
     </div>
     <div class="user-badge" onclick="handleSignOut()" id="user-badge" style="display:none">
       <div class="user-avatar" id="user-avatar">?</div>
@@ -299,6 +318,7 @@ tr.tappable { cursor: pointer; }
     </div>
 
     <button class="btn-invio" onclick="submitIngresso()">REGISTRA INGRESSO →</button>
+    <div id="last-saved-card"></div>
   </div>
 </div>
 
@@ -327,7 +347,7 @@ tr.tappable { cursor: pointer; }
   <div class="filter-bar">
     <div class="search-wrap">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input id="search-input" type="search" placeholder="Cerca nome, braccialetto…" oninput="renderTable()">
+      <input id="search-input" type="search" placeholder="Cerca nome, braccialetto…" oninput="onSearchInput()">
     </div>
     <select class="fsel" id="filter-area" onchange="renderTable()">
       <option value="">Tutte le aree</option>
@@ -689,10 +709,21 @@ async function submitIngresso() {
     operatore_ingresso: operatorName
   });
 
+  showLastSaved(braccialetto || nome || '—', orarioIngresso);
   resetForm();
+  var bf = document.getElementById('f-braccialetto'); if (bf) bf.focus();
   renderTable();
   updateStats();
   await saveData();
+}
+
+function showLastSaved(label, time) {
+  var el = document.getElementById('last-saved-card');
+  if (!el) return;
+  el.innerHTML = '<span>✓ Ultimo: <b>' + esc(label) + '</b> · ' + esc(time) + '</span><span style="opacity:0.6;font-size:10px">Pronto per il prossimo</span>';
+  el.classList.add('show');
+  clearTimeout(window._lsTimer);
+  window._lsTimer = setTimeout(function(){ el.classList.remove('show'); }, 6000);
 }
 
 function resetForm() {
@@ -749,7 +780,7 @@ function renderTable() {
     var areaCls  = p.area ? 'area-' + p.area.toLowerCase() : '';
     var areaLbl  = p.area || '—';
     var statoCls = 'stato-' + (p.stato || 'inpma').toLowerCase().replace(/\s+/g,'').replace('ò','o');
-    var dimBtn   = (p.stato === 'In PMA') ? '<button class="btn-dimetti" onclick="event.stopPropagation();dimetti(' + p.id + ')">✓ Dimetti</button>' : '';
+    var dimBtn = '';
     var hasNote  = !!(p.note && p.note.trim());
     var noteDot  = hasNote ? '<span class="has-note-dot" title="Ha note"></span>' : '';
     var nameCell = p.nome
@@ -793,6 +824,7 @@ function renderTable() {
       html += '<button class="btn-secondary" style="flex:0 0 auto;padding:9px 14px" onclick="event.stopPropagation();openModalEdit(' + p.id + ')">✏ Modifica</button>';
       if (p.stato === 'In PMA') {
         html += '<button class="btn-dimetti" style="padding:9px 14px;font-size:12px" onclick="event.stopPropagation();dimetti(' + p.id + ')">✓ Dimetti ora</button>';
+        html += '<button class="btn-osped" style="padding:9px 14px;font-size:12px" onclick="event.stopPropagation();ospedalizza(' + p.id + ')">⚠ Ospedalizza</button>';
       }
       html += '</div>';
       html += '</div></td></tr>';
@@ -835,8 +867,32 @@ function toggleExpand(id) {
 async function dimetti(id) {
   var idx = DB.pazienti.findIndex(function(p){ return p.id === id; });
   if (idx < 0) return;
+  var p = DB.pazienti[idx];
+  if (p.orario_ingresso && minutesSince(p.orario_ingresso) < 2) {
+    if (!confirm('Il paziente è entrato meno di 2 minuti fa.\n\nDimettere comunque?')) return;
+  }
   var ora = new Date();
-  DB.pazienti[idx].stato             = 'Dimesso';
+  p.stato             = 'Dimesso';
+  p.orario_dimissione = pad(ora.getHours()) + ':' + pad(ora.getMinutes());
+  renderTable();
+  await saveData();
+}
+
+function minutesSince(hhmm) {
+  try {
+    var parts = hhmm.split(':');
+    var now = new Date();
+    var then = new Date(now);
+    then.setHours(parseInt(parts[0],10), parseInt(parts[1],10), 0, 0);
+    return Math.floor((now - then) / 60000);
+  } catch(e) { return 999; }
+}
+
+async function ospedalizza(id) {
+  var idx = DB.pazienti.findIndex(function(p){ return p.id === id; });
+  if (idx < 0) return;
+  var ora = new Date();
+  DB.pazienti[idx].stato             = 'Ospedalizzato';
   DB.pazienti[idx].orario_dimissione = pad(ora.getHours()) + ':' + pad(ora.getMinutes());
   renderTable();
   await saveData();
@@ -922,6 +978,12 @@ function switchTab(tab) {
     document.getElementById('tab-btn-' + t).classList.toggle('active', t === tab);
   });
   if (tab === 'lista') renderTable();
+  if (tab === 'ingresso') {
+    setTimeout(function(){
+      var bf = document.getElementById('f-braccialetto');
+      if (bf) bf.focus();
+    }, 80);
+  }
 }
 
 // ─────────────────────────────────────────────
@@ -940,6 +1002,13 @@ function showToast(msg, isErr) {
 //  UTILITY
 // ─────────────────────────────────────────────
 function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+// debounce ricerca
+var _searchTimer = null;
+function onSearchInput() {
+  clearTimeout(_searchTimer);
+  _searchTimer = setTimeout(renderTable, 180);
+}
 
 // chiudi modali toccando l'overlay
 document.getElementById('modal-evento').addEventListener('click', function(e){ if (e.target === this) closeModalEvento(); });
